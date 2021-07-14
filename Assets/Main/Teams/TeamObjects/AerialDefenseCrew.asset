@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ffb1e9a5e0cb324db5ac75aef78c879, type: 3}
+  m_Name: AerialDefenseCrew
+  m_EditorClassIdentifier: 
+  teamName: Aerial Defense Crew
+  teamInitials: ADC
+  teamLogo: {fileID: 0}
+  teamColor: {r: 0, g: 1, b: 0.98041606, a: 0}
+  startingTeamType: 0
+  entranceText: 
