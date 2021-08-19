@@ -1,0 +1,185 @@
+Using pre-set license
+Built from '2020.3/staging' branch; Version is '2020.3.11f1 (99c7afb366b3) revision 10078127'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Home; OS build 19043.1165; Version 2009; 64bit' Language: 'en' Physical Memory: 16226 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+D:\UnityEditors\2020.3.11f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker1
+-projectPath
+D:/GameProjects/WarAgainstInvaders/War-Against-Invaders
+-logFile
+Logs/AssetImportWorker1.log
+-srvPort
+50566
+Successfully changed project path to: D:/GameProjects/WarAgainstInvaders/War-Against-Invaders
+D:/GameProjects/WarAgainstInvaders/War-Against-Invaders
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 48.89 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.3.11f1 (99c7afb366b3)
+[Subsystems] Discovering subsystems at path D:/UnityEditors/2020.3.11f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/GameProjects/WarAgainstInvaders/War-Against-Invaders/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce GTX 1060 (ID=0x1c20)
+    Vendor:   
+    VRAM:     6052 MB
+    Driver:   27.21.14.5709
+Initialize mono
+Mono path[0] = 'D:/UnityEditors/2020.3.11f1/Editor/Data/Managed'
+Mono path[1] = 'D:/UnityEditors/2020.3.11f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'D:/UnityEditors/2020.3.11f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56276
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: D:/UnityEditors/2020.3.11f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.001166 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 50.52 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.100 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.004409 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 61.13 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.436 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.07 seconds
+Refreshing native plugins compatible for Editor in 0.57 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2711 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 123.7 MB.
+System memory in use after: 120.9 MB.
+
+Unloading 52 unused Assets to reduce memory usage. Loaded Objects now: 3116.
+Total: 3.792000 ms (FindLiveObjects: 0.259000 ms CreateObjectMapping: 0.107200 ms MarkObjects: 2.097900 ms  DeleteObjects: 1.326700 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/Main/IntroScene/Prefabs/Corridor.prefab
+  artifactKey: Guid(ebaaf4d0640a2a64bbe346064c140b81) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Main/IntroScene/Prefabs/Corridor.prefab using Guid(ebaaf4d0640a2a64bbe346064c140b81) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '240d6534a8fe9fa940bac44a68693d52') in 0.472692 seconds
+  Import took 0.486891 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.190104 seconds.
+  path: Assets/Main/IntroScene/Prefabs/Corridor.prefab
+  artifactKey: Guid(ebaaf4d0640a2a64bbe346064c140b81) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Main/IntroScene/Prefabs/Corridor.prefab using Guid(ebaaf4d0640a2a64bbe346064c140b81) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '240d6534a8fe9fa940bac44a68693d52') in 0.156799 seconds
+  Import took 0.173643 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003144 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.52 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.137 seconds
+Platform modules already initialized, skipping
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 0.53 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2634 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 125.1 MB.
+System memory in use after: 122.3 MB.
+
+Unloading 47 unused Assets to reduce memory usage. Loaded Objects now: 3165.
+Total: 4.589500 ms (FindLiveObjects: 0.261800 ms CreateObjectMapping: 0.100400 ms MarkObjects: 2.701200 ms  DeleteObjects: 1.524900 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 10.228798 seconds.
+  path: Assets/Main/IntroScene/Prefabs/Corridor.prefab
+  artifactKey: Guid(ebaaf4d0640a2a64bbe346064c140b81) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Main/IntroScene/Prefabs/Corridor.prefab using Guid(ebaaf4d0640a2a64bbe346064c140b81) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b157225c1ef4f58b4e8876bfbb32be17') in 0.282463 seconds
+  Import took 0.330695 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003198 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.50 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.125 seconds
+Platform modules already initialized, skipping
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 0.54 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2634 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 125.2 MB.
+System memory in use after: 122.5 MB.
+
+Unloading 47 unused Assets to reduce memory usage. Loaded Objects now: 3204.
+Total: 4.018100 ms (FindLiveObjects: 0.232900 ms CreateObjectMapping: 0.143100 ms MarkObjects: 2.132200 ms  DeleteObjects: 1.508900 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.004118 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.55 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.372 seconds
+Platform modules already initialized, skipping
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 0.70 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2634 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 125.2 MB.
+System memory in use after: 122.5 MB.
+
+Unloading 47 unused Assets to reduce memory usage. Loaded Objects now: 3207.
+Total: 6.099400 ms (FindLiveObjects: 0.340300 ms CreateObjectMapping: 0.177200 ms MarkObjects: 3.539800 ms  DeleteObjects: 2.040100 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 316.439735 seconds.
+  path: Assets/Main/Art Assets/Intro/Corridor/m021SFF_001.001.mat
+  artifactKey: Guid(62b7ce8e72d978747a8c7ed8e4165c1e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Main/Art Assets/Intro/Corridor/m021SFF_001.001.mat using Guid(62b7ce8e72d978747a8c7ed8e4165c1e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1c3f232e5fdd440a388faedbb1d19132') in 0.212095 seconds
+  Import took 0.219024 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000300 seconds.
+  path: Assets/Main/Art Assets/Intro/Corridor/sfglass01.001.mat
+  artifactKey: Guid(cb19c9d69945b0d41949fb47c6265df6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Main/Art Assets/Intro/Corridor/sfglass01.001.mat using Guid(cb19c9d69945b0d41949fb47c6265df6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6b5fbaf628181def767aee137bc88bf3') in 0.070365 seconds
+  Import took 0.077630 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000252 seconds.
+  path: Assets/Main/Art Assets/Intro/Corridor/sfglass02.001.mat
+  artifactKey: Guid(b4cd508bc22926140a7e58b354b18e02) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Main/Art Assets/Intro/Corridor/sfglass02.001.mat using Guid(b4cd508bc22926140a7e58b354b18e02) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0e79ad9d6a59424e79a2946a2862106d') in 0.051778 seconds
+  Import took 0.068903 seconds .
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
