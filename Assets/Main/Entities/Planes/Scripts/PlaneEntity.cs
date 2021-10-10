@@ -70,13 +70,7 @@ public class PlaneEntity : MonoBehaviour
         // if plane pepsi
         if (!baseEntity.CheckHealth())
         {
-            if (isLocalPlayerControl)
-            {
-                // Disable baseEntity to be controllable by players.
-                baseEntity.playerCanControl = false;
-                baseEntity.playerControlling = "";
-                PlayerManager.instance.freeRoam = true;
-            }
+            DisconnectLocalPlayer();
             engineActive = false;
             if (GetComponent<DestroyAfterSeconds>() == null)
             {
@@ -109,6 +103,17 @@ public class PlaneEntity : MonoBehaviour
         }
 
         
+    }
+
+    public void DisconnectLocalPlayer()
+    {
+        if (isLocalPlayerControl)
+        {
+            // Disable baseEntity to be controllable by players.
+            baseEntity.playerCanControl = false;
+            baseEntity.playerControlling = "";
+            PlayerManager.instance.freeRoam = true;
+        }
     }
 
     public void Accelerate()

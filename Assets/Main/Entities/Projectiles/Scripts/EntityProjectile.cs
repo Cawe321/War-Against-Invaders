@@ -19,5 +19,5 @@ public abstract class EntityProjectile : MonoBehaviour
 
     public abstract void ActivateProjectile(EntityWeapon parent);
 
-    public abstract void OnHit(EntityHealth entityHealth);
+    public abstract void OnHit(EntityHealth entityHealth, Vector3 impulse);
 }

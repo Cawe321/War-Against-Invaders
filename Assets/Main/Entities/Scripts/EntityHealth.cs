@@ -51,32 +51,40 @@ public class EntityHealth : MonoBehaviour
         // Do nothing currently. All damaging objects colliding with this Entity will be handled in the colliding objects' scripts.
     }
 
-    public void HandleZeroHealth(Collision collision)
+    public void HandleZeroHealth(Vector3 hitStrength)
     {
         switch (destructionType)
         {
             case DESTRUCTION_TYPE.DETACH:
                 {
+                    Rigidbody rb = GetComponent<Rigidbody>();
+                    if (rb == null)
+                        rb = gameObject.AddComponent<Rigidbody>();
 
+                    rb.velocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                    rb.useGravity = true;
+                    rb.AddForce(hitStrength * 0.5f);
                     break;
                 }
         }
     }
 
     #region UTILITY_FUNCTIONS
-    public void TakeDamage(float damage, Collision collision = null)
+    public void TakeDamage(float damage, Vector3 hitStrength)
     {
+        print(transform.name);
         UpdateHealth(currHealth - (damage * (1f - baseEntity.dmgReduction))); // currently a function to handle multiplayer in the future
         if (currHealth < 0f)
         {
             currHealth = 0f;
-            HandleZeroHealth(collision);
+            HandleZeroHealth(hitStrength);
         }
     }
 
     public void UpdateHealth(float newHealth)
     {
-
+        currHealth = newHealth;
     }
     #endregion
 

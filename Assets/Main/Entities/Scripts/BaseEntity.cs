@@ -101,6 +101,8 @@ public class BaseEntity : MonoBehaviour
         currFuel = maxFuel;
         foreach (EntityWeapon weapon in entityWeaponList)
             weapon.owner = this;
+        foreach (EntityHealth health in entityHealthList)
+            health.baseEntity = this;
     }
 
     private void OnMouseDown()

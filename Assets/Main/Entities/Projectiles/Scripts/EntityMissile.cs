@@ -58,7 +58,7 @@ public class EntityMissile : EntityProjectile
             Physics.IgnoreCollision(collider, collision.collider);
         else
         {
-            OnHit(null);
+            OnHit(null, Vector3.zero);
         }
 
     }
@@ -77,7 +77,7 @@ public class EntityMissile : EntityProjectile
         }
     }
 
-    public override void OnHit(EntityHealth entityHealth)
+    public override void OnHit(EntityHealth entityHealth, Vector3 impulse)
     {
         // Explosion!!!
         entityExplosion.Ignite(transform.position);
