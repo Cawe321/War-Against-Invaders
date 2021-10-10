@@ -112,7 +112,7 @@ public class BaseEntity : MonoBehaviour
 
     bool CheckControlAccess()
     {
-        return playerCanControl && playerControlling == "";
+        return playerCanControl && playerControlling == "" && PlayerManager.instance.freeRoam;
     }
 
     void TakeControl()

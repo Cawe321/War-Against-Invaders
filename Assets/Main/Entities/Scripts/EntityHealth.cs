@@ -25,7 +25,7 @@ public class EntityHealth : MonoBehaviour
 
     public bool isAlive { get { return currHealth >= 0f; } }
 
-    [HideInInspector]
+    //[HideInInspector]
     public float currHealth;
 
     /// <summary>
@@ -35,15 +35,19 @@ public class EntityHealth : MonoBehaviour
     public BaseEntity baseEntity;
 
 
+    bool zeroHealthHandled = false;
 
     private void Start()
     {
         Init();
+        if (destructionType == DESTRUCTION_TYPE.EXPLODE && GetComponent<EntityExplosion>() == null)
+            Debug.Log("[EntityHealth] ERROR: DESTRUCTION_TYPE.EXPLODE has been selected but cannot find any EntityExplosion components.");
     }
 
     public void Init()
     {
         currHealth = maxHealth;
+        zeroHealthHandled = false;
     }
 
     public void OnCollisionEnter(Collision collision)
@@ -53,6 +57,10 @@ public class EntityHealth : MonoBehaviour
 
     public void HandleZeroHealth(Vector3 hitStrength)
     {
+        if (zeroHealthHandled)
+            return;
+
+        zeroHealthHandled = true;
         switch (destructionType)
         {
             case DESTRUCTION_TYPE.DETACH:
@@ -67,15 +75,32 @@ public class EntityHealth : MonoBehaviour
                     rb.AddForce(hitStrength * 0.5f);
                     break;
                 }
+            case DESTRUCTION_TYPE.EXPLODE:
+                {
+                    Rigidbody rb = GetComponent<Rigidbody>();
+                    if (rb == null)
+                        rb = gameObject.AddComponent<Rigidbody>();
+
+                    rb.velocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                    rb.useGravity = true;
+                    rb.AddForce(hitStrength * 0.5f);
+
+                    EntityExplosion entityExplosion = GetComponent<EntityExplosion>();
+                    if (entityExplosion != null)
+                    {
+                        entityExplosion.Ignite(transform.position);
+                    }
+                    break;
+                }
         }
     }
 
     #region UTILITY_FUNCTIONS
     public void TakeDamage(float damage, Vector3 hitStrength)
     {
-        print(transform.name);
         UpdateHealth(currHealth - (damage * (1f - baseEntity.dmgReduction))); // currently a function to handle multiplayer in the future
-        if (currHealth < 0f)
+        if (currHealth <= 0f)
         {
             currHealth = 0f;
             HandleZeroHealth(hitStrength);

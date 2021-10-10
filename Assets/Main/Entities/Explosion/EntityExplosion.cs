@@ -14,6 +14,8 @@ public class EntityExplosion : MonoBehaviour
     [Header("Settings")]
     [SerializeField]
     float explosionRadius;
+    public float damage;
+
 
     GameObject explosionVFX;
 
@@ -25,7 +27,23 @@ public class EntityExplosion : MonoBehaviour
         explosionVFX.SetActive(true);
         DestroyAfterSeconds destroyScript = explosionVFX.AddComponent<DestroyAfterSeconds>();
         destroyScript.DestroyAfterWaiting(5);
+        AreaDamage();
     }
 
-
+    public void AreaDamage()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        foreach (Collider collider in hitColliders)
+        {
+            // Make an attempt to find EntityHealth component
+            EntityHealth entityHealth = collider.transform.GetComponent<EntityHealth>();
+            if (entityHealth != null)
+            {
+                Vector3 dist = entityHealth.transform.position - transform.position;
+                // Calculate explosion force
+                Vector3 explosionForce = (explosionRadius - dist.magnitude) * dist * explosionRadius *1000f;
+                entityHealth.TakeDamage(damage, explosionForce);
+            }
+        }
+    }
 }

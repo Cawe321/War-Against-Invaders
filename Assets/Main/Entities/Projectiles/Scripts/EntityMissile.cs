@@ -80,6 +80,7 @@ public class EntityMissile : EntityProjectile
     public override void OnHit(EntityHealth entityHealth, Vector3 impulse)
     {
         // Explosion!!!
+        entityExplosion.damage = finalDamage;
         entityExplosion.Ignite(transform.position);
         gameObject.SetActive(false);
     }
