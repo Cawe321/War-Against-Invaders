@@ -8,7 +8,8 @@ using UnityEngine;
 [System.Serializable]
 public enum TEAM_TYPE
 {
-    ALLY,
+    NONE,
     ROGUE,
-    ENEMY,
+    DEFENDERS,
+    INVADERS,
 }
