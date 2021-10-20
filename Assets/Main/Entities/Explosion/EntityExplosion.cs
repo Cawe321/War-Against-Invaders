@@ -41,7 +41,7 @@ public class EntityExplosion : MonoBehaviour
             {
                 Vector3 dist = entityHealth.transform.position - transform.position;
                 // Calculate explosion force
-                Vector3 explosionForce = (explosionRadius - dist.magnitude) * dist * explosionRadius *1000f;
+                Vector3 explosionForce = (explosionRadius - dist.magnitude) * dist * explosionRadius * 10f;
                 entityHealth.TakeDamage(damage, explosionForce);
             }
         }

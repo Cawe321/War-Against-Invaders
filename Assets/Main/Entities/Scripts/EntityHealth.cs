@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 
 /// <summary>
@@ -72,7 +73,7 @@ public class EntityHealth : MonoBehaviour
                     rb.velocity = Vector3.zero;
                     rb.angularVelocity = Vector3.zero;
                     rb.useGravity = true;
-                    rb.AddForce(hitStrength * 0.5f);
+                    rb.AddForce(hitStrength * (1f/rb.mass), ForceMode.Impulse);
                     break;
                 }
             case DESTRUCTION_TYPE.EXPLODE:

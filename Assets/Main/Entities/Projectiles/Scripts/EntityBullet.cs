@@ -107,7 +107,7 @@ public class EntityBullet : EntityProjectile
     public override void OnHit(EntityHealth targetHealth, Vector3 impulse)
     {
         if (targetHealth != null)
-            targetHealth.TakeDamage(finalDamage, impulse);
+            targetHealth.TakeDamage(finalDamage, impulse * 0.1f);
 
         gameObject.SetActive(false);
     }
