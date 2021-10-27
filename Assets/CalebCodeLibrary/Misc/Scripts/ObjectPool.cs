@@ -20,10 +20,15 @@ public abstract class ObjectPool<T> : MonoBehaviour
 
     [Tooltip("The number of copies of the original object the script will create at start.")]
     [SerializeField]
-    int defaultNumberOfObjects;
+    protected int defaultNumberOfObjects;
     #endregion
 
     protected void Start()
+    {
+        InstantiateObjects();
+    }
+
+    protected virtual void InstantiateObjects()
     {
         for (int i = 0; i < defaultNumberOfObjects; ++i)
             Instantiate(originalObject, objectContainer).SetActive(false);

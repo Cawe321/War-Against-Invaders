@@ -8,6 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class IntroCorridor : MonoBehaviour
 {
+
     [HideInInspector]
     public IntroCorridorManager corridorManager;
 
@@ -24,6 +25,7 @@ public class IntroCorridor : MonoBehaviour
     
     Camera mainCamera;
 
+    float length;
 
     private void Awake()
     {
@@ -34,6 +36,8 @@ public class IntroCorridor : MonoBehaviour
             Debug.Log("IntroCorridor: Corridor has no box collider to trigger next animation!");
         else
             triggerCollider.isTrigger = false;
+
+        length = endPosition.position.z - startPosition.position.z;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,6 +47,14 @@ public class IntroCorridor : MonoBehaviour
         if (camera && mainCamera == camera)
         {
             corridorManager.PlayNextLoop();
+        }
+    }
+
+    private void Update()
+    {
+        if (mainCamera.transform.position.z - transform.position.z > length)
+        {
+            gameObject.SetActive(false);
         }
     }
 }
