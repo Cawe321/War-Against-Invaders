@@ -1,0 +1,3 @@
+Credits to:
+http://wwwtyro.github.io/space-3d 
+(Skybox generator)

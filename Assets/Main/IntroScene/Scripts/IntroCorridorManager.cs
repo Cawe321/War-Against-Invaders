@@ -61,7 +61,7 @@ public class IntroCorridorManager : ObjectPool<IntroCorridorManager>
             previousCorridor = newCorridor;
         }
 
-        StartCorridorAnim();
+        //StartCorridorAnim();
     }
 
     // Update is called once per frame
