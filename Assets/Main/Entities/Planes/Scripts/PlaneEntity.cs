@@ -41,6 +41,8 @@ public class PlaneEntity : MonoBehaviour
     /* in-script values*/
     bool engineActive;
 
+    JetEngineVFXController[] jetEngineVFXControllers;
+
     /// <summary>
     /// public values
     /// </summary>
@@ -51,6 +53,7 @@ public class PlaneEntity : MonoBehaviour
     {
         baseEntity = GetComponent<BaseEntity>();
         rb = GetComponent<Rigidbody>();
+        jetEngineVFXControllers = GetComponentsInChildren<JetEngineVFXController>();
         Init();
     }
 
@@ -79,8 +82,24 @@ public class PlaneEntity : MonoBehaviour
             }
         }
 
+        // Simulate lack of speed for take off
+        if (rb.useGravity)
+        {
+            if (rb.velocity.y > 0f)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            }
+        }
+
         if (engineActive)
         {
+            // Calculate speed percentage
+            float speedPercent = (flightSpeed / flightMinTakeOffSpeed) * 100f;
+            foreach(JetEngineVFXController jet in jetEngineVFXControllers)
+            {
+                jet._percentage = speedPercent;
+            }
+
             // Banking
             // Store to variable eulerAngles to avoid calculation
             Vector3 eulerAngles = rb.rotation.eulerAngles;
@@ -100,6 +119,14 @@ public class PlaneEntity : MonoBehaviour
             //Set drag and angular drag according relative to speed
             rb.drag = 0.1f * rb.velocity.magnitude;
             rb.angularDrag = 0.01f * rb.velocity.magnitude;
+        }
+        else
+        {
+            foreach (JetEngineVFXController jet in jetEngineVFXControllers)
+            {
+                jet._percentage = 0f;
+            }
+
         }
 
         

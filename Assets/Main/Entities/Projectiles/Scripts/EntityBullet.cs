@@ -69,7 +69,9 @@ public class EntityBullet : EntityProjectile
         owner = parent.owner;
         collider.isTrigger = false;
         rb.transform.forward = parent.transform.forward;
-        rb.velocity = parent.owner.GetComponent<Rigidbody>().velocity;
+        Rigidbody ownerRB = parent.owner.GetComponent<Rigidbody>();
+        if (ownerRB != null)
+            rb.velocity = parent.owner.GetComponent<Rigidbody>().velocity;
         rb.AddRelativeForce(Vector3.forward * outputForce, ForceMode.Acceleration);
         //rb.AddForce(Vector3.zero, ForceMode.Impulse);
     }

@@ -6,6 +6,7 @@ using UnityEngine;
 /// <summary>
 /// The base class of every entity.
 /// </summary>
+[RequireComponent(typeof(Collider))]
 public class BaseEntity : MonoBehaviour
 {
     [Header("Settings/Configuration")]
