@@ -33,6 +33,14 @@ public class MouseManager : SingletonObject<MouseManager>
             return new Vector2(Input.mousePosition.x - (Screen.width * 0.5f), Input.mousePosition.y - (Screen.height * 0.5f));
         }
     }
+
+    public Vector2 mousePosChanges
+    {
+        get
+        {
+            return new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        }
+    }
     #endregion;
 
     public override void Awake()

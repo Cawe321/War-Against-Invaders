@@ -11,7 +11,12 @@ public class BaseEntity : MonoBehaviour
 {
     [Header("Settings/Configuration")]
     public bool playerCanControl;
-    
+    public EntityTypes entityType;
+
+    [Header("Health Settings")]
+    [Range(1f, 100f)]
+    public float requiredStability = 20f;
+
     [Header("Base Stats")]
     public TEAM_TYPE team;
     [HideInInspector]
@@ -31,6 +36,9 @@ public class BaseEntity : MonoBehaviour
     public float pointsIncrease;
     [HideInInspector]
     public float ammunitionIncrease;
+    /// <summary>
+    /// Buff to reduce fuel consumption.
+    /// </summary>
     [HideInInspector]
     public float fuelReduction;
 
@@ -55,8 +63,15 @@ public class BaseEntity : MonoBehaviour
     /// </summary>
     public bool isAnyPlayerControlling { get { return playerControlling == ""; } }
 
+    [HideInInspector]
+    public bool initialised = false;
+
+    /* In-script Values */
+    float maxStability;
+
     virtual protected void Start()
     {
+        initialised = false;
         entityHealthList = new List<EntityHealth>(GetComponentsInChildren<EntityHealth>());
         entityWeaponList = new List<EntityWeapon>(GetComponentsInChildren<EntityWeapon>());
         
@@ -76,17 +91,44 @@ public class BaseEntity : MonoBehaviour
     }
 
     /// <summary>
+    /// Set all ammunition to max
+    /// </summary>
+    public void ReloadAllWeapons()
+    {
+        foreach(EntityWeapon entityWeapon in entityWeaponList)
+        {
+            // Reload ammo
+            entityWeapon.ReloadAmmo();
+        }
+    }
+
+    public void ReloadAll()
+    {
+        ReloadFuel();
+        ReloadAllWeapons();
+    }
+
+    public void ReloadFuel()
+    {
+        currFuel = maxFuel;
+    }
+
+    /// <summary>
     /// Checks all <see cref="EntityHealth"/> in this entity.
     /// </summary>
     /// <returns>Returns true if this entity is deemed to be alive. Returns false if it should be destroyed/dead.</returns>
     public bool CheckHealth()
     {
         bool isAlive = false;
+        float currStability = 0f;
         foreach (EntityHealth entityHealth in entityHealthList)
         {
+            
+
             if (entityHealth.isAlive)
             {
                 isAlive = true;
+                currStability += entityHealth.stabilityScore;
             }
             else if (entityHealth.isCoreComponent) // is dead and the health entity is a core component
             {
@@ -94,6 +136,13 @@ public class BaseEntity : MonoBehaviour
                 break;
             }
         }
+
+        // Current stability is lower than required stability to survive
+        if (isAlive && (currStability / maxStability) * 100f < requiredStability)
+        {
+            isAlive = false;
+        }
+
         return isAlive;
     }
 
@@ -102,8 +151,16 @@ public class BaseEntity : MonoBehaviour
         currFuel = maxFuel;
         foreach (EntityWeapon weapon in entityWeaponList)
             weapon.owner = this;
+
+        maxStability = 0f;
         foreach (EntityHealth health in entityHealthList)
+        {
             health.baseEntity = this;
+            maxStability += health.stabilityScore;
+        }
+        initialised = true;
+
+
     }
 
     private void OnMouseDown()
@@ -124,4 +181,14 @@ public class BaseEntity : MonoBehaviour
             Debug.Log("Player has taken over");
         }
     }
+    public void DisconnectLocalPlayer()
+    {
+        if (isLocalPlayerControlling)
+        {
+            // Disable baseEntity to be controllable by players.
+            playerControlling = "";
+            PlayerManager.instance.freeRoam = true;
+        }
+    }
+
 }

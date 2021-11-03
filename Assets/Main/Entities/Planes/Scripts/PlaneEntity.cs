@@ -21,7 +21,7 @@ public class PlaneEntity : MonoBehaviour
     public float flightMinSpeed = -20f;
     //public float flightBankingMaxAngle = 60f;
     //public float flightBankingMultiplier = 0.5f;
-    public float flightBankingBalanceSpeed = 0.5f;
+    public float flightBankingBalanceSpeed = 0.025f;
     public float flightStability = 0.3f;
     public float flightStabilitySpeed = 2f;
     public float flightEnginePower = 2f;
@@ -43,6 +43,9 @@ public class PlaneEntity : MonoBehaviour
 
     JetEngineVFXController[] jetEngineVFXControllers;
 
+    [HideInInspector]
+    public Vector3 torque;
+
     /// <summary>
     /// public values
     /// </summary>
@@ -54,7 +57,7 @@ public class PlaneEntity : MonoBehaviour
         baseEntity = GetComponent<BaseEntity>();
         rb = GetComponent<Rigidbody>();
         jetEngineVFXControllers = GetComponentsInChildren<JetEngineVFXController>();
-        Init();
+        StartCoroutine(WaitForBaseEntity(baseEntity));
     }
 
     void Init()
@@ -62,18 +65,32 @@ public class PlaneEntity : MonoBehaviour
         // We are using BaseEntity's variables
         baseEntity.maxFuel = maxFuel;
         baseEntity.fuelConsumptionRate = fuelConsumptionRate;
+        baseEntity.ReloadAll();
 
         engineActive = false;
-        flightSpeed = 0;
+        flightSpeed = 0f;
     }
 
+   
+    
+    IEnumerator WaitForBaseEntity(BaseEntity entity)
+    {
+        while (!entity.initialised)
+            yield return new WaitForEndOfFrame();
+
+        Init();
+    }
 
     void FixedUpdate()
     {
+        if (!baseEntity.initialised)
+            return;
+
         // if plane pepsi
         if (!baseEntity.CheckHealth())
         {
-            DisconnectLocalPlayer();
+            baseEntity.DisconnectLocalPlayer();
+            baseEntity.playerCanControl = false;
             engineActive = false;
             if (GetComponent<DestroyAfterSeconds>() == null)
             {
@@ -82,17 +99,24 @@ public class PlaneEntity : MonoBehaviour
             }
         }
 
-        // Simulate lack of speed for take off
-        if (rb.useGravity)
-        {
-            if (rb.velocity.y > 0f)
-            {
-                rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-            }
-        }
+
+        //Set drag and angular drag according relative to speed
+        rb.drag = Mathf.Clamp(0.1f * flightSpeed, 0f, 1f);
+        rb.angularDrag = Mathf.Clamp(0.01f * flightSpeed, 0f, 1f);
+
+
+
+        // Lock rotation 
+        rb.angularVelocity = Vector3.zero;
 
         if (engineActive)
         {
+            baseEntity.currFuel -= baseEntity.fuelConsumptionRate * Time.fixedDeltaTime;
+            if (baseEntity.currFuel <= 0)
+            {
+                ToggleEngine();
+            }
+
             // Calculate speed percentage
             float speedPercent = (flightSpeed / flightMinTakeOffSpeed) * 100f;
             foreach(JetEngineVFXController jet in jetEngineVFXControllers)
@@ -100,25 +124,36 @@ public class PlaneEntity : MonoBehaviour
                 jet._percentage = speedPercent;
             }
 
+
+            rb.AddTorque(torque, ForceMode.Acceleration);
+
             // Banking
             // Store to variable eulerAngles to avoid calculation
-            Vector3 eulerAngles = rb.rotation.eulerAngles;
-            rb.MoveRotation(Quaternion.Euler(eulerAngles.x, eulerAngles.y, 0));
-            //FixBanking();
+            //Vector3 eulerAngles = rb.rotation.eulerAngles;
+            //rb.MoveRotation(Quaternion.AngleAxis(-rb.rotation.eulerAngles.z, transform.forward) * rb.rotation);
+            //rb.MoveRotation(Quaternion.Lerp(rb.rotation, Quaternion.Euler(eulerAngles.x, eulerAngles.y, 0), 1f));
+            //rb.MoveRotation(Quaternion.AngleAxis(-rb.rotation.eulerAngles.z, rb.velocity.normalized));
+            //UpdateStability();
+            FixBanking();
 
             // Move Forward
-            rb.AddForce(rb.transform.forward * (flightSpeed - rb.velocity.magnitude) * flightEnginePower);
-            if (rb.velocity.magnitude > flightSpeed)
+            if (flightSpeed > 0f)
+                rb.AddForce((flightSpeed * transform.forward - rb.velocity) * flightEnginePower);
+            if (flightSpeed > flightMinTakeOffSpeed && rb.velocity.magnitude > flightSpeed)
                 rb.velocity = rb.velocity.normalized * flightSpeed;
             //rb.velocity = (rb.velocity + transform.forward * flightSpeed).normalized * flightSpeed;
 
-            // Lock rotation 
-            rb.angularVelocity = Vector3.zero;
+          
+            // Simulate no takeoff without reahcing min speed
+            if (flightSpeed < flightMinTakeOffSpeed && rb.velocity.y > 0)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+                rb.AddForce(Physics.gravity * flightSpeed); 
+            }
+
             //FixBanking();
 
-            //Set drag and angular drag according relative to speed
-            rb.drag = 0.1f * rb.velocity.magnitude;
-            rb.angularDrag = 0.01f * rb.velocity.magnitude;
+            
         }
         else
         {
@@ -132,16 +167,6 @@ public class PlaneEntity : MonoBehaviour
         
     }
 
-    public void DisconnectLocalPlayer()
-    {
-        if (isLocalPlayerControl)
-        {
-            // Disable baseEntity to be controllable by players.
-            baseEntity.playerCanControl = false;
-            baseEntity.playerControlling = "";
-            PlayerManager.instance.freeRoam = true;
-        }
-    }
 
     public void Accelerate()
     {
@@ -183,17 +208,11 @@ public class PlaneEntity : MonoBehaviour
         if (flightSpeed < 1f)
             return;
 
-        //rb.AddRelativeTorque(new Vector3(-yPercent, 0f, -xPercent) * flightTurnSpeed, ForceMode.Acceleration);
-        rb.AddTorque(rb.transform.up * flightTurnSpeed * xPercent, ForceMode.Acceleration);
-        rb.AddTorque(-rb.transform.right * flightTurnSpeed * yPercent, ForceMode.Acceleration);
-        //rb.MoveRotation(Quaternion.AngleAxis(flightTurnSpeed * percent, transform.up) * rb.rotation);
+        /*rb.AddTorque(rb.transform.up * flightTurnSpeed * xPercent, ForceMode.Acceleration);
+        rb.AddTorque(rb.transform.forward * flightTurnSpeed * -xPercent, ForceMode.Acceleration);
+        rb.AddTorque(-rb.transform.right * flightTurnSpeed * yPercent, ForceMode.Acceleration);*/
 
-        /*float currBankingAngle = flightBankingMultiplier * -percent * flightBankingMaxAngle;
-        currBankingAngle = Mathf.Clamp(currBankingAngle, -flightBankingMaxAngle, flightBankingMaxAngle);
-        if (rb.velocity.y < 0)
-            rb.AddTorque(rb.transform.forward * (-currBankingAngle), ForceMode.Acceleration);
-        else
-            rb.AddTorque(rb.transform.forward * (currBankingAngle), ForceMode.Acceleration);*/
+        torque = rb.transform.up * flightTurnSpeed * xPercent + rb.transform.forward * flightTurnSpeed * -xPercent + -rb.transform.right * flightTurnSpeed * yPercent;
     }
 
 
@@ -204,8 +223,12 @@ public class PlaneEntity : MonoBehaviour
         {
             // Turning off engine
             rb.useGravity = true;
+            if (flightSpeed >= flightMinTakeOffSpeed)
+                flightSpeed = flightMinTakeOffSpeed;
+            else
+                flightSpeed = 0f;
         }
-        else
+        else if (baseEntity.currFuel > 0f)
         {
             // Turning on engine
             rb.useGravity = (flightSpeed < flightMinTakeOffSpeed);
@@ -249,10 +272,10 @@ public class PlaneEntity : MonoBehaviour
 
     void FixBanking()
     {
-        Vector3 currEulerAngles = rb.rotation.eulerAngles;
-        Quaternion targetQuat = Quaternion.Euler(currEulerAngles.x, currEulerAngles.y, 0);
+        /*Vector3 currEulerAngles = rb.rotation.eulerAngles;
+        Quaternion targetQuat = Quaternion.Euler(0, 0, -currEulerAngles.z);
 
-        Quaternion AngleDifference = Quaternion.FromToRotation(transform.up, targetQuat * Vector3.up);
+        Quaternion AngleDifference = Quaternion.FromToRotation(transform.up, targetQuat * transform.up);
 
         float AngleToCorrect = Quaternion.Angle(targetQuat, transform.rotation);
         Vector3 Perpendicular = Vector3.Cross(transform.up, transform.forward);
@@ -262,6 +285,19 @@ public class PlaneEntity : MonoBehaviour
 
         Vector3 MainRotation = RectifyAngleDifference((AngleDifference).eulerAngles);
         Vector3 CorrectiveRotation = RectifyAngleDifference((Correction).eulerAngles);
-        rb.AddTorque(((MainRotation - CorrectiveRotation / 2) - rb.angularVelocity) * flightBankingBalanceSpeed * Time.fixedDeltaTime, ForceMode.VelocityChange);
+        rb.AddTorque(((MainRotation - CorrectiveRotation / 2) - rb.angularVelocity) * flightBankingBalanceSpeed * Time.fixedDeltaTime, ForceMode.VelocityChange);*/
+
+        Quaternion targetRotation = Quaternion.AngleAxis(-rb.rotation.eulerAngles.z, transform.forward) * rb.rotation;
+
+        Quaternion diff = Quaternion.Inverse(rb.rotation) * targetRotation;
+        Vector3 eulers = RectifyAngleDifference(diff.eulerAngles);
+        Vector3 torque = eulers;
+        //put the torque back in body space
+        torque = rb.rotation * torque;
+
+        //just zero out the current angularVelocity so it doesnt interfere
+        //rigidbody.angularVelocity = Vector3.zero;
+
+        rb.AddTorque((torque - rb.angularVelocity) * flightBankingBalanceSpeed, ForceMode.VelocityChange);
     }
 }

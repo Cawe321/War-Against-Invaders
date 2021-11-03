@@ -11,6 +11,9 @@ public class EntityExplosion : MonoBehaviour
     [SerializeField]
     GameObject explosionVFXPrefab;
 
+    [HideInInspector]
+    public BaseEntity owner;
+
     [Header("Settings")]
     [SerializeField]
     float explosionRadius;
@@ -18,6 +21,8 @@ public class EntityExplosion : MonoBehaviour
 
 
     GameObject explosionVFX;
+
+    
 
     public void Ignite(Vector3 position)
     {
@@ -42,7 +47,7 @@ public class EntityExplosion : MonoBehaviour
                 Vector3 dist = entityHealth.transform.position - transform.position;
                 // Calculate explosion force
                 Vector3 explosionForce = (explosionRadius - dist.magnitude) * dist * explosionRadius * 10f;
-                entityHealth.TakeDamage(damage, explosionForce);
+                entityHealth.TakeDamage(owner, damage, explosionForce);
             }
         }
     }

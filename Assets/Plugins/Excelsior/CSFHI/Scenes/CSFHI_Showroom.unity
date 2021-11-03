@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.5
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3355174, g: 0.19684285, b: 0.1289, a: 0.5}
+  m_IndirectSpecularColor: {r: 0.37985274, g: 0.2371485, b: 0.16651367, a: 0.5}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7865,7 +7865,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 564261514}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: ExampleUI, Assembly-CSharp-firstpass
         m_MethodName: DoSwitchAnimDelays
         m_Mode: 1
         m_Arguments:
@@ -10487,7 +10487,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 5
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &233416130
 Canvas:
   m_ObjectHideFlags: 0
@@ -10823,7 +10823,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 564261514}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: ExampleUI, Assembly-CSharp-firstpass
         m_MethodName: DoSwitchAutoCam
         m_Mode: 1
         m_Arguments:
@@ -21301,7 +21301,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 564261514}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: ExampleUI, Assembly-CSharp-firstpass
         m_MethodName: DoSwitchCameraEffects
         m_Mode: 1
         m_Arguments:
@@ -27013,7 +27013,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.561412, y: 1}
-  m_AnchoredPosition: {x: 0.000000059604645, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0.00000011920929, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &588626405
@@ -29705,6 +29705,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 160798, guid: 21b379a4614f60b49a3ddbe3761a0d21, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 404654, guid: 21b379a4614f60b49a3ddbe3761a0d21, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -89.980194
@@ -41235,7 +41239,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -0.00000047683716, y: -5.7}
+  m_AnchoredPosition: {x: 0, y: -5.7}
   m_SizeDelta: {x: -30, y: 95.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!82 &1168413641
@@ -52961,7 +52965,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 2.0000095, y: -1.5000136}
+  m_AnchoredPosition: {x: 2.0000076, y: -1.5000153}
   m_SizeDelta: {x: 104.7, y: -16.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1393019083
@@ -65412,7 +65416,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1945544911}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: ExcelsiorUtils, Assembly-CSharp-firstpass
         m_MethodName: GetSliderValue_ToText
         m_Mode: 1
         m_Arguments:

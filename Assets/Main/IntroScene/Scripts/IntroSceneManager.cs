@@ -13,7 +13,7 @@ public class IntroSceneManager : MonoBehaviour
     IntroCorridorManager corridorManager = null;
 
     [SerializeField]
-    InterfaceAnimManager UIAnimManager = null;
+    InterfaceAnimManager[] UIAnimManagers;
 
     [Header("Settings")]
     [SerializeField]
@@ -24,6 +24,12 @@ public class IntroSceneManager : MonoBehaviour
 
     [SerializeField]
     AudioClip zoomSFX;
+
+    [SerializeField]
+    AudioClip openSound;
+
+    [SerializeField]
+    AudioClip closeSound;
 
     AudioSource audioSource;
 
@@ -37,23 +43,25 @@ public class IntroSceneManager : MonoBehaviour
             Debug.LogWarning("IntroSceneManager: IntroCorridorManager has not been assigned. GetComponent will be used.");
             corridorManager = GetComponent<IntroCorridorManager>();
         }
-        if (UIAnimManager == null)
-            Debug.LogError("IntroSceneManager: InterfaceAnimManager not attached.");
 
         corridorManager.StartCorridorAnim();
-        UIAnimManager.startAppear();
-        audioSource.clip = UIAnimManager.openSound;
+        foreach (InterfaceAnimManager UIAnimManager in UIAnimManagers)
+            UIAnimManager.startAppear();
+        audioSource.clip = openSound;
         audioSource.Play();
     }
 
     public void EndIntroScene()
     {
         print("pressed");
-        UIAnimManager.startDisappear();
+        foreach (InterfaceAnimManager UIAnimManager in UIAnimManagers)
+        {
+            UIAnimManager.startDisappear();
+        }
         //StartCoroutine(WaitBeforeChangingScenes());
-        UIAnimManager.OnEndDisappear += DisableCorridorAnim;
+        UIAnimManagers[0].OnEndDisappear += DisableCorridorAnim;
 
-        audioSource.clip = UIAnimManager.closeSound;
+        audioSource.clip = closeSound;
         audioSource.Play();
     }
     

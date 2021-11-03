@@ -68,11 +68,10 @@ public class EntityBullet : EntityProjectile
         // A hard false
         owner = parent.owner;
         collider.isTrigger = false;
-        rb.transform.forward = parent.transform.forward;
         Rigidbody ownerRB = parent.owner.GetComponent<Rigidbody>();
         if (ownerRB != null)
             rb.velocity = parent.owner.GetComponent<Rigidbody>().velocity;
-        rb.AddRelativeForce(Vector3.forward * outputForce, ForceMode.Acceleration);
+        rb.AddForce(transform.forward * outputForce, ForceMode.Acceleration);
         //rb.AddForce(Vector3.zero, ForceMode.Impulse);
     }
 
@@ -83,24 +82,32 @@ public class EntityBullet : EntityProjectile
             Physics.IgnoreCollision(collider, collision.collider);
         else
         {
-            
+
+            // Didnt hit its owner
             // This projectile has hitted something.
-            EntityHealth oppositionHealth = collision.gameObject.GetComponent<EntityHealth>();
+            EntityHealth oppositionHealth = collision.transform.GetComponent<EntityHealth>();
             if (oppositionHealth != null)
             {
+
                 if (oppositionHealth.baseEntity.team != owner.team)
                 {
-                    OnHit(oppositionHealth, collision.impulse);
+                    OnHit(oppositionHealth, rb.velocity);
                     return;
                 }
             }
             else
             {
-                // Projectile must have hitted an object without health. Do accordingly
-                EntityProjectile entityProjectile = collision.gameObject.GetComponent<EntityProjectile>();
 
-                
-                OnHit(null, collision.impulse);
+
+                // Projectile must have hitted an object without health. Do accordingly
+                EntityProjectile entityProjectile = collision.transform.GetComponent<EntityProjectile>();
+                // Since other projectile cannot detect this raycast detected collision, initiate it for them
+                if (entityProjectile != null)
+                {
+                    entityProjectile.OnHit(null, Vector3.zero);
+                }
+
+                OnHit(null, Vector3.zero);
             }
         }
 
@@ -109,7 +116,7 @@ public class EntityBullet : EntityProjectile
     public override void OnHit(EntityHealth targetHealth, Vector3 impulse)
     {
         if (targetHealth != null)
-            targetHealth.TakeDamage(finalDamage, impulse * 0.1f);
+            targetHealth.TakeDamage(owner, finalDamage, impulse * 0.1f);
 
         gameObject.SetActive(false);
     }

@@ -36,9 +36,18 @@ public class TurretEntity : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        if (!baseEntity.CheckHealth())
+        {
+            baseEntity.DisconnectLocalPlayer();
+            baseEntity.playerCanControl = false;
+            if (GetComponent<DestroyAfterSeconds>() == null)
+            {
+                DestroyAfterSeconds destroyScript = gameObject.AddComponent<DestroyAfterSeconds>();
+                destroyScript.DestroyAfterWaiting(10);
+            }
+        }
     }
     
     /// <summary>

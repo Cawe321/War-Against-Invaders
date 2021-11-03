@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a06dbb0102ded7e448d8fb00cdadcb58, type: 3}
+  m_Name: EntityList
+  m_EditorClassIdentifier: 
+  entityObjects:
+  - entityName: Stealth Wing
+    entityType: 1
+    entityDescription: Nothing to say here.
+    entityTeam: 2
+    entityIcon: {fileID: 0}
+    gameModel: {fileID: 8833522019778185314, guid: f304eb2f29b5ed145a5aa922355f8065, type: 3}
+    displayModel: {fileID: 1203802547736348323, guid: 40e23bdddf1c7b64e8415ba9a64b46d6, type: 3}
+  - entityName: F16
+    entityType: 0
+    entityDescription: Nothing to say here.
+    entityTeam: 2
+    entityIcon: {fileID: 0}
+    gameModel: {fileID: 8648475845583234039, guid: 5633710eb1c63e3438b37ce841077200, type: 3}
+    displayModel: {fileID: 4514817367369034372, guid: 4b918346c0bed2b45844f99ce451ec3a, type: 3}
+  - entityName: Whitebeard
+    entityType: 2
+    entityDescription: Nothing to say here.
+    entityTeam: 2
+    entityIcon: {fileID: 0}
+    gameModel: {fileID: 2162456091370205430, guid: 18ecda28111d8094fabf48ac53f613e5, type: 3}
+    displayModel: {fileID: 6295537424973051493, guid: a11a7987883a70744ba927a6cfc6ba51, type: 3}
+  - entityName: X-Wing
+    entityType: 7
+    entityDescription: Nothing to say here.
+    entityTeam: 3
+    entityIcon: {fileID: 0}
+    gameModel: {fileID: 7156498954158920595, guid: 5d444e66609e9d34eb0846f7d6187d07, type: 3}
+    displayModel: {fileID: 1763334496711809685, guid: b49a40687e488fb42b685e8f14a1f731, type: 3}
+  - entityName: Death Row
+    entityType: 5
+    entityDescription: Nothing to say here.
+    entityTeam: 3
+    entityIcon: {fileID: 0}
+    gameModel: {fileID: 241471991855331731, guid: 61a52c6d913291e4eb453bec6e692e27, type: 3}
+    displayModel: {fileID: 361713764994546088, guid: 211a72bbc6342934294eb02d4cb264ce, type: 3}
+  - entityName: Mako
+    entityType: 6
+    entityDescription: Nothing to say here.
+    entityTeam: 3
+    entityIcon: {fileID: 0}
+    gameModel: {fileID: 8421498864198137707, guid: 00e61f2888521ab459d8ee3a24b36adc, type: 3}
+    displayModel: {fileID: 5273375340416205511, guid: 005e26c7b4cd40644b9c66270db6a5d8, type: 3}
+  - entityName: Machine Gun Turret
+    entityType: 3
+    entityDescription: Nothing to say here.
+    entityTeam: 2
+    entityIcon: {fileID: 0}
+    gameModel: {fileID: 4039113663840476068, guid: 104eb793904049342bcb6868ebf9a0b0, type: 3}
+    displayModel: {fileID: 2206646787159419046, guid: 949938f770313bb4d955d8d2440dc4ca, type: 3}
+  - entityName: Missile Turret
+    entityType: 4
+    entityDescription: Nothing to say here.
+    entityTeam: 2
+    entityIcon: {fileID: 0}
+    gameModel: {fileID: 895474661237622149, guid: 0b03a49e1777a8d458ae841db6adb841, type: 3}
+    displayModel: {fileID: 7223970358537372294, guid: f0db1ceeedc8eaa49a8d8654f0541674, type: 3}
+  - entityName: Laser Beam Turret
+    entityType: 8
+    entityDescription: Nothing to say here.
+    entityTeam: 3
+    entityIcon: {fileID: 0}
+    gameModel: {fileID: 7626357343104636422, guid: 8285605b9bf233f49b1b84da10c4e0d0, type: 3}
+    displayModel: {fileID: 7106149744343344650, guid: 6d7c95db29d5ef04abb14474cc8ff218, type: 3}
+  - entityName: Laser Gun Turret
+    entityType: 9
+    entityDescription: Nothing to say here.
+    entityTeam: 3
+    entityIcon: {fileID: 0}
+    gameModel: {fileID: 1919452922094627172, guid: d3b9a38a13da6684cb1e8666f063ffef, type: 3}
+    displayModel: {fileID: 5787491713013383651, guid: d22450f716a985d49983246231e8f861, type: 3}

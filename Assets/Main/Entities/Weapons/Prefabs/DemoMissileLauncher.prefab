@@ -79,12 +79,13 @@ MonoBehaviour:
   objectContainer: {fileID: 6683627254220274488}
   originalObject: {fileID: 7287939307410261288, guid: 834711d3db296cb4e8fae0e032be6e06, type: 3}
   defaultNumberOfObjects: 3
-  defaultDamage: 50
-  maxAmmunition: 10
-  currAmmunition: 10
+  defaultDamage: 500
+  maxAmmunition: 9
+  currAmmunition: 9
   owner: {fileID: 0}
   _weaponCooldown: 2
   weaponType: 1
+  projectileSpread: 0
 --- !u!33 &3895276721189909307
 MeshFilter:
   m_ObjectHideFlags: 0

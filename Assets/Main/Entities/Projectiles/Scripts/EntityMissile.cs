@@ -30,6 +30,8 @@ public class EntityMissile : EntityProjectile
     Rigidbody rb = null;
     public override void ActivateProjectile(EntityWeapon parent)
     {
+        owner = parent.owner;
+
         propulsionActive = false;
 
         if (rb == null)
@@ -37,18 +39,25 @@ public class EntityMissile : EntityProjectile
         if (collider == null)
             collider = GetComponent<Collider>();
 
+        rb.velocity = Vector3.zero;
+
         // A hard false
         collider.isTrigger = false;
 
         rb.transform.forward = parent.transform.forward;
-        rb.velocity = parent.owner.GetComponent<Rigidbody>().velocity;
-        rb.useGravity = true;
+        rb.angularVelocity = Vector3.zero;
+        Rigidbody parentRB = parent.owner.GetComponent<Rigidbody>();
+        if (parentRB != null)
+            rb.velocity = parentRB.velocity;
+        if (propulsionDelay > 0.000f)
+            rb.useGravity = true;
+
+        if (jetEngineVFXController != null)
+            jetEngineVFXController._percentage = 0f;
 
         // No need to call this coroutine if missile doesnt belong to client (Multiplayer Note)
         lastCO = StartCoroutine(PropulsionDelay(propulsionDelay, parent.transform.forward));
 
-        if (jetEngineVFXController != null)
-            jetEngineVFXController._percentage = 0f;
     }
 
     public void OnCollisionEnter(Collision collision)
@@ -69,10 +78,13 @@ public class EntityMissile : EntityProjectile
         {
             rb.AddRelativeForce(Vector3.forward * propulsionAccelerationForce * Time.fixedDeltaTime, ForceMode.Acceleration);
             propulsionRemainingDuration -= Time.fixedDeltaTime;
+            rb.angularVelocity = Vector3.zero;
             if (propulsionRemainingDuration <= 0)
             {
                 propulsionActive = false;
-                rb.useGravity = false;
+                rb.useGravity = true;
+                if (jetEngineVFXController != null)
+                    jetEngineVFXController._percentage = 0f;
             }
         }
     }
@@ -81,6 +93,7 @@ public class EntityMissile : EntityProjectile
     {
         // Explosion!!!
         entityExplosion.damage = finalDamage;
+        entityExplosion.owner = owner;
         entityExplosion.Ignite(transform.position);
         gameObject.SetActive(false);
     }
@@ -93,8 +106,10 @@ public class EntityMissile : EntityProjectile
         {
             countdown -= Time.fixedDeltaTime;
             transform.forward = direction;
+            rb.angularVelocity = Vector3.zero;
             yield return new WaitForFixedUpdate();
         }
+        transform.forward = direction;
         StartPropulsion();
         yield return null;
     }

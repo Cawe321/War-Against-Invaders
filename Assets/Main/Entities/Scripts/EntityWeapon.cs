@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public abstract class EntityWeapon : ObjectPool<EntityWeapon>
 {
+    [Header("Weapon Settings")]
     public float defaultDamage;
 
     public int maxAmmunition;

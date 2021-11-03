@@ -7,9 +7,11 @@ public class PlanePlayerController : MonoBehaviour
 {
     PlaneEntity planeEntity;
 
+
+
     private void Start()
     {
-        planeEntity = GetComponent<PlaneEntity>();    
+        planeEntity = GetComponent<PlaneEntity>();
     }
 
     // Update is called once per frame
@@ -52,7 +54,12 @@ public class PlanePlayerController : MonoBehaviour
                 //planeEntity.UpdateLeftRightRotation(MouseManager.instance.mousePosAwayFromCenter.x / Screen.width);
                 //planeEntity.UpdateUpDownRotation(MouseManager.instance.mousePosAwayFromCenter.y / Screen.height);
             }
+            else
+            {
+                planeEntity.UpdateRotation(0f, 0f);
+            }
 
         }
+        
     }
 }

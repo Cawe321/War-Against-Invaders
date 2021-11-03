@@ -14,6 +14,9 @@ public class EntityHealth : MonoBehaviour
     public float maxHealth = 100;
     [Tooltip("If this object is a core component, when its health reaches 0, the entity this health object belongs to will automatically be destroyed, regardless of all other health objects.")]
     public bool isCoreComponent = false;
+    [Tooltip("Even if this Entity isCoreComponent, stability score still required as it still will account for the total stability.")]
+    public float stabilityScore = 1f;
+
 
 
     public enum DESTRUCTION_TYPE
@@ -62,6 +65,9 @@ public class EntityHealth : MonoBehaviour
             return;
 
         zeroHealthHandled = true;
+        // Disable collision
+        GetComponent<Collider>().isTrigger = true;
+        
         switch (destructionType)
         {
             case DESTRUCTION_TYPE.DETACH:
@@ -85,11 +91,12 @@ public class EntityHealth : MonoBehaviour
                     rb.velocity = Vector3.zero;
                     rb.angularVelocity = Vector3.zero;
                     rb.useGravity = true;
-                    rb.AddForce(hitStrength * 0.5f);
+                    rb.AddForce(hitStrength * (1f / rb.mass), ForceMode.Impulse);
 
                     EntityExplosion entityExplosion = GetComponent<EntityExplosion>();
                     if (entityExplosion != null)
                     {
+                        entityExplosion.owner = baseEntity;
                         entityExplosion.Ignite(transform.position);
                     }
                     break;
@@ -98,7 +105,7 @@ public class EntityHealth : MonoBehaviour
     }
 
     #region UTILITY_FUNCTIONS
-    public void TakeDamage(float damage, Vector3 hitStrength)
+    public void TakeDamage(BaseEntity dealer, float damage, Vector3 hitStrength)
     {
         UpdateHealth(currHealth - (damage * (1f - baseEntity.dmgReduction))); // currently a function to handle multiplayer in the future
         if (currHealth <= 0f)

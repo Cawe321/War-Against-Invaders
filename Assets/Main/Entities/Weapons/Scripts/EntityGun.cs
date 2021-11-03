@@ -8,6 +8,9 @@ using UnityEngine;
 /// </summary>
 public class EntityGun : EntityWeapon
 {
+    [SerializeField]
+    float projectileSpread = 0.1f;
+
     protected void Start()
     {
         base.Start();
@@ -33,6 +36,9 @@ public class EntityGun : EntityWeapon
             EntityProjectile entityProjectile = newProjectile.GetComponent<EntityProjectile>();
             entityProjectile.owner = parent;
             entityProjectile.finalDamage = defaultDamage * (1 + parent.dmgIncrease);
+            entityProjectile.transform.forward = transform.forward;
+            Vector3 rotationEuler = new Vector3(Random.Range(-projectileSpread, projectileSpread), Random.Range(-projectileSpread, projectileSpread), 0f);
+            entityProjectile.transform.Rotate(rotationEuler);
             entityProjectile.ActivateProjectile(this);
         }
     }
