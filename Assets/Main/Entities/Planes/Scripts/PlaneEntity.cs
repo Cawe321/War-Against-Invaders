@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements.Experimental;
 
 /// <summary>
 /// Entity script for planes. Requires <see cref="BaseEntity"/>.
@@ -259,13 +260,25 @@ public class PlaneEntity : MonoBehaviour
     }
     
     public void RotateToTargetDirection(Vector3 targetDir)
-    {
-        Debug.Log(targetDir);
-        //UpdateRotation(Mathf.Clamp((targetDir.x - transform.forward.x) * 20f, -1f, 1f), Mathf.Clamp((targetDir.y - transform.forward.y) * 20f, -1f, 1f));
-        if (targetDir.z < Mathf.Epsilon)
-            UpdateRotation(Mathf.Clamp(targetDir.z - transform.forward.z, -1f, 1f), Mathf.Clamp(targetDir.y - transform.forward.y, -1f, 1f));
+{
+        Vector3 localDir = transform.InverseTransformDirection(targetDir);
+        //if (localDir.z < 0)
+        //{
+        //    Debug.Log("Using Z" + (targetDir.z - transform.forward.z));
+            
+        //    UpdateRotation(Mathf.Clamp(-localDir.z, -1f, 1f), Mathf.Clamp(targetDir.y - transform.forward.y, -1f, 1f));
+        //}
+        //else
+        if (localDir.x < Mathf.Epsilon && localDir.x > -Mathf.Epsilon && localDir.z < 0f) // target is directly behind
+        {
+            UpdateRotation(Mathf.Clamp(localDir.z, -1f, 1f), Mathf.Clamp(targetDir.y - transform.forward.y, -1f, 1f));
+        }
         else
-            UpdateRotation(Mathf.Clamp(targetDir.x - transform.forward.x, -1f, 1f), Mathf.Clamp(targetDir.y - transform.forward.y, -1f, 1f));
+        {
+            Debug.Log("Using X");
+            UpdateRotation(Mathf.Clamp(localDir.x, -1f, 1f), Mathf.Clamp(targetDir.y - transform.forward.y, -1f, 1f));
+        }
+
 
     }
 
