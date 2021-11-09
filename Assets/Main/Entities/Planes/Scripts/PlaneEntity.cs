@@ -260,8 +260,13 @@ public class PlaneEntity : MonoBehaviour
     
     public void RotateToTargetDirection(Vector3 targetDir)
     {
+        Debug.Log(targetDir);
         //UpdateRotation(Mathf.Clamp((targetDir.x - transform.forward.x) * 20f, -1f, 1f), Mathf.Clamp((targetDir.y - transform.forward.y) * 20f, -1f, 1f));
-        UpdateRotation(Mathf.Clamp((targetDir.z - transform.forward.z + targetDir.x - transform.forward.x) * 0.5f, -1f, 1f), Mathf.Clamp(targetDir.y - transform.forward.y, -1f, 1f));
+        if (targetDir.z < Mathf.Epsilon)
+            UpdateRotation(Mathf.Clamp(targetDir.z - transform.forward.z, -1f, 1f), Mathf.Clamp(targetDir.y - transform.forward.y, -1f, 1f));
+        else
+            UpdateRotation(Mathf.Clamp(targetDir.x - transform.forward.x, -1f, 1f), Mathf.Clamp(targetDir.y - transform.forward.y, -1f, 1f));
+
     }
 
     public void ToggleEngine()

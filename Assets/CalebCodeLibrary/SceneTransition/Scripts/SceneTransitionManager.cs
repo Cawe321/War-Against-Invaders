@@ -142,12 +142,15 @@ public class SceneTransitionManager : MonoBehaviour
         {
             if (textMesh)
                 textMesh.text = $"{(int)(asyncLoad.progress * 100f)}%";
+            if (progressBar)
+                progressBar.localScale = new Vector3(asyncLoad.progress, progressBar.localScale.y, progressBar.localScale.z);
             yield return new WaitForFixedUpdate();
         }
 
         if (textMesh)
             textMesh.text = "100%";
-
+        if (progressBar)
+            progressBar.localScale = new Vector3(1f, progressBar.localScale.y, progressBar.localScale.z);
         // Handle exit of loading screen
         switch (exitType)
         {
