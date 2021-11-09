@@ -102,6 +102,9 @@ public class BaseEntity : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Reloads both fuel and ammunition. Use <see cref="ReloadAllWeapons"/> to reload weapons only or <see cref="ReloadFuel"/> to reload fuel.
+    /// </summary>
     public void ReloadAll()
     {
         ReloadFuel();

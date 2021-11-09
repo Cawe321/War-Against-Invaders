@@ -658,6 +658,7 @@ MonoBehaviour:
   isCoreComponent: 1
   stabilityScore: 1
   destructionType: 0
+  meshDestroy: {fileID: 0}
   currHealth: 0
   baseEntity: {fileID: 0}
 --- !u!65 &476147677
@@ -1431,6 +1432,7 @@ MonoBehaviour:
   isCoreComponent: 1
   stabilityScore: 1
   destructionType: 0
+  meshDestroy: {fileID: 0}
   currHealth: 0
   baseEntity: {fileID: 0}
 --- !u!65 &1757577803
@@ -1534,6 +1536,7 @@ MonoBehaviour:
   isCoreComponent: 1
   stabilityScore: 1
   destructionType: 1
+  meshDestroy: {fileID: 0}
   currHealth: 100
   baseEntity: {fileID: 0}
 --- !u!114 &1758205897
@@ -1571,7 +1574,10 @@ MonoBehaviour:
   flightStabilitySpeed: 2
   flightEnginePower: 500
   flightMinTakeOffSpeed: 20
+  baseEntity: {fileID: 0}
+  stateMachine: {fileID: 0}
   flightSpeed: 0
+  engineActive: 0
   torque: {x: 0, y: 0, z: 0}
 --- !u!54 &1758205899
 Rigidbody:
@@ -2265,7 +2271,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4039113663840476068, guid: 104eb793904049342bcb6868ebf9a0b0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 104eb793904049342bcb6868ebf9a0b0, type: 3}
@@ -2717,6 +2723,7 @@ MonoBehaviour:
   isCoreComponent: 0
   stabilityScore: 1
   destructionType: 0
+  meshDestroy: {fileID: 0}
   currHealth: 0
   baseEntity: {fileID: 0}
 --- !u!114 &8317623591370889490
@@ -2735,6 +2742,7 @@ MonoBehaviour:
   yTransform: {fileID: 8317623590022337294}
   turnSpeed: 5
   maxHeightAngle: 80
+  baseEntity: {fileID: 0}
 --- !u!114 &8317623591370889491
 MonoBehaviour:
   m_ObjectHideFlags: 0

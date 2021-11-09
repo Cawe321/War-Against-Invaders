@@ -15,8 +15,7 @@ public class EntityExplosion : MonoBehaviour
     public BaseEntity owner;
 
     [Header("Settings")]
-    [SerializeField]
-    float explosionRadius;
+    public float explosionRadius;
     public float damage;
 
 
@@ -44,9 +43,11 @@ public class EntityExplosion : MonoBehaviour
             EntityHealth entityHealth = collider.transform.GetComponent<EntityHealth>();
             if (entityHealth != null)
             {
-                Vector3 dist = entityHealth.transform.position - transform.position;
+                
+                Vector3 dist = collider.ClosestPoint(transform.position) - transform.position;
+
                 // Calculate explosion force
-                Vector3 explosionForce = (explosionRadius - dist.magnitude) * dist * explosionRadius * 10f;
+                Vector3 explosionForce = (explosionRadius - dist.magnitude) * dist * explosionRadius;
                 entityHealth.TakeDamage(owner, damage, explosionForce);
             }
         }

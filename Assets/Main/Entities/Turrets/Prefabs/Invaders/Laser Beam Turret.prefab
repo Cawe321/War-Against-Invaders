@@ -309,7 +309,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCanControl: 1
-  entityType: 8
+  entityType: 9
+  requiredStability: 20
   team: 3
   maxFuel: 0
   fuelConsumptionRate: 0
@@ -366,6 +367,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 20000
   isCoreComponent: 1
+  stabilityScore: 1
+  meshDestroy: {fileID: 0}
   destructionType: 1
   currHealth: 0
   baseEntity: {fileID: 0}

@@ -17,14 +17,16 @@ public class EntityHealth : MonoBehaviour
     [Tooltip("Even if this Entity isCoreComponent, stability score still required as it still will account for the total stability.")]
     public float stabilityScore = 1f;
 
-
-
     public enum DESTRUCTION_TYPE
     {
         DETACH,
         EXPLODE
     }
     public DESTRUCTION_TYPE destructionType;
+
+    [Header("References")]
+    public MeshDestroy meshDestroy;
+
 
 
     public bool isAlive { get { return currHealth >= 0f; } }
@@ -67,7 +69,7 @@ public class EntityHealth : MonoBehaviour
         zeroHealthHandled = true;
         // Disable collision
         GetComponent<Collider>().isTrigger = true;
-        
+
         switch (destructionType)
         {
             case DESTRUCTION_TYPE.DETACH:
@@ -91,7 +93,7 @@ public class EntityHealth : MonoBehaviour
                     rb.velocity = Vector3.zero;
                     rb.angularVelocity = Vector3.zero;
                     rb.useGravity = true;
-                    rb.AddForce(hitStrength * (1f / rb.mass), ForceMode.Impulse);
+                    rb.AddForce(hitStrength * rb.mass, ForceMode.Impulse);
 
                     EntityExplosion entityExplosion = GetComponent<EntityExplosion>();
                     if (entityExplosion != null)
@@ -99,6 +101,13 @@ public class EntityHealth : MonoBehaviour
                         entityExplosion.owner = baseEntity;
                         entityExplosion.Ignite(transform.position);
                     }
+
+                    MeshDestroy meshDestroy = GetComponent<MeshDestroy>();
+                    if (meshDestroy != null)
+                    {
+                        meshDestroy.DestroyMesh();
+                    }
+
                     break;
                 }
         }

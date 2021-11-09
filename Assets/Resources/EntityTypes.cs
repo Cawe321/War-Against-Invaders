@@ -4,6 +4,8 @@ using UnityEngine;
 
 public enum EntityTypes
 {
+    Mothership,
+    
     // Defender Planes
     F16,
     StealthWing,

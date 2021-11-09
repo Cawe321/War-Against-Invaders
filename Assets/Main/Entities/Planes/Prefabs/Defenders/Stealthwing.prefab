@@ -304,7 +304,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCanControl: 1
-  entityType: 1
+  entityType: 2
+  requiredStability: 20
   team: 2
   maxFuel: 0
   fuelConsumptionRate: 0
@@ -350,7 +351,7 @@ MonoBehaviour:
   maxFuel: 300
   fuelConsumptionRate: 0.5
   flightTurnSpeed: 100
-  flightAcceleration: 2
+  flightAcceleration: 5
   flightMaxSpeed: 100
   flightMinSpeed: -20
   flightBankingBalanceSpeed: 0.025
@@ -358,7 +359,10 @@ MonoBehaviour:
   flightStabilitySpeed: 500
   flightEnginePower: 500
   flightMinTakeOffSpeed: 20
+  baseEntity: {fileID: 0}
+  stateMachine: {fileID: 0}
   flightSpeed: 0
+  engineActive: 0
   torque: {x: 0, y: 0, z: 0}
 --- !u!114 &8833522019778185315
 MonoBehaviour:
@@ -400,7 +404,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 200
   isCoreComponent: 1
+  stabilityScore: 1
   destructionType: 1
+  meshDestroy: {fileID: 0}
   currHealth: 0
   baseEntity: {fileID: 0}
 --- !u!114 &8833522019778185319

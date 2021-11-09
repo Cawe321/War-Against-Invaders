@@ -237,4 +237,4 @@ MonoBehaviour:
   projectileType: 0
   finalDamage: 0
   owner: {fileID: 0}
-  outputForce: 100000
+  outputForce: 50000

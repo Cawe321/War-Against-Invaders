@@ -21,7 +21,8 @@ public class TurretEntity : MonoBehaviour
 
 
     /*In-script Values*/
-    BaseEntity baseEntity;
+    [HideInInspector]
+    public BaseEntity baseEntity;
 
     public bool isLocalPlayerControl { get { return baseEntity.isLocalPlayerControlling; } }
 

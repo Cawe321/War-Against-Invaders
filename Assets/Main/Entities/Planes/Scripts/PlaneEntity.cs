@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,15 +32,21 @@ public class PlaneEntity : MonoBehaviour
     /// </summary>
     public float flightMinTakeOffSpeed = 100f;
 
+    /* in-script values*/
     Rigidbody rb;
 
-    BaseEntity baseEntity;
+    [HideInInspector]
+    public BaseEntity baseEntity;
+
+    [HideInInspector]
+    public StateMachine stateMachine;
 
     //[HideInInspector]
     public float flightSpeed = 0f;
 
-    /* in-script values*/
-    bool engineActive;
+    [HideInInspector]
+    public bool engineActive;
+
 
     JetEngineVFXController[] jetEngineVFXControllers;
 
@@ -56,6 +63,7 @@ public class PlaneEntity : MonoBehaviour
     {
         baseEntity = GetComponent<BaseEntity>();
         rb = GetComponent<Rigidbody>();
+        stateMachine = GetComponent<StateMachine>();
         jetEngineVFXControllers = GetComponentsInChildren<JetEngineVFXController>();
         StartCoroutine(WaitForBaseEntity(baseEntity));
     }
@@ -148,7 +156,7 @@ public class PlaneEntity : MonoBehaviour
             if (flightSpeed < flightMinTakeOffSpeed && rb.velocity.y > 0)
             {
                 rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-                rb.AddForce(Physics.gravity * flightSpeed); 
+                rb.AddForce(Physics.gravity * flightSpeed * flightSpeed); // to counteract drag
             }
 
             //FixBanking();
@@ -167,13 +175,31 @@ public class PlaneEntity : MonoBehaviour
         
     }
 
+    public void StartFlyingInstantly()
+    {
+        StartCoroutine(StartFlyingInstantlyOnLoad());
+    }
+    IEnumerator StartFlyingInstantlyOnLoad()
+    {
+        while (baseEntity == null)
+        {
+            yield return new WaitForFixedUpdate();
+        }
+
+        if (!engineActive)
+            ToggleEngine();
+
+        SetFlightSpeed(flightMinTakeOffSpeed);
+
+        rb.useGravity = false;
+    }
 
     public void Accelerate()
     {
         if (!engineActive)
             return;
 
-        flightSpeed += flightAcceleration * Time.fixedDeltaTime;
+        flightSpeed += flightAcceleration * Time.deltaTime;
         if (flightSpeed > flightMaxSpeed)
             flightSpeed = flightMaxSpeed;
 
@@ -187,11 +213,20 @@ public class PlaneEntity : MonoBehaviour
         if (!engineActive)
             return;
 
-        flightSpeed -= flightAcceleration * Time.fixedDeltaTime;
+        flightSpeed -= flightAcceleration * Time.deltaTime;
         if (flightSpeed < flightMinSpeed)
             flightSpeed = flightMinSpeed;
 
         // Enable/Disable gravity according to the plane speed compared to minimum take off speed
+        if (engineActive)
+            rb.useGravity = (flightSpeed < flightMinTakeOffSpeed);
+    }
+
+    public void SetFlightSpeed(float targetSpeed)
+    {
+        flightSpeed = targetSpeed;
+        flightSpeed = Mathf.Clamp(flightSpeed, flightMinSpeed, flightMaxSpeed);
+
         if (engineActive)
             rb.useGravity = (flightSpeed < flightMinTakeOffSpeed);
     }
@@ -213,8 +248,21 @@ public class PlaneEntity : MonoBehaviour
         rb.AddTorque(-rb.transform.right * flightTurnSpeed * yPercent, ForceMode.Acceleration);*/
 
         torque = rb.transform.up * flightTurnSpeed * xPercent + rb.transform.forward * flightTurnSpeed * -xPercent + -rb.transform.right * flightTurnSpeed * yPercent;
+        //Debug.Log($"X: {xPercent } | Y: {yPercent}");
     }
 
+    public void RotateToTargetPosition(Vector3 targetWorldPos)
+    {
+        Vector3 targetDir = (targetWorldPos - transform.position).normalized;
+        RotateToTargetDirection(targetDir);
+        //Debug.Log(targetDir);
+    }
+    
+    public void RotateToTargetDirection(Vector3 targetDir)
+    {
+        //UpdateRotation(Mathf.Clamp((targetDir.x - transform.forward.x) * 20f, -1f, 1f), Mathf.Clamp((targetDir.y - transform.forward.y) * 20f, -1f, 1f));
+        UpdateRotation(Mathf.Clamp((targetDir.z - transform.forward.z + targetDir.x - transform.forward.x) * 0.5f, -1f, 1f), Mathf.Clamp(targetDir.y - transform.forward.y, -1f, 1f));
+    }
 
     public void ToggleEngine()
     {
