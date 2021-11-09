@@ -28,6 +28,8 @@ public class SceneTransitionManager : MonoBehaviour
     [Tooltip("{OPTIONAL] The progress bar that will show the percentage of loading progress. Will modify X scale on transform.")]
     [SerializeField] Transform progressBar;
 
+    [SerializeField] List<InterfaceAnimManager> allAnims;
+
 
     [Space(0.5f)]
     [Header("Fade Anim Settings")]
@@ -108,6 +110,7 @@ public class SceneTransitionManager : MonoBehaviour
         }
         else
             Debug.LogError("SceneTransitionManager: No splash screen selected.");
+        allAnims = new List<InterfaceAnimManager>(canvasGroup.GetComponentsInChildren<InterfaceAnimManager>());
     }
     #endregion
 
@@ -134,6 +137,9 @@ public class SceneTransitionManager : MonoBehaviour
                     break;
                 }
         }
+        foreach (InterfaceAnimManager anim in allAnims)
+            anim.startAppear();
+
         // Load scene async
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 
@@ -151,6 +157,10 @@ public class SceneTransitionManager : MonoBehaviour
             textMesh.text = "100%";
         if (progressBar)
             progressBar.localScale = new Vector3(1f, progressBar.localScale.y, progressBar.localScale.z);
+
+        foreach (InterfaceAnimManager anim in allAnims)
+            anim.startDisappear();
+
         // Handle exit of loading screen
         switch (exitType)
         {
