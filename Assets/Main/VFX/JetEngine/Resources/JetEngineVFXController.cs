@@ -1,5 +1,7 @@
+using Newtonsoft.Json.Schema;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 /// <summary>
@@ -8,8 +10,11 @@ using UnityEngine;
 public class JetEngineVFXController : MonoBehaviour
 {
 
-    [Range(0f,100f)]
-    public float _percentage;
+    public float percentage { get { return _percentage; } set { _percentage = Mathf.Clamp(value, 0f, 100f); } }
+
+    [Range(0f, 100f)]
+    [SerializeField]
+    float _percentage;
 
     [SerializeField]
     [Tooltip("The reference ParticleSystem component. Will automatically find one if null")]
@@ -39,7 +44,7 @@ public class JetEngineVFXController : MonoBehaviour
 
     private void Update()
     {
-        SetEnginePowerByPercentage(_percentage);
+        SetEnginePowerByPercentage(percentage);
     }
 
     /// <summary>

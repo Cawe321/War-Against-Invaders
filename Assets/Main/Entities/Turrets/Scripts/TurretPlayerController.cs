@@ -24,6 +24,7 @@ public class TurretPlayerController : MonoBehaviour
     {
         if (turretEntity.isLocalPlayerControl)
         {
+            
             if (!wasPlayerControlled)
             {
                 // player just gain control
@@ -44,6 +45,11 @@ public class TurretPlayerController : MonoBehaviour
                 
             }
 
+            if (Input.GetButtonDown("LeaveControl"))
+            {
+                turretEntity.baseEntity.DisconnectLocalPlayer();
+            }
+
             // Only rotate when LMB is pressed down
             if (Input.GetMouseButton(0))
             {
@@ -53,14 +59,13 @@ public class TurretPlayerController : MonoBehaviour
             }
 
         }
-        else
+
+        if (wasPlayerControlled && !turretEntity.isLocalPlayerControl)
         {
-            if (wasPlayerControlled)
-            {
-                // player just lost control
-                DisabledPlayerControl();
-            }
+            // player just lost control
+            DisabledPlayerControl();
         }
+        wasPlayerControlled = turretEntity.isLocalPlayerControl;
     }
 
     virtual protected void EnabledPlayerControl()

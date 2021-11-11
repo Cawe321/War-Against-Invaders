@@ -43,7 +43,7 @@ public class RunwayObject : MonoBehaviour
     /// <param name="newOccupant">The new occupant.</param>
     void SetOccupant(BaseEntity newOccupant)
     {
-        if (!isOccupied && newOccupant.GetComponent<PlaneEntity>() != null && newOccupant.team == owner.teamType) // Checks if current runway is occupied and the new occupant is a Plane and that they are in the same team
+        if (newOccupant.team == owner.teamType && newOccupant.GetComponent<PlaneEntity>() != null) // Checks if current runway is occupied and the new occupant is a Plane and that they are in the same team
         {
             // No longer occupied, ready for new occupant.
             _occupant = newOccupant;

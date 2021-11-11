@@ -61,7 +61,7 @@ public class BaseEntity : MonoBehaviour
     /// <summary>
     /// Checks if any players are controlling this entity.
     /// </summary>
-    public bool isAnyPlayerControlling { get { return playerControlling == ""; } }
+    public bool isAnyPlayerControlling { get { return playerControlling != ""; } }
 
     [HideInInspector]
     public bool initialised = false;

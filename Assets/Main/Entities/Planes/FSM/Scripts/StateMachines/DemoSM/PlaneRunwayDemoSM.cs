@@ -19,15 +19,17 @@ public class PlaneRunwayDemoSM : StateMachine
     protected override void Start()
     {
         planeEntity = GetComponent<PlaneEntity>();
-        planeEntity.StartFlyingInstantly(); // For demo purposes only
-                                            //base.Start();
+         
+        //base.Start();
 
-        StartCoroutine(WaitOneFrameBeforeStartState());
+        StartCoroutine(WaitForFrameBeforeStartState(2));
     }
 
-    IEnumerator WaitOneFrameBeforeStartState()
+    IEnumerator WaitForFrameBeforeStartState(int numberOfFrames)
     {
-        yield return new WaitForEndOfFrame();
+        for (int i = 0; i < numberOfFrames; ++i)
+            yield return new WaitForEndOfFrame();
+        planeEntity.StartFlyingInstantly(); // For demo purposes only
         ChangeStateByName("PlaneRunwayState", planeEntity);
     }
 
@@ -38,7 +40,9 @@ public class PlaneRunwayDemoSM : StateMachine
         {
             ChangeStateByName("PlaneRunwayState", planeEntity);
         }
-        base.Update();
+
+        if (!planeEntity.baseEntity.isAnyPlayerControlling)
+            base.Update();
         isLastFramePlayerControlled = planeEntity.baseEntity.isAnyPlayerControlling;
     }
 }

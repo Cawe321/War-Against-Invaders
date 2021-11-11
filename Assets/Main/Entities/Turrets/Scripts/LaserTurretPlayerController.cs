@@ -17,6 +17,7 @@ public class LaserTurretPlayerController : TurretPlayerController
     // Update is called once per frame
     protected override void Update()
     {
+        
         if (turretEntity.isLocalPlayerControl)
         {
             if (!wasPlayerControlled)
@@ -25,6 +26,10 @@ public class LaserTurretPlayerController : TurretPlayerController
                 EnabledPlayerControl();
             }
 
+            if (Input.GetButtonDown("LeaveControl"))
+            {
+                turretEntity.baseEntity.DisconnectLocalPlayer();
+            }
 
             // Temp camera script
             Camera.main.transform.position = turretEntity.xTransform.transform.position - turretEntity.xTransform.transform.forward * 20 + transform.up * 10;
@@ -59,5 +64,6 @@ public class LaserTurretPlayerController : TurretPlayerController
                 DisabledPlayerControl();
             }
         }
+        wasPlayerControlled = turretEntity.isLocalPlayerControl;
     }
 }

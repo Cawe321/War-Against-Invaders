@@ -14,7 +14,7 @@ public class PlaneRunwayState : BaseState
     PlaneEntity planeEntity;
     RunwayManager runwayManager;
     RunwayObject assignedRunway;
-    const float circlingRadius = 5f;
+    const float circlingRadius = 75f;
     float circlingAngle = 1f;
     float cooldown = 1f;
     enum PHASE
@@ -68,7 +68,7 @@ public class PlaneRunwayState : BaseState
                             planeEntity.Decelerate();
 
                         Vector3 targetPosition = new Vector3(Mathf.Cos(circlingAngle) * circlingRadius + runwayManager.transform.position.x,
-                                                                runwayManager.transform.position.y,
+                                                                runwayManager.transform.position.y + 50f,
                                                                 Mathf.Sin(circlingAngle) * circlingRadius + runwayManager.transform.position.z);
                         planeEntity.RotateToTargetPosition(targetPosition);
                     }

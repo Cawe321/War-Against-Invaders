@@ -36,6 +36,8 @@ public class PlaneEntity : MonoBehaviour
     /* in-script values*/
     Rigidbody rb;
 
+    float storedFlightSpeed;
+
     [HideInInspector]
     public BaseEntity baseEntity;
 
@@ -77,7 +79,7 @@ public class PlaneEntity : MonoBehaviour
         baseEntity.ReloadAll();
 
         engineActive = false;
-        flightSpeed = 0f;
+        flightSpeed = storedFlightSpeed = 0f;
     }
 
    
@@ -130,7 +132,7 @@ public class PlaneEntity : MonoBehaviour
             float speedPercent = (flightSpeed / flightMinTakeOffSpeed) * 100f;
             foreach(JetEngineVFXController jet in jetEngineVFXControllers)
             {
-                jet._percentage = speedPercent;
+                jet.percentage = speedPercent;
             }
 
 
@@ -168,7 +170,7 @@ public class PlaneEntity : MonoBehaviour
         {
             foreach (JetEngineVFXController jet in jetEngineVFXControllers)
             {
-                jet._percentage = 0f;
+                jet.percentage = 0f;
             }
 
         }
@@ -289,14 +291,16 @@ public class PlaneEntity : MonoBehaviour
         {
             // Turning off engine
             rb.useGravity = true;
-            if (flightSpeed >= flightMinTakeOffSpeed)
-                flightSpeed = flightMinTakeOffSpeed;
+            if (storedFlightSpeed > flightMinTakeOffSpeed)
+                storedFlightSpeed = flightMinTakeOffSpeed;
             else
-                flightSpeed = 0f;
+                storedFlightSpeed = flightSpeed;
+            flightSpeed = 0f;
         }
         else if (baseEntity.currFuel > 0f)
         {
             // Turning on engine
+            flightSpeed = storedFlightSpeed;
             rb.useGravity = (flightSpeed < flightMinTakeOffSpeed);
         }
 

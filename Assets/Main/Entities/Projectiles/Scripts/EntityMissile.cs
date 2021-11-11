@@ -53,7 +53,7 @@ public class EntityMissile : EntityProjectile
             rb.useGravity = true;
 
         if (jetEngineVFXController != null)
-            jetEngineVFXController._percentage = 0f;
+            jetEngineVFXController.percentage = 0f;
 
         // No need to call this coroutine if missile doesnt belong to client (Multiplayer Note)
         lastCO = StartCoroutine(PropulsionDelay(propulsionDelay, parent.transform.forward));
@@ -84,7 +84,7 @@ public class EntityMissile : EntityProjectile
                 propulsionActive = false;
                 rb.useGravity = true;
                 if (jetEngineVFXController != null)
-                    jetEngineVFXController._percentage = 0f;
+                    jetEngineVFXController.percentage = 0f;
             }
         }
     }
@@ -121,6 +121,6 @@ public class EntityMissile : EntityProjectile
         propulsionActive = true;
         propulsionRemainingDuration = durationOfPropulsion;
         if (jetEngineVFXController != null)
-            jetEngineVFXController._percentage = 100f;
+            jetEngineVFXController.percentage = 100f;
     }
 }

@@ -420,7 +420,7 @@ MonoBehaviour:
   flightTurnSpeed: 100
   flightAcceleration: 5
   flightMaxSpeed: 100
-  flightMinSpeed: -20
+  flightMinSpeed: 0
   flightBankingBalanceSpeed: 0.025
   flightStability: 1
   flightStabilitySpeed: 500

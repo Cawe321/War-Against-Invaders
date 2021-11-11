@@ -43,8 +43,13 @@ public class RunwayManager : MonoBehaviour
         if (occupant.GetComponent<PlaneEntity>() != null && occupant.team == teamType)
         {
             RunwayObject availableRunway = FindEmptyRunway();
-            availableRunway.occupant = occupant;
-            return availableRunway;
+            if (availableRunway != null)
+            {
+                availableRunway.occupant = occupant;
+                Debug.Log("Runway assigned to:" + occupant.name);
+                return availableRunway;
+            }
+
         }
         return null;
     }

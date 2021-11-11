@@ -47,6 +47,11 @@ public class PlanePlayerController : MonoBehaviour
                 planeEntity.FireAllWeapons(EntityWeapon.WEAPON_TYPE.SECONDARY);
             }
 
+            if (Input.GetButton("LeaveControl"))
+            {
+                planeEntity.baseEntity.DisconnectLocalPlayer();
+            }
+
             // Only rotate when LMB is pressed down
             if (Input.GetMouseButton(0))
             {
