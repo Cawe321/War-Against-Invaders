@@ -32,4 +32,6 @@ public abstract class BaseState
     public abstract void Enter(params object[] inputs);
     public abstract void UpdateLogic(); // UpdateLogic for its name so as to not confuse with Unity's Update()
     public abstract void Exit();
+
+    public abstract void ForceFinishState();
 }

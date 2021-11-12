@@ -63,12 +63,13 @@ public class RunwayObject : MonoBehaviour
             // Tell the AI to find a new Runway
             PlaneEntity planeEntity = occupant.GetComponent<PlaneEntity>();
             planeEntity.stateMachine.ReloadState(planeEntity);
+            _occupant = null;
         }
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        BaseEntity colliderEntity = collision.gameObject.GetComponent<BaseEntity>();
+        BaseEntity colliderEntity = collision.gameObject.GetComponent<EntityHealth>().baseEntity;
         if (colliderEntity != null) // If another Entity which is not the assigned occupant landed on the runway
         {
             if (occupant != null && collision.gameObject != occupant.gameObject)
@@ -101,9 +102,10 @@ public class RunwayObject : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        BaseEntity colliderEntity = collision.gameObject.GetComponent<BaseEntity>();
+        BaseEntity colliderEntity = collision.gameObject.GetComponent<EntityHealth>().baseEntity;
         if (colliderEntity != null && colliderEntity == occupant && _reloaded) // Entity is leaving the runway
         {
+            Debug.Log("Occupant gone");
             _occupant = null;
         }
     }

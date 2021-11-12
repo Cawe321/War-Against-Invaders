@@ -47,7 +47,7 @@ public class PlaneRunwayState : BaseState
 
     public override void UpdateLogic()
     {
-        Debug.Log(currentPhase);
+        //Debug.Log(currentPhase);
         switch (currentPhase)
         {
             case PHASE.LOOK_FOR_RUNWAY:
@@ -169,7 +169,7 @@ public class PlaneRunwayState : BaseState
                     {
                         // CHANGE TO NEXT STATE
                         // CODE HERE
-                        Debug.Log("Finished Takeoff");
+                        //Debug.Log("Finished Takeoff");
                         return;
                     }
                     else
@@ -191,6 +191,12 @@ public class PlaneRunwayState : BaseState
         // Nothing to do currently.
     }
 
+    public override void ForceFinishState()
+    {
+        // CHANGE TO NEXT STATE
+        // CODE HERE
+        //stateMachine.ChangeStateByName()
+    }
 
 
 }
