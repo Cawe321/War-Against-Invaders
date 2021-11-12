@@ -271,7 +271,12 @@ public class PlaneEntity : MonoBehaviour
         else
         {
             if (localDir.z < 0f)
-                UpdateRotation(Mathf.Clamp(localDir.x * (1f + Mathf.Abs(localDir.z)), -1f, 1f), Mathf.Clamp(localDir.y, -1f, 1f));
+            {
+                if (localDir.x < 0f)
+                    UpdateRotation(Mathf.Clamp(localDir.x - Mathf.Abs(localDir.z), -1f, 1f), Mathf.Clamp(localDir.y, -1f, 1f));
+                else
+                    UpdateRotation(Mathf.Clamp(localDir.x + Mathf.Abs(localDir.z), -1f, 1f), Mathf.Clamp(localDir.y, -1f, 1f));
+            }
             else
                 UpdateRotation(Mathf.Clamp(localDir.x, -1f, 1f), Mathf.Clamp(localDir.y, -1f, 1f));
         }
