@@ -8,15 +8,19 @@ public class WarpDriveVFXController : MonoBehaviour
     [Header("References")]
     public VisualEffect warpDriveVFX;
     [Header("Settings")]
-    float deactivationRate = 0.02f;
+    public float deactivationRate = 0.02f;
 
     bool warpActive = false;
 
+    public bool isWarpActive { get { return warpActive; } }
 
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// Returns the active particle count
+    /// </summary>
+    /// <returns>(int)The number of active particles.</returns>
+    public int GetParticleCount()
     {
-        warpDriveVFX.Stop();
+        return warpDriveVFX.aliveParticleCount;
     }
 
     /// <summary>
@@ -25,10 +29,9 @@ public class WarpDriveVFXController : MonoBehaviour
     /// <param name="toActivate">Whether to activate the warp drive</param>
     public void ActivateWarpDrive(bool toActivate)
     {
-        warpActive = toActivate;
-
         if (toActivate)
         {
+            warpActive = true;
             warpDriveVFX.SetFloat("WarpAmount", 1f);
             warpDriveVFX.Play();
         }
@@ -48,5 +51,6 @@ public class WarpDriveVFXController : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         warpDriveVFX.Stop();
+        warpActive = false;
     }
 }
