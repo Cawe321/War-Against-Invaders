@@ -21,7 +21,7 @@ public class StateMachine : MonoBehaviour
             currentState.UpdateLogic();
     }
 
-    void ChangeState(BaseState newState, params object[] inputs)
+    protected void ChangeState(BaseState newState, params object[] inputs)
     {
         if (currentState != null)
             currentState.Exit();
@@ -45,17 +45,9 @@ public class StateMachine : MonoBehaviour
     /// <param name="newStateName">(string)Name of the new state</param>
     /// <param name="inputs">A list of inputs the new BaseState will need.</param>
     /// <returns>Whether the changing of state was successful.</returns>
-    public bool ChangeStateByName(string newStateName, params object[] inputs)
+    public virtual bool ChangeStateByName(string newStateName)
     {
-        foreach (BaseState state in states)
-        {
-            if (state.stateName == newStateName)
-            {
-                ChangeState(state, inputs);
-                return true;
-            }
-        }
-        Debug.LogError("StateMachine: ChangeStateByName was called, but the state corresponding to the string given was not found!.");
+        Debug.LogError("StateMachine is using default ChangeStateByName! This function needs to be overriden");
         return false;
     }
 
