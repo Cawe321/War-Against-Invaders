@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 241471991855331740}
   - component: {fileID: 241471991855331741}
   - component: {fileID: 241471991855331730}
+  - component: {fileID: 7061186167885620381}
   m_Layer: 0
   m_Name: 'Deathrow '
   m_TagString: Untagged
@@ -45,6 +46,9 @@ Transform:
   - {fileID: 2602091686906301500}
   - {fileID: 368961232571377705}
   - {fileID: 722752059584959906}
+  - {fileID: 4387115323409663587}
+  - {fileID: 4349042236561310150}
+  - {fileID: 610867013713738487}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -130,6 +134,10 @@ MonoBehaviour:
   flightStabilitySpeed: 500
   flightEnginePower: 500
   flightMinTakeOffSpeed: 20
+  mirrorCameraPosition: {fileID: 4349042236561310150}
+  radarCameraPosition: {fileID: 610867013713738487}
+  LWing: {fileID: 8375260626257903085}
+  RWing: {fileID: 6449072797340361395}
   baseEntity: {fileID: 0}
   stateMachine: {fileID: 0}
   flightSpeed: 0
@@ -182,6 +190,48 @@ MonoBehaviour:
   owner: {fileID: 0}
   explosionRadius: 10
   damage: 100
+--- !u!114 &7061186167885620381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 241471991855331731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b47e904b88119444b8c92f3db4aff931, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &2086238640293749848
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4349042236561310150}
+  m_Layer: 0
+  m_Name: MirrorCameraPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4349042236561310150
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2086238640293749848}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 0, y: 0.027, z: -0.0884}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_Children: []
+  m_Father: {fileID: 581582087733011241}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &3288940541346284680
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,6 +261,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 581582087733011241}
   m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3850267554219905761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 610867013713738487}
+  m_Layer: 0
+  m_Name: RadarCameraPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &610867013713738487
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3850267554219905761}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 20, z: -20}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_Children: []
+  m_Father: {fileID: 581582087733011241}
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5453044337504461015
 GameObject:
@@ -994,4 +1074,50 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6210665108355942585, guid: 0394318117944a34c855e84e509b462b, type: 3}
   m_PrefabInstance: {fileID: 6725026002002169328}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8098722593184797083
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 581582087733011241}
+    m_Modifications:
+    - target: {fileID: 5514195324680558584, guid: fc248dd590a878a4098f727128c9ac2c, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5514195324680558584, guid: fc248dd590a878a4098f727128c9ac2c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5514195324680558584, guid: fc248dd590a878a4098f727128c9ac2c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5514195324680558584, guid: fc248dd590a878a4098f727128c9ac2c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5514195324680558584, guid: fc248dd590a878a4098f727128c9ac2c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.1252
+      objectReference: {fileID: 0}
+    - target: {fileID: 5514195324680558584, guid: fc248dd590a878a4098f727128c9ac2c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5514195324680558584, guid: fc248dd590a878a4098f727128c9ac2c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5514195324680558584, guid: fc248dd590a878a4098f727128c9ac2c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fc248dd590a878a4098f727128c9ac2c, type: 3}
+--- !u!4 &4387115323409663587 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5514195324680558584, guid: fc248dd590a878a4098f727128c9ac2c, type: 3}
+  m_PrefabInstance: {fileID: 8098722593184797083}
   m_PrefabAsset: {fileID: 0}

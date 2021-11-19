@@ -33,6 +33,12 @@ public class PlaneEntity : MonoBehaviour
     /// </summary>
     public float flightMinTakeOffSpeed = 100f;
 
+    [Header("UI Settings")]
+    public Transform mirrorCameraPosition;
+    public Transform radarCameraPosition;
+    public EntityHealth LWing;
+    public EntityHealth RWing;
+
     /* in-script values*/
     Rigidbody rb;
 

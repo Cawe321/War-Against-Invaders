@@ -146,9 +146,23 @@ public class BaseEntity : MonoBehaviour
         ReloadAllWeapons();
     }
 
+    /// <summary>
+    /// Reloads fuel
+    /// </summary>
     public void ReloadFuel()
     {
         currFuel = maxFuel;
+    }
+
+
+    public EntityWeapon GetFirstWeaponOfType(WEAPON_TYPE weaponType)
+    {
+        foreach (EntityWeapon weapon in entityWeaponList)
+        {
+            if (weapon.weaponType == weaponType)
+                return weapon;
+        }
+        return null;
     }
 
     /// <summary>

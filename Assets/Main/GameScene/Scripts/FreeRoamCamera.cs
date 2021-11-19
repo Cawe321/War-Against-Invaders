@@ -8,6 +8,9 @@ public class FreeRoamCamera : MonoBehaviour
     float moveSpeed = 200f;
     [SerializeField]
     float rotationSpeed = 10f;
+
+    [SerializeField]
+    float minHeight = 0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -56,5 +59,8 @@ public class FreeRoamCamera : MonoBehaviour
         {
             MouseManager.instance.mouseLockState = CursorLockMode.None;
         }
+
+        if (transform.position.y < minHeight)
+            transform.position = new Vector3(transform.position.x, minHeight, transform.position.z);
     }
 }

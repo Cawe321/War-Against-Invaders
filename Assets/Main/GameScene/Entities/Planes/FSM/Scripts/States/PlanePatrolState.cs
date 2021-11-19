@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Parameters needed:
 /// <para>(0)-(PlaneEntity)</para>
-/// <para>(1)-(BaseEntity) The enemy entity</para>
+/// <para>(1)-(BaseEntity) The target entity</para>
 /// </summary>
 public class PlanePatrolState : BaseState
 {
