@@ -28,7 +28,9 @@ public class EntityHealth : MonoBehaviour
     public MeshDestroy meshDestroy;
 
 
-
+    /// <summary>
+    /// CHecks if health > 0
+    /// </summary>
     public bool isAlive { get { return currHealth > 0f; } }
 
     //[HideInInspector]
