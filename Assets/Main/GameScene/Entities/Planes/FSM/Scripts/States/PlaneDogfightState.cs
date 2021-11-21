@@ -23,7 +23,7 @@ public class PlaneDogfightState : BaseState
         // Init the values from inputs
         planeEntity = inputs[0] as PlaneEntity;
 
-        Collider[] colliders = Physics.OverlapSphere(planeEntity.transform.position, 250f);
+        Collider[] colliders = Physics.OverlapSphere(planeEntity.transform.position, 750f);
         if (colliders.Length > 0)
         {
             // Find the enemy plane entity
@@ -66,7 +66,7 @@ public class PlaneDogfightState : BaseState
         }
 
         // Check if any object is near, fly away if that's the case
-        Collider[] allColliders = Physics.OverlapSphere(planeEntity.transform.position, 20f);
+        Collider[] allColliders = Physics.OverlapSphere(planeEntity.transform.position, 200f);
         bool toAvoid = false;
         Vector3 averageDirection = Vector3.zero;
         foreach (Collider collider in allColliders)

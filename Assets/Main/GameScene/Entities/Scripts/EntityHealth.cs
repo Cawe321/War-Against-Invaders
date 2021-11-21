@@ -42,12 +42,14 @@ public class EntityHealth : MonoBehaviour
     [HideInInspector]
     public BaseEntity baseEntity;
 
+    Collider collider;
 
     bool zeroHealthHandled = false;
 
     private void Start()
     {
         Init();
+        collider = GetComponent<Collider>();
         if (destructionType == DESTRUCTION_TYPE.EXPLODE && GetComponent<EntityExplosion>() == null)
             Debug.Log("[EntityHealth] ERROR: For" + transform.name +", DESTRUCTION_TYPE.EXPLODE has been selected but cannot find any EntityExplosion components.");
     }
@@ -61,6 +63,12 @@ public class EntityHealth : MonoBehaviour
     public void OnCollisionEnter(Collision collision)
     {
         // Do nothing currently. All damaging objects colliding with this Entity will be handled in the colliding objects' scripts.
+
+        // This is for spaceship components to ignore each other
+        if (transform.IsChildOf(GameplayManager.instance.GetSpaceshipEntity().transform) && collision.transform.IsChildOf(GameplayManager.instance.GetSpaceshipEntity().transform))
+        {
+            Physics.IgnoreCollision(collider, collision.collider);
+        }
     }
 
     public void HandleZeroHealth(Vector3 hitStrength)

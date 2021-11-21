@@ -26,13 +26,12 @@ public class PlaneTravelState : BaseState
 
         // Init from the inputs
         planeEntity = inputs[0] as PlaneEntity;
-        targetEntity = inputs[1] as BaseEntity;
-
-        // Init the script values
-        targetPosOffset = targetEntity.transform.position + new Vector3(Random.Range(-maxTargetPosOffset.x, maxTargetPosOffset.x), Random.Range(-maxTargetPosOffset.y, maxTargetPosOffset.y), Random.Range(-maxTargetPosOffset.z, maxTargetPosOffset.z));    
+        targetEntity = inputs[1] as BaseEntity;           
     }
     public override void UpdateLogic()
     {
+        targetPosOffset = targetEntity.transform.position + new Vector3(Random.Range(-maxTargetPosOffset.x, maxTargetPosOffset.x), Random.Range(-maxTargetPosOffset.y, maxTargetPosOffset.y), Random.Range(-maxTargetPosOffset.z, maxTargetPosOffset.z));
+
         if (planeEntity.baseEntity.getFuelPercentage < 25f || (planeEntity.baseEntity.HasSecondaryWeapon() && !planeEntity.baseEntity.HasAmmo(EntityWeapon.WEAPON_TYPE.SECONDARY))) // Check if plane has less than 25% fuel
         {
             // PlaneEntity is low on fuel
@@ -49,7 +48,7 @@ public class PlaneTravelState : BaseState
         }
         else
         {
-            Collider[] colliders = Physics.OverlapSphere(planeEntity.transform.position, 250f);
+            Collider[] colliders = Physics.OverlapSphere(planeEntity.transform.position, 500f);
             if (colliders.Length > 0)
             {
                 foreach (Collider collider in colliders)
@@ -78,7 +77,7 @@ public class PlaneTravelState : BaseState
         }
 
         // Check if any object is near, fly away if that's the case
-        Collider[] allColliders = Physics.OverlapSphere(planeEntity.transform.position, 50f);
+        Collider[] allColliders = Physics.OverlapSphere(planeEntity.transform.position, 200f);
         Collider closestCollider = null;
         float closestDistance = 0f;
         foreach (Collider collider in allColliders)

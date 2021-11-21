@@ -12,8 +12,8 @@ public class PlanePatrolState : BaseState
     public PlanePatrolState(StateMachine stateMachine) : base("PlanePatrolState", stateMachine) { }
 
     /* Setting Values */
-    float radiusOfPatrol = 750f;
-    float circlingSpeed = 0.5f;
+    float radiusOfPatrol = 1000f;
+    float circlingSpeed = 0.1f;
 
     /* Script Values */
     PlaneEntity planeEntity;
@@ -39,7 +39,7 @@ public class PlanePatrolState : BaseState
             return;
         }
 
-        Collider[] colliders = Physics.OverlapSphere(planeEntity.transform.position, 250f); // Check if enemy plane is nearby
+        Collider[] colliders = Physics.OverlapSphere(planeEntity.transform.position, 750f); // Check if enemy plane is nearby
         if (colliders.Length > 0)
         {
             foreach (Collider collider in colliders)
@@ -63,7 +63,7 @@ public class PlanePatrolState : BaseState
         planeEntity.Accelerate();
 
         // Check if any object is near, fly away if that's the case
-        Collider[] allColliders = Physics.OverlapSphere(planeEntity.transform.position, 50f);
+        Collider[] allColliders = Physics.OverlapSphere(planeEntity.transform.position, 200f);
         Collider closestCollider = null;
         float closestDistance = 0f;
         foreach (Collider collider in allColliders)

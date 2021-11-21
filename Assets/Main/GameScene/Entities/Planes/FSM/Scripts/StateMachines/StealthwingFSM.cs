@@ -83,11 +83,16 @@ public class StealthwingFSM : StateMachine
                             ChangeState(state, planeEntity);
                             break;
                         }
+                    case "PlaneBombingState":
+                        {
+                            ChangeStateByName("PlaneDogfightState");
+                            break;
+                        }
                 }
                 return true;
             }
         }
-        Debug.LogError("StateMachine: ChangeStateByName was called, but the state corresponding to the string given was not found!.");
+        Debug.LogError("StateMachine: ChangeStateByName was called, but the state " + newStateName + "corresponding to the string given was not found!.");
         return false;
     }
 

@@ -102,6 +102,7 @@ public class GameplayManager : SingletonObject<GameplayManager>
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("FPS:" + (1f / Time.deltaTime));
         switch (gameplayPhase)
         {
             case GAMEPLAY_PHASE.WAIT:
