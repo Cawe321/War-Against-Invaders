@@ -16,7 +16,7 @@ public class WhitebeardFSM : StateMachine
 
         // ALL STATES
         states.Add(new PlaneTravelState(this));   // Initial State
-        states.Add(new PlaneInvaderBombingState(this));
+        states.Add(new PlaneDefenderBombingState(this));
         states.Add(new PlaneRunwayState(this));
         states.Add(new PlaneDogfightState(this));
     }

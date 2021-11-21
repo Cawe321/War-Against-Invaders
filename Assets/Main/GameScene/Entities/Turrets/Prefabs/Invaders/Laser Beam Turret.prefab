@@ -27,6 +27,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.0959, z: 0.0028}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 8654486932527693459}
   - {fileID: 7373646812292545760}
   m_Father: {fileID: 5869236478374522174}
   m_RootOrder: 0
@@ -61,7 +62,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 813003165854882521}
-  - {fileID: 8654486932527693459}
   m_Father: {fileID: 7105997640608894140}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -145,7 +145,7 @@ Transform:
   m_Children:
   - {fileID: 3515929665209480161}
   m_Father: {fileID: 813003165854882521}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6583627329959170506
 MeshFilter:
@@ -327,6 +327,7 @@ MonoBehaviour:
   entityHealthList: []
   entityWeaponList: []
   initialised: 0
+  autoGetWeapons: 1
 --- !u!114 &7626357343104636443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,19 +512,19 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 5869236478374522174}
+    m_TransformParent: {fileID: 813003165854882521}
     m_Modifications:
     - target: {fileID: 7411467176477663221, guid: 752ed895ca9f9e343916083e92bbae8e, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7411467176477663221, guid: 752ed895ca9f9e343916083e92bbae8e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.15
+      value: 0.054100007
       objectReference: {fileID: 0}
     - target: {fileID: 7411467176477663221, guid: 752ed895ca9f9e343916083e92bbae8e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.1
+      value: -0.1028
       objectReference: {fileID: 0}
     - target: {fileID: 7411467176477663221, guid: 752ed895ca9f9e343916083e92bbae8e, type: 3}
       propertyPath: m_LocalRotation.x

@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using UnityEditor;
 using UnityEngine;
 
+#if UNITY_EDITOR
 public class SpaceshipFormatter : EditorWindow
 {
     GameObject spaceshipModel;
@@ -141,3 +142,4 @@ public class SpaceshipFormatter : EditorWindow
         }
     }
 }
+#endif

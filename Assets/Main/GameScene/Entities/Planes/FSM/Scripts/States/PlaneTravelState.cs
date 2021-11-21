@@ -49,6 +49,8 @@ public class PlaneTravelState : BaseState
         else
         {
             Collider[] colliders = Physics.OverlapSphere(planeEntity.transform.position, 500f);
+            Collider closestCollider = null;
+            float closestDistance = 200f * 200f;
             if (colliders.Length > 0)
             {
                 foreach (Collider collider in colliders)
@@ -60,6 +62,13 @@ public class PlaneTravelState : BaseState
                         // Change to next state
                         stateMachine.ChangeStateByName("PlaneDogfightState");
                         return;
+                    }
+
+                    //Check if any object is near, if yes, fly away
+                    if (collider != planeEntity.GetComponent<Collider>() && !collider.transform.IsChildOf(planeEntity.transform) && (closestCollider == null || closestDistance > (collider.transform.position - planeEntity.transform.position).sqrMagnitude))
+                    {
+                        closestCollider = collider;
+                        closestDistance = (collider.transform.position - planeEntity.transform.position).sqrMagnitude;
                     }
                 }
 
@@ -74,29 +83,19 @@ public class PlaneTravelState : BaseState
                     }
                 }*/
             }
-        }
 
-        // Check if any object is near, fly away if that's the case
-        Collider[] allColliders = Physics.OverlapSphere(planeEntity.transform.position, 200f);
-        Collider closestCollider = null;
-        float closestDistance = 0f;
-        foreach (Collider collider in allColliders)
-        {
-            if (collider != planeEntity.GetComponent<Collider>() && !collider.transform.IsChildOf(planeEntity.transform) && (closestCollider == null || closestDistance > (collider.transform.position - planeEntity.transform.position).sqrMagnitude))
+            if (closestCollider != null) // Fly away to avoid collision
+                planeEntity.RotateToTargetDirection(planeEntity.transform.position - closestCollider.ClosestPoint(planeEntity.transform.position));
+            else
             {
-                closestCollider = collider;
-                closestDistance = (collider.transform.position - planeEntity.transform.position).sqrMagnitude;
+                // if still remaining on this state, do what this state does
+                // moves towards target position & accelerate
+                planeEntity.RotateToTargetPosition(targetPosOffset);
+                planeEntity.Accelerate(); // No need to check for max flight speed since it has already been handled in this function
             }
         }
-        if (closestCollider != null) // Fly away to avoid collision
-            planeEntity.RotateToTargetDirection(planeEntity.transform.position - closestCollider.ClosestPoint(planeEntity.transform.position));
-        else
-        {
-            // if still remaining on this state, do what this state does
-            // moves towards target position & accelerate
-            planeEntity.RotateToTargetPosition(targetPosOffset);
-            planeEntity.Accelerate(); // No need to check for max flight speed since it has already been handled in this function
-        }
+
+       
 
     }
 
