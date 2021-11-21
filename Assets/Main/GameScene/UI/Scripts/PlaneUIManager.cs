@@ -8,6 +8,9 @@ public class PlaneUIManager : SingletonObject<PlaneUIManager>
 {
     [Header("References")]
     [SerializeField]
+    GameObject UIContainer;
+
+    [SerializeField]
     Camera mirrorCamera;
 
     [SerializeField]
@@ -60,15 +63,15 @@ public class PlaneUIManager : SingletonObject<PlaneUIManager>
 
     public void EnableUI(PlaneEntity planeEntity)
     {
+        UIContainer.SetActive(true);
         this.planeEntity = planeEntity;
-        mirrorCamera.transform.parent = planeEntity.transform;
         mirrorCamera.gameObject.SetActive(true);
     }
 
     public void DisableUI()
     {
+        UIContainer.SetActive(false);
         planeEntity = null;
-        mirrorCamera.transform.parent = null;
     }
 
 
@@ -83,7 +86,8 @@ public class PlaneUIManager : SingletonObject<PlaneUIManager>
 
             // Radar View
             radarCamera.transform.position = planeEntity.radarCameraPosition.transform.position;
-            radarCamera.transform.rotation = planeEntity.radarCameraPosition.transform.rotation;
+            radarCamera.transform.LookAt(planeEntity.transform);
+            //radarCamera.transform.rotation = planeEntity.radarCameraPosition.transform.rotation;
 
             // Health Bars
             LWingHealthBar.localScale = new Vector3(planeEntity.LWing.currHealth/planeEntity.LWing.maxHealth, LWingHealthBar.localScale.y, LWingHealthBar.localScale.z);

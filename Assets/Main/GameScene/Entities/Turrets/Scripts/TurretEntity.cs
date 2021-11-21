@@ -9,6 +9,7 @@ using UnityEngine;
 public class TurretEntity : MonoBehaviour
 {
     [Header("References")]
+    public GameObject cmCamera;
     public Transform xTransform = null;
     public Transform yTransform = null;
 
@@ -47,10 +48,23 @@ public class TurretEntity : MonoBehaviour
             {
                 DestroyAfterSeconds destroyScript = gameObject.AddComponent<DestroyAfterSeconds>();
                 destroyScript.DestroyAfterWaiting(10);
+                GiveCoinsOnDestruction();
             }
         }
     }
-    
+    /// <summary>
+    /// Gives coins on destruction of this turret entity
+    /// </summary>
+    void GiveCoinsOnDestruction()
+    {
+        // Give gold to opponent team
+        if (PlayerManager.instance.playerTeam != baseEntity.team)
+        {
+            PlayerManager.instance.AddCoins(GameplayManager.instance.currencySettings.turretDestroyedReward, "An enemy turret has been destroyed. You got " + GameplayManager.instance.currencySettings.turretDestroyedReward + " coins.");
+        }
+    }
+
+
     /// <summary>
     /// Commands BaseEntity to fire all weapons of the respective weapon type.
     /// </summary>

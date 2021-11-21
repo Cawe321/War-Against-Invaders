@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 
 [RequireComponent(typeof(BaseEntity))]
@@ -51,6 +52,7 @@ public class SpaceshipEntity : MonoBehaviour
 
     Collider[] colliders;
 
+    [HideInInspector]
     public BaseEntity baseEntity;
 
 
@@ -76,7 +78,7 @@ public class SpaceshipEntity : MonoBehaviour
             collider.enabled = false;
         }
 
-        StartFlyIn();
+        //StartFlyIn();
         //StartFallDown();
     }
 
@@ -86,11 +88,13 @@ public class SpaceshipEntity : MonoBehaviour
         {
             case PHASE.MOVING_FORWARD:
                 {
+                    Vector3 targetDest = new Vector3(destination.position.x, transform.position.y, destination.position.z);
+
                     if (!baseEntity.CheckHealth()) // Check if Spaceship is dead
                         StartFallDown();
-                    else if ((transform.position - destination.position).sqrMagnitude < 0.1f) // Check if Spaceship has reached the destination.
+                    else if((transform.position - targetDest).sqrMagnitude < 0.1f) // Check if Spaceship has reached the destination.
                         ReachedDestination();
-
+                            
                     float functioningThrusters = 0;
                     foreach (GameObject thruster in thrusters)
                     {
@@ -106,16 +110,20 @@ public class SpaceshipEntity : MonoBehaviour
                     }
                     // Slow down according to number of thrusters
                     // If all thrusters are destroyed, spaceship should run at 25% speed.
-                    moveSpeed = originalMoveSpeed * (0.25f + (functioningThrusters / originalNumberOfThrusters) * 0.75f);
+                    if (functioningThrusters == 0)
+                        moveSpeed = originalMoveSpeed * 0.25f;
+                    else
+                        moveSpeed = originalMoveSpeed * (0.25f + (functioningThrusters / originalNumberOfThrusters) * 0.75f);
 
                     // Enter moving to destination code
+                    rb.MovePosition(transform.position + (moveSpeed * (targetDest - transform.position).normalized));
 
                     break;
                 }
         }
     }
 
-    void StartFlyIn()
+    public void StartFlyIn()
     {
         if (phase == PHASE.WAITING_TO_FLY_IN) // only fly in when it is waiting to fly in
         {
@@ -140,7 +148,7 @@ public class SpaceshipEntity : MonoBehaviour
         // End of flying in.
         foreach (Collider collider in colliders)
         {
-            collider.enabled = false;
+            collider.enabled = true;
         }
         phase = PHASE.WAITING_TO_MOVE;
     }
@@ -151,6 +159,16 @@ public class SpaceshipEntity : MonoBehaviour
         StartCoroutine(FallDown());
     }
 
+    public bool StartMoving()
+    {
+        if (phase == PHASE.WAITING_TO_MOVE)
+        {
+            phase = PHASE.MOVING_FORWARD;
+            return true;
+        }
+        return false;
+    }
+
     IEnumerator FallDown()
     {
         while ((Vector3.down - transform.forward).sqrMagnitude > 0.1f)
@@ -159,10 +177,12 @@ public class SpaceshipEntity : MonoBehaviour
             transform.position += transform.forward * Time.fixedDeltaTime * moveSpeed;
             yield return new WaitForFixedUpdate();
         }
+
+        GameplayManager.instance.EndMatch(TEAM_TYPE.DEFENDERS);
     }
 
     void ReachedDestination()
     {
-
+        GameplayManager.instance.EndMatch(TEAM_TYPE.INVADERS);
     }
 }

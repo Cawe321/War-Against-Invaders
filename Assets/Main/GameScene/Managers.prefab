@@ -45,9 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c8808b66d1811d46a4a8da6b4ef353d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freeRoamCamera: {fileID: 0}
+  planeUI: {fileID: 0}
   playerName: Cawe
   playerTeam: 0
-  freeRoam: 1
 --- !u!114 &9190648692237773797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,5 +73,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 649d9f21c0cfa4c46886ecfacaa10f09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  entityList: {fileID: 11400000, guid: bf1bd3294b95ec648ab272ad676165dc, type: 2}
+  currencySettings: {fileID: 11400000, guid: 6437b96f3bc03f04196bd6c6efa7d935, type: 2}
   dockEntity: {fileID: 0}
   spaceshipEntity: {fileID: 0}
+  waitForPlayersCanvas: {fileID: 0}
+  defendersSpawnLocation: {fileID: 0}
+  invadersSpawnLocation: {fileID: 0}
+  originalSpawnCooldown: 60
+  spawnDistanceOffset: 50

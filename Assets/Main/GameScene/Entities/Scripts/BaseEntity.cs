@@ -72,6 +72,8 @@ public class BaseEntity : MonoBehaviour
     [HideInInspector]
     public bool initialised = false;
 
+    public bool autoGetWeapons = true;
+
     /* In-script Values */
     float maxStability;
 
@@ -171,6 +173,9 @@ public class BaseEntity : MonoBehaviour
     /// <returns>Returns true if this entity is deemed to be alive. Returns false if it should be destroyed/dead.</returns>
     public bool CheckHealth()
     {
+        if (!initialised) // always return true since this entity has not intialised.
+            return true;
+
         bool isAlive = false;
         float currStability = 0f;
         foreach (EntityHealth entityHealth in entityHealthList)
@@ -198,8 +203,9 @@ public class BaseEntity : MonoBehaviour
     void Init()
     {
         currFuel = maxFuel;
-        foreach (EntityWeapon weapon in entityWeaponList)
-            weapon.owner = this;
+        if (autoGetWeapons)
+            foreach (EntityWeapon weapon in entityWeaponList)
+                weapon.owner = this;
 
         maxStability = 0f;
         foreach (EntityHealth health in entityHealthList)
@@ -215,28 +221,23 @@ public class BaseEntity : MonoBehaviour
     private void OnMouseDown()
     {
         TakeControl();
+        Debug.Log("Pressed");
     }
 
-    bool CheckControlAccess()
+    public bool CheckControlAccess()
     {
-        return playerCanControl && playerControlling == "" && PlayerManager.instance.freeRoam;
+        return playerCanControl && playerControlling == "" && !PlayerManager.instance.isControllingEntity && team == PlayerManager.instance.playerTeam;
     }
 
     void TakeControl()
     {
-        if (CheckControlAccess())
-        {
-            playerControlling = PlayerManager.instance.playerName;
-            Debug.Log("Player has taken over");
-        }
+        PlayerManager.instance.TakeOverEntity(this);
     }
     public void DisconnectLocalPlayer()
     {
         if (isLocalPlayerControlling)
         {
-            // Disable baseEntity to be controllable by players.
-            playerControlling = "";
-            PlayerManager.instance.freeRoam = true;
+            PlayerManager.instance.DisconnectFromEntity();
         }
     }
 

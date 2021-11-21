@@ -34,6 +34,7 @@ public class PlaneEntity : MonoBehaviour
     public float flightMinTakeOffSpeed = 100f;
 
     [Header("UI Settings")]
+    public GameObject cmCamera;
     public Transform mirrorCameraPosition;
     public Transform radarCameraPosition;
     public EntityHealth LWing;
@@ -114,6 +115,7 @@ public class PlaneEntity : MonoBehaviour
             {
                 DestroyAfterSeconds destroyScript = gameObject.AddComponent<DestroyAfterSeconds>();
                 destroyScript.DestroyAfterWaiting(10);
+                GiveCoinsOnDestruction();
             }
         }
 
@@ -183,6 +185,18 @@ public class PlaneEntity : MonoBehaviour
         }
 
         
+    }
+
+    /// <summary>
+    /// Gives coins on destruction of this plane entity
+    /// </summary>
+    void GiveCoinsOnDestruction()
+    {
+        // Give gold to opponent team
+        if (PlayerManager.instance.playerTeam != baseEntity.team)
+        {
+            PlayerManager.instance.AddCoins(GameplayManager.instance.currencySettings.planeDestroyedReward, "An enemy plane has been destroyed. You got " + GameplayManager.instance.currencySettings.planeDestroyedReward + " coins.");
+        }
     }
 
     public void StartFlyingInstantly()

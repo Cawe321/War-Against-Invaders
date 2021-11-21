@@ -8,6 +8,9 @@ public class FreeRoamCamera : MonoBehaviour
     float moveSpeed = 200f;
     [SerializeField]
     float rotationSpeed = 10f;
+    [SerializeField]
+    float maxHeightAngle = 89f;
+
 
     [SerializeField]
     float minHeight = 0f;
@@ -20,6 +23,31 @@ public class FreeRoamCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameplayManager.instance.gameplayPhase != GameplayManager.GAMEPLAY_PHASE.GAME)
+        {
+            // Override camera rotation for Intro Event
+            transform.LookAt(GameplayManager.instance.GetSpaceshipEntity().transform);
+        }
+        else
+        {
+            // No special events that require camera's attention.
+            // Transform Rotation
+            if (Input.GetMouseButton(1))
+            {
+                // Center the mouse
+                MouseManager.instance.mouseLockState = CursorLockMode.Locked;
+                float newRotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * rotationSpeed;
+                float newRotationY = transform.localEulerAngles.x - Input.GetAxis("Mouse Y") * rotationSpeed;
+                if (newRotationY > 180f)
+                    newRotationY -= 360f;
+                transform.localEulerAngles = new Vector3(Mathf.Clamp(newRotationY, -maxHeightAngle, maxHeightAngle), newRotationX);
+            }
+            else
+            {
+                MouseManager.instance.mouseLockState = CursorLockMode.None;
+            }
+        }
+
         // Transform Movement
         if (Input.GetButton("Forward"))
         {
@@ -46,20 +74,6 @@ public class FreeRoamCamera : MonoBehaviour
             transform.position -= Vector3.up * Time.deltaTime * moveSpeed;
         }
         
-        // Transform Rotation
-        if (Input.GetMouseButton(2))
-        {
-            // Center the mouse
-            MouseManager.instance.mouseLockState = CursorLockMode.Locked;
-            float newRotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * rotationSpeed;
-            float newRotationY = transform.localEulerAngles.x - Input.GetAxis("Mouse Y") * rotationSpeed;
-            transform.localEulerAngles = new Vector3(newRotationY, newRotationX, 0f);
-        }
-        else
-        {
-            MouseManager.instance.mouseLockState = CursorLockMode.None;
-        }
-
         if (transform.position.y < minHeight)
             transform.position = new Vector3(transform.position.x, minHeight, transform.position.z);
     }

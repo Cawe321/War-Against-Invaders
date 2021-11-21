@@ -28,13 +28,16 @@ public class RadarObject : MonoBehaviour
         baseEntity = GetComponentInParent<BaseEntity>();
         meshFilter = GetComponent<MeshFilter>();
         meshRenderer = GetComponent<MeshRenderer>();
+    }
 
+    private void Update()
+    {
         if (baseEntity.isLocalPlayerControlling)
         {
             meshFilter.mesh = arrowMesh;
             meshRenderer.material = selfMaterial;
         }
-        if (baseEntity.team == PlayerManager.instance.playerTeam)
+        else if (baseEntity.team == PlayerManager.instance.playerTeam)
         {
             meshFilter.mesh = sphereMesh;
             meshRenderer.material = allyMaterial;
@@ -44,10 +47,7 @@ public class RadarObject : MonoBehaviour
             meshFilter.mesh = sphereMesh;
             meshRenderer.material = enemyMaterial;
         }
-    }
 
-    private void Update()
-    {
         if (PlaneUIManager.instance.planeEntity != null && (PlaneUIManager.instance.planeEntity.transform.position - transform.position).sqrMagnitude < maxDistance * maxDistance)
             meshRenderer.enabled = true;
         else

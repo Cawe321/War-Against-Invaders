@@ -12,7 +12,7 @@ public class PlanePatrolState : BaseState
     public PlanePatrolState(StateMachine stateMachine) : base("PlanePatrolState", stateMachine) { }
 
     /* Setting Values */
-    float radiusOfPatrol = 100f;
+    float radiusOfPatrol = 750f;
     float circlingSpeed = 0.5f;
 
     /* Script Values */

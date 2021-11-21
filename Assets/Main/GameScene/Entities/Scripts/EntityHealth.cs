@@ -49,7 +49,7 @@ public class EntityHealth : MonoBehaviour
     {
         Init();
         if (destructionType == DESTRUCTION_TYPE.EXPLODE && GetComponent<EntityExplosion>() == null)
-            Debug.Log("[EntityHealth] ERROR: DESTRUCTION_TYPE.EXPLODE has been selected but cannot find any EntityExplosion components.");
+            Debug.Log("[EntityHealth] ERROR: For" + transform.name +", DESTRUCTION_TYPE.EXPLODE has been selected but cannot find any EntityExplosion components.");
     }
 
     public void Init()

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "EntityList", menuName = "EntityList", order = 1)]
+[CreateAssetMenu(fileName = "EntityList", menuName = "WarAgainstInvaders/Settings/EntityList", order = 1)]
 public class EntityList : ScriptableObject
 {
     [SerializeField]
@@ -12,6 +12,26 @@ public class EntityList : ScriptableObject
     public List<EntityObject> GetAllEntities()
     {
         return entityObjects;
+    }
+
+    public TEAM_TYPE GetEntityTeam(EntityTypes entityType)
+    {
+        foreach (EntityObject entity in entityObjects)
+        {
+            if (entity.entityType == entityType)
+                return entity.entityTeam;
+        }
+        return TEAM_TYPE.NONE;
+    }
+
+    public GameObject GetCombatEntityObject(EntityTypes entityType)
+    {
+        foreach (EntityObject entity in entityObjects)
+        {
+            if (entity.entityType == entityType)
+                return entity.gameModel;
+        }
+        return null;
     }
 }
 

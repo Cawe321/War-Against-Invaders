@@ -18,7 +18,10 @@ public class StateMachine : MonoBehaviour
     protected virtual void Update()
     {
         if (currentState != null)
+        {
             currentState.UpdateLogic();
+            Debug.Log(transform.name + "'s StateMachine: " + currentState.stateName);
+        }
     }
 
     protected void ChangeState(BaseState newState, params object[] inputs)
@@ -61,9 +64,9 @@ public class StateMachine : MonoBehaviour
     }
 
     // Used to show the current name of the state.
-    private void OnGUI()
+    /*private void OnGUI()
     {
         string content = currentState != null ? currentState.stateName : "(no current state)";
         GUILayout.Label($"<color='black'><size=40>{content}</size></color>");
-    }
+    }*/
 }

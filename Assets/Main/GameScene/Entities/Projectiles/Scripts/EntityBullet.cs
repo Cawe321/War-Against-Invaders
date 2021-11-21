@@ -13,8 +13,14 @@ public class EntityBullet : EntityProjectile
 
     private Vector3 prevPos;
 
+    [SerializeField]
+    private float lifespan = 10f;
+
     private void FixedUpdate()
     {
+        lifespan -= Time.fixedDeltaTime;
+        if (lifespan < 0f)
+            gameObject.SetActive(false);
         if (prevPos != Vector3.zero)
         {
             RaycastHit hit;

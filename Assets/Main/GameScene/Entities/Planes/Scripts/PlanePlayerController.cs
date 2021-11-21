@@ -25,8 +25,8 @@ public class PlanePlayerController : MonoBehaviour
             }
 
             // Temp camera script
-            Camera.main.transform.position = transform.position - transform.forward * 20 + transform.up * 10;
-            Camera.main.transform.LookAt(transform);
+            //Camera.main.transform.position = transform.position - transform.forward * 20 + transform.up * 10;
+            //Camera.main.transform.LookAt(transform);
 
             if (Input.GetButton("Forward"))
             {

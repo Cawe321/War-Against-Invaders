@@ -841,7 +841,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 23
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -887,7 +887,7 @@ MonoBehaviour:
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 23
   m_VolumeTrigger: {fileID: 0}
   m_RenderPostProcessing: 0
   m_Antialiasing: 0
@@ -1574,6 +1574,11 @@ MonoBehaviour:
   flightStabilitySpeed: 2
   flightEnginePower: 500
   flightMinTakeOffSpeed: 20
+  cmCamera: {fileID: 0}
+  mirrorCameraPosition: {fileID: 0}
+  radarCameraPosition: {fileID: 0}
+  LWing: {fileID: 0}
+  RWing: {fileID: 0}
   baseEntity: {fileID: 0}
   stateMachine: {fileID: 0}
   flightSpeed: 0
@@ -1866,7 +1871,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: OOf
   playerTeam: 0
-  freeRoam: 1
 --- !u!4 &1860256091
 Transform:
   m_ObjectHideFlags: 0
@@ -2066,7 +2070,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7626357343104636422, guid: 8285605b9bf233f49b1b84da10c4e0d0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8285605b9bf233f49b1b84da10c4e0d0, type: 3}
@@ -2139,7 +2143,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8648475845583234039, guid: 5633710eb1c63e3438b37ce841077200, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5633710eb1c63e3438b37ce841077200, type: 3}
@@ -2738,6 +2742,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5157b16a90a9fa1459356a39281ca73d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cmCamera: {fileID: 0}
   xTransform: {fileID: 8317623590568386247}
   yTransform: {fileID: 8317623590022337294}
   turnSpeed: 5
