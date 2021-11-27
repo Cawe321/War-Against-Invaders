@@ -23,6 +23,11 @@ public class PlayerManager : SingletonObject<PlayerManager>
         // INVOKE NOTIFICATION MANAGER
         // CODE HERE
     }
+
+    public void RemoveCoins(int amountToRemove)
+    {
+        coins -= amountToRemove;
+    }
     #endregion
 
     #region ENTITY_CONTROL;

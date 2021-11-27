@@ -13,7 +13,7 @@ public class PlanePatrolState : BaseState
 
     /* Setting Values */
     float radiusOfPatrol = 1000f;
-    float circlingSpeed = 0.1f;
+    float circlingSpeed = 2f;
 
     /* Script Values */
     PlaneEntity planeEntity;

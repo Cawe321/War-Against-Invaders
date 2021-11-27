@@ -13,7 +13,7 @@ public class PlaneDefenderBombingState : BaseState
     /* Setting Values */
     const float maxShootAngle = 0.00001f;
     Vector3 targetOffset = new Vector3(0, 19f, 0f);
-    float maxDistance = 200f; // amount of distance before firing
+    float maxDistance = 1000f; // amount of distance before firing
 
     /* Script Values */
     PlaneEntity planeEntity;

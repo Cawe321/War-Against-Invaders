@@ -56,33 +56,35 @@ public class MakoFSM : StateMachine
 
     public override bool ChangeStateByName(string newStateName)
     {
-        foreach (BaseState state in states)
+        switch (newStateName)
         {
-            if (state.stateName == newStateName)
-            {
-                switch (state.stateName)
+            case "PlaneTravelState":
                 {
-                    case "PlanePatrolState":
-                        {
-                            ChangeState(state, planeEntity, homeEntity);
-                            break;
-                        }
-                    case "PlaneRunwayState":
-                        {
-                            ChangeState(state, planeEntity);
-                            break;
-                        }
-                    case "PlaneDogfightState":
-                        {
-                            ChangeState(state, planeEntity);
-                            break;
-                        }
+                    ChangeStateByName("PlanePatrolState");
+                    break;
                 }
-                return true;
-            }
+            case "PlanePatrolState":
+                {
+                    ChangeState(FindStateByName(newStateName), planeEntity, homeEntity);
+                    break;
+                }
+            case "PlaneRunwayState":
+                {
+                    ChangeState(FindStateByName(newStateName), planeEntity);
+                    break;
+                }
+            case "PlaneDogfightState":
+                {
+                    ChangeState(FindStateByName(newStateName), planeEntity);
+                    break;
+                }
+            default:
+                {
+                    Debug.LogError("StateMachine: ChangeStateByName was called, but the state corresponding to the string given was not found!.");
+                    return false;
+                }
         }
-        Debug.LogError("StateMachine: ChangeStateByName was called, but the state corresponding to the string given was not found!.");
-        return false;
+        return true;
     }
 
 }

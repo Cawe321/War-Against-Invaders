@@ -18,3 +18,8 @@ MonoBehaviour:
   _defeatPremiumCurrencyReward: 0
   _planeDestroyedReward: 500
   _turretDestroyedReward: 5000
+  _scoutPurchaseCost: 500
+  _balancedPurchaseCost: 750
+  _assaultPurchaseCost: 1000
+  _carePackageAmount: 750
+  _carePackageCooldown: 360

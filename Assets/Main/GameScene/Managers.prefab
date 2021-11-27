@@ -9,9 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9190648692237773795}
+  - component: {fileID: 8034461231142218319}
   - component: {fileID: 9190648692237773794}
   - component: {fileID: 9190648692237773797}
   - component: {fileID: 2415944643287313089}
+  - component: {fileID: 5559979134700928195}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -33,6 +35,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8034461231142218319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9190648692237773796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84cb2efc3e62e4c44808b57cabf6a218, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currencySettings: {fileID: 11400000, guid: 6437b96f3bc03f04196bd6c6efa7d935, type: 2}
+  entityList: {fileID: 11400000, guid: bf1bd3294b95ec648ab272ad676165dc, type: 2}
 --- !u!114 &9190648692237773794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,8 +89,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 649d9f21c0cfa4c46886ecfacaa10f09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityList: {fileID: 11400000, guid: bf1bd3294b95ec648ab272ad676165dc, type: 2}
-  currencySettings: {fileID: 11400000, guid: 6437b96f3bc03f04196bd6c6efa7d935, type: 2}
   dockEntity: {fileID: 0}
   spaceshipEntity: {fileID: 0}
   waitForPlayersCanvas: {fileID: 0}
@@ -82,5 +96,15 @@ MonoBehaviour:
   invadersSpawnLocation: {fileID: 0}
   originalSpawnCooldown: 60
   spawnDistanceOffset: 205
-  carePackageAmount: 500
-  carePackageCooldown: 360
+--- !u!114 &5559979134700928195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9190648692237773796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54e3fd5ff6acd6e4aaec32ea2a79e2fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

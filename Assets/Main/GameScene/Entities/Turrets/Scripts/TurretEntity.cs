@@ -60,7 +60,11 @@ public class TurretEntity : MonoBehaviour
         // Give gold to opponent team
         if (PlayerManager.instance.playerTeam != baseEntity.team)
         {
-            PlayerManager.instance.AddCoins(GameplayManager.instance.currencySettings.turretDestroyedReward, "An enemy turret has been destroyed. You got " + GameplayManager.instance.currencySettings.turretDestroyedReward + " coins.");
+            PlayerManager.instance.AddCoins(ResourceReference.instance.currencySettings.turretDestroyedReward, "An enemy turret has been destroyed.");
+        }
+        else
+        {
+            EnemyAIBehaviour.instance.AddCoins(ResourceReference.instance.currencySettings.turretDestroyedReward);
         }
     }
 

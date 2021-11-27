@@ -8,9 +8,6 @@ using UnityEngine;
 public class GameplayManager : SingletonObject<GameplayManager>
 {
     [Header("References")]
-    public EntityList entityList;
-
-    public CurrencySettings currencySettings;
 
     [SerializeField]
     DockEntity dockEntity;
@@ -35,33 +32,26 @@ public class GameplayManager : SingletonObject<GameplayManager>
     [SerializeField]
     float spawnDistanceOffset = 50f;
 
-
-    [Tooltip("Care Package is what you give to every player every period of time.")]
-    [Header("Care Package Settings")]
-    [SerializeField]
-    int carePackageAmount = 500;
-    [SerializeField]
-    float carePackageCooldown = 360f;
-
-
-
     /* In-script Values */
+    EntityList entityList;
+
     float defenderSpawnCooldown;
     float invaderSpawnCooldown;
 
     /// <summary>
     /// List of entities to spawn for defenders
     /// </summary>
-    Dictionary<EntityTypes, int> defenderSpawnWave;
+    public Dictionary<EntityTypes, int> defenderSpawnWave;
     float defenderSpawnCooldownMultiplier = 1f;
 
     /// <summary>
     /// List of entities to spawn for invaders
     /// </summary>
-    Dictionary<EntityTypes, int> invaderSpawnWave;
+    public Dictionary<EntityTypes, int> invaderSpawnWave;
     float invaderSpawnCooldownMultiplier = 1f;
 
     float carePackageCooldownCounter;
+    int carePackageAmount = 500;
 
 
     public enum GAMEPLAY_PHASE
@@ -79,7 +69,11 @@ public class GameplayManager : SingletonObject<GameplayManager>
     // Start is called before the first frame update
     void Start()
     {
-        carePackageCooldownCounter = carePackageCooldown;
+        entityList = ResourceReference.instance.entityList;
+
+        carePackageAmount = ResourceReference.instance.currencySettings.carePackageAmount;
+
+        carePackageCooldownCounter = ResourceReference.instance.currencySettings.carePackageCooldown;
 
         waitForPlayersCanvas.gameObject.SetActive(true);
 
@@ -163,6 +157,7 @@ public class GameplayManager : SingletonObject<GameplayManager>
                     if (carePackageCooldownCounter < Mathf.Epsilon)
                     {
                         PlayerManager.instance.AddCoins(carePackageAmount, "Care Package has just arrived with a message \"Don\'t die!\"!");
+                        EnemyAIBehaviour.instance.AddCoins(carePackageAmount);
                     }
 
                     break;

@@ -71,12 +71,13 @@ public class EntityHealth : MonoBehaviour
         }
 
         // This is to check collision of other entities
-        EntityHealth opposition = collision.gameObject.GetComponent<EntityHealth>();
-        if (opposition != null) // Check if the collided entityhealth is connected to the owner of this entityhealth
+        EntityHealth opposition = collision.collider.GetComponent<EntityHealth>();
+        if (opposition != null) // Check if the other entity has health
         {
+            Debug.Log(collision.impulse.magnitude);
             if (opposition.transform.IsChildOf(baseEntity.transform)) // Check if the collided entityhealth is connected to the owner of this entityhealth
                 Physics.IgnoreCollision(collision.collider, collider); // Set both entity's collider to ignore each other
-            else
+            else if (baseEntity.GetComponent<PlaneEntity>() != null && collision.impulse.sqrMagnitude > 100f * 100f) // only deal dmg to ownself if entity is a plane
                 TakeDamage(opposition.baseEntity, maxHealth, collision.impulse, true); // Deal dmg to ownself
         }
     }
@@ -98,7 +99,7 @@ public class EntityHealth : MonoBehaviour
                     if (rb == null)
                     {
                         rb = gameObject.AddComponent<Rigidbody>();
-                        rb.mass = 100f;
+                        rb.mass = 500f;
                     }
 
                     rb.velocity = Vector3.zero;
@@ -134,6 +135,13 @@ public class EntityHealth : MonoBehaviour
                     break;
                 }
         }
+    }
+
+    public void AddHealth(float addHealth)
+    {
+        currHealth += addHealth;
+        if (currHealth > maxHealth)
+            currHealth = maxHealth;
     }
 
     #region UTILITY_FUNCTIONS

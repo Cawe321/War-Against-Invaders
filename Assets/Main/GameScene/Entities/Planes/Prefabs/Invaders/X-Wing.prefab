@@ -566,7 +566,7 @@ MonoBehaviour:
   explosionVFXPrefab: {fileID: 4851780503602277444, guid: 4b51027cca24a3c4f905165580e55abf, type: 3}
   owner: {fileID: 0}
   explosionRadius: 10
-  damage: 100
+  damage: 225
 --- !u!114 &4343341129815770975
 MonoBehaviour:
   m_ObjectHideFlags: 0
