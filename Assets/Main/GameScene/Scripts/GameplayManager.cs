@@ -32,11 +32,22 @@ public class GameplayManager : SingletonObject<GameplayManager>
     [SerializeField]
     [Tooltip("Cooldown for both teams")]
     float originalSpawnCooldown = 60f;
-    float defenderSpawnCooldown;
-    float invaderSpawnCooldown;
-
     [SerializeField]
     float spawnDistanceOffset = 50f;
+
+
+    [Tooltip("Care Package is what you give to every player every period of time.")]
+    [Header("Care Package Settings")]
+    [SerializeField]
+    int carePackageAmount = 500;
+    [SerializeField]
+    float carePackageCooldown = 360f;
+
+
+
+    /* In-script Values */
+    float defenderSpawnCooldown;
+    float invaderSpawnCooldown;
 
     /// <summary>
     /// List of entities to spawn for defenders
@@ -50,6 +61,7 @@ public class GameplayManager : SingletonObject<GameplayManager>
     Dictionary<EntityTypes, int> invaderSpawnWave;
     float invaderSpawnCooldownMultiplier = 1f;
 
+    float carePackageCooldownCounter;
 
 
     public enum GAMEPLAY_PHASE
@@ -67,12 +79,14 @@ public class GameplayManager : SingletonObject<GameplayManager>
     // Start is called before the first frame update
     void Start()
     {
+        carePackageCooldownCounter = carePackageCooldown;
+
         waitForPlayersCanvas.gameObject.SetActive(true);
 
         gameplayPhase = GAMEPLAY_PHASE.WAIT;
 
         defenderSpawnWave = new Dictionary<EntityTypes, int>();
-        defenderSpawnWave.Add(EntityTypes.F16, 1);
+        defenderSpawnWave.Add(EntityTypes.F16, 3);
 
         invaderSpawnWave = new Dictionary<EntityTypes, int>();
         invaderSpawnWave.Add(EntityTypes.Mako, 3);
@@ -99,8 +113,7 @@ public class GameplayManager : SingletonObject<GameplayManager>
         StartIntro();
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         switch (gameplayPhase)
         {
@@ -132,8 +145,8 @@ public class GameplayManager : SingletonObject<GameplayManager>
                     // Base 40% cooldown for defender cooldown multiplier
                     defenderSpawnCooldownMultiplier = 0.4f + dockEntity.GetPercentageOfExistingWarehouses() * 0.6f;
 
-                    defenderSpawnCooldown -= Time.deltaTime * defenderSpawnCooldownMultiplier;
-                    invaderSpawnCooldown -= Time.deltaTime * invaderSpawnCooldownMultiplier;
+                    defenderSpawnCooldown -= Time.fixedDeltaTime * defenderSpawnCooldownMultiplier;
+                    invaderSpawnCooldown -= Time.fixedDeltaTime * invaderSpawnCooldownMultiplier;
                     if (defenderSpawnCooldown < 0f)
                     {
                         SpawnTheEntityWave(TEAM_TYPE.DEFENDERS);
@@ -143,6 +156,13 @@ public class GameplayManager : SingletonObject<GameplayManager>
                     {
                         SpawnTheEntityWave(TEAM_TYPE.INVADERS);
                         invaderSpawnCooldown = originalSpawnCooldown;
+                    }
+
+                    // Care Package Logic
+                    carePackageCooldownCounter -= Time.fixedDeltaTime;
+                    if (carePackageCooldownCounter < Mathf.Epsilon)
+                    {
+                        PlayerManager.instance.AddCoins(carePackageAmount, "Care Package has just arrived with a message \"Don\'t die!\"!");
                     }
 
                     break;

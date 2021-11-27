@@ -86,7 +86,8 @@ public class PlaneUIManager : SingletonObject<PlaneUIManager>
 
             // Radar View
             radarCamera.transform.position = planeEntity.radarCameraPosition.transform.position;
-            radarCamera.transform.LookAt(planeEntity.transform);
+            radarCamera.transform.rotation = planeEntity.radarCameraPosition.transform.rotation;
+            radarCamera.transform.LookAt(planeEntity.transform, planeEntity.transform.up);
             //radarCamera.transform.rotation = planeEntity.radarCameraPosition.transform.rotation;
 
             // Health Bars

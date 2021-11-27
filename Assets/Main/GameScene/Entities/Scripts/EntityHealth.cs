@@ -69,6 +69,16 @@ public class EntityHealth : MonoBehaviour
         {
             Physics.IgnoreCollision(collider, collision.collider);
         }
+
+        // This is to check collision of other entities
+        EntityHealth opposition = collision.gameObject.GetComponent<EntityHealth>();
+        if (opposition != null) // Check if the collided entityhealth is connected to the owner of this entityhealth
+        {
+            if (opposition.transform.IsChildOf(baseEntity.transform)) // Check if the collided entityhealth is connected to the owner of this entityhealth
+                Physics.IgnoreCollision(collision.collider, collider); // Set both entity's collider to ignore each other
+            else
+                TakeDamage(opposition.baseEntity, maxHealth, collision.impulse, true); // Deal dmg to ownself
+        }
     }
 
     public void HandleZeroHealth(Vector3 hitStrength)
@@ -86,7 +96,10 @@ public class EntityHealth : MonoBehaviour
                 {
                     Rigidbody rb = GetComponent<Rigidbody>();
                     if (rb == null)
+                    {
                         rb = gameObject.AddComponent<Rigidbody>();
+                        rb.mass = 100f;
+                    }
 
                     rb.velocity = Vector3.zero;
                     rb.angularVelocity = Vector3.zero;
@@ -124,9 +137,19 @@ public class EntityHealth : MonoBehaviour
     }
 
     #region UTILITY_FUNCTIONS
-    public void TakeDamage(BaseEntity dealer, float damage, Vector3 hitStrength)
+    /// <summary>
+    /// Function that makes EntityHealth take damage.
+    /// </summary>
+    /// <param name="dealer">(BaseEntity) Dealer of the damage</param>
+    /// <param name="damage">(float) Base Damage</param>
+    /// <param name="hitStrength">(Vector3) Impulse of hit</param>
+    /// <param name="ignoreDmgReduction">(bool) Whether to ignore dmg reduction</param>
+    public void TakeDamage(BaseEntity dealer, float damage, Vector3 hitStrength, bool ignoreDmgReduction = false)
     {
-        UpdateHealth(currHealth - (damage * (1f - baseEntity.dmgReduction))); // currently a function to handle multiplayer in the future
+        if (ignoreDmgReduction)
+            UpdateHealth(currHealth - damage); // currently a function to handle multiplayer in the future
+        else
+            UpdateHealth(currHealth - (damage * (1f - baseEntity.dmgReduction))); // currently a function to handle multiplayer in the future
         if (currHealth <= 0f)
         {
             currHealth = 0f;

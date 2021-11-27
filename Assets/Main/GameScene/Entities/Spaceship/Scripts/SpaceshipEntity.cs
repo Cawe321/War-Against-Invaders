@@ -137,7 +137,7 @@ public class SpaceshipEntity : MonoBehaviour
     IEnumerator FlyIn()
     {
         transform.forward = targetFlyInTransform.forward;
-        while ((targetFlyInTransform.position - transform.position).sqrMagnitude > 0.1f)
+        while ((targetFlyInTransform.position - transform.position).sqrMagnitude > 1f)
         {
             Vector3 targetDir = targetFlyInTransform.position - transform.position;
             transform.position = Vector3.Lerp(transform.position, targetFlyInTransform.position, flyMovementSpeed);

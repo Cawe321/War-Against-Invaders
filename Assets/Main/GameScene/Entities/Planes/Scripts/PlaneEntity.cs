@@ -204,7 +204,7 @@ public class PlaneEntity : MonoBehaviour
         // Give gold to opponent team
         if (PlayerManager.instance.playerTeam != baseEntity.team)
         {
-            PlayerManager.instance.AddCoins(GameplayManager.instance.currencySettings.planeDestroyedReward, "An enemy plane has been destroyed. You got " + GameplayManager.instance.currencySettings.planeDestroyedReward + " coins.");
+            PlayerManager.instance.AddCoins(GameplayManager.instance.currencySettings.planeDestroyedReward, "An enemy plane has been destroyed.");
         }
     }
 

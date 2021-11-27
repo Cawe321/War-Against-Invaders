@@ -81,4 +81,6 @@ MonoBehaviour:
   defendersSpawnLocation: {fileID: 0}
   invadersSpawnLocation: {fileID: 0}
   originalSpawnCooldown: 60
-  spawnDistanceOffset: 210
+  spawnDistanceOffset: 205
+  carePackageAmount: 500
+  carePackageCooldown: 360
