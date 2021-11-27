@@ -80,7 +80,7 @@ public class GameplayManager : SingletonObject<GameplayManager>
         gameplayPhase = GAMEPLAY_PHASE.WAIT;
 
         defenderSpawnWave = new Dictionary<EntityTypes, int>();
-        defenderSpawnWave.Add(EntityTypes.F16, 3);
+        defenderSpawnWave.Add(EntityTypes.F16, 1);
 
         invaderSpawnWave = new Dictionary<EntityTypes, int>();
         invaderSpawnWave.Add(EntityTypes.Mako, 3);

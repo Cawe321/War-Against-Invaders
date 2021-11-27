@@ -85,7 +85,7 @@ public class PlaneTravelState : BaseState
                 if (collider != planeEntity.GetComponent<Collider>() && !collider.transform.IsChildOf(planeEntity.transform))
                 {
                     toAvoid = true;
-                    averageDirection += (planeEntity.transform.position - collider.transform.position).normalized;
+                    averageDirection += (planeEntity.transform.position - collider.ClosestPoint(planeEntity.transform.position)).normalized;
                 }
             }
             if (toAvoid) // Fly away to avoid collision

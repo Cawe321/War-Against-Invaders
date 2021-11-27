@@ -57,9 +57,6 @@ public class PlayerManager : SingletonObject<PlayerManager>
             }
             freeRoamCamera.enabled = false;
 
-            StateMachine stateMachine = baseEntity.GetComponent<StateMachine>();
-            if (stateMachine != null)
-                stateMachine.enabled = false;
             return true;
         }
 
@@ -87,10 +84,6 @@ public class PlayerManager : SingletonObject<PlayerManager>
             freeRoamCamera.transform.rotation = turretEntity.cmCamera.transform.rotation;
         }
         freeRoamCamera.enabled = true;
-
-        StateMachine stateMachine = controllingEntity.GetComponent<StateMachine>();
-        if (stateMachine != null)
-            stateMachine.enabled = false;
 
         controllingEntity = null;
     }

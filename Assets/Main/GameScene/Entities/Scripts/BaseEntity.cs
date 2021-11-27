@@ -47,9 +47,10 @@ public class BaseEntity : MonoBehaviour
     [HideInInspector]
     public float currFuel;
 
-    [HideInInspector]
+    //[HideInInspector]
     public string playerControlling = "";
-   
+
+
     [HideInInspector]
     public List<EntityHealth> entityHealthList;
     [HideInInspector]

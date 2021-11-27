@@ -11,6 +11,7 @@ using UnityEngine;
 public class EntityHealth : MonoBehaviour
 {
     [Header("Settings")]
+    public bool immortalObject = false;
     public float maxHealth = 100;
     [Tooltip("If this object is a core component, when its health reaches 0, the entity this health object belongs to will automatically be destroyed, regardless of all other health objects.")]
     public bool isCoreComponent = false;
@@ -72,9 +73,8 @@ public class EntityHealth : MonoBehaviour
 
         // This is to check collision of other entities
         EntityHealth opposition = collision.collider.GetComponent<EntityHealth>();
-        if (opposition != null) // Check if the other entity has health
+        if (opposition != null && !immortalObject) // Check if the other entity has health
         {
-            Debug.Log(collision.impulse.magnitude);
             if (opposition.transform.IsChildOf(baseEntity.transform)) // Check if the collided entityhealth is connected to the owner of this entityhealth
                 Physics.IgnoreCollision(collision.collider, collider); // Set both entity's collider to ignore each other
             else if (baseEntity.GetComponent<PlaneEntity>() != null && collision.impulse.sqrMagnitude > 100f * 100f) // only deal dmg to ownself if entity is a plane
@@ -154,6 +154,9 @@ public class EntityHealth : MonoBehaviour
     /// <param name="ignoreDmgReduction">(bool) Whether to ignore dmg reduction</param>
     public void TakeDamage(BaseEntity dealer, float damage, Vector3 hitStrength, bool ignoreDmgReduction = false)
     {
+        if (immortalObject)
+            return;
+
         if (ignoreDmgReduction)
             UpdateHealth(currHealth - damage); // currently a function to handle multiplayer in the future
         else
