@@ -75,6 +75,7 @@ public class PlaneEntity : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         stateMachine = GetComponent<StateMachine>();
         jetEngineVFXControllers = GetComponentsInChildren<JetEngineVFXController>();
+        rb.inertiaTensor = new Vector3(30f, 30f, 30f);
         StartCoroutine(WaitForBaseEntity(baseEntity));
     }
 
@@ -144,6 +145,9 @@ public class PlaneEntity : MonoBehaviour
                 jet.percentage = speedPercent;
             }
 
+            
+            if (flightSpeed < flightMinTakeOffSpeed && transform.forward.y > -0.95f)
+                rb.AddRelativeTorque(Vector3.right * Mathf.Abs(1f - transform.forward.y) * flightEnginePower);
 
             rb.AddTorque(torque, ForceMode.Acceleration);
 
@@ -157,23 +161,28 @@ public class PlaneEntity : MonoBehaviour
             FixBanking();
 
             // Move Forward
-            if (flightSpeed > 0f)
+
+            if (flightSpeed > flightMinTakeOffSpeed)
                 rb.AddForce((flightSpeed * transform.forward - rb.velocity) * flightEnginePower);
+            else
+                rb.AddForce(flightSpeed / flightMinTakeOffSpeed * transform.forward * flightEnginePower);
             if (flightSpeed > flightMinTakeOffSpeed && rb.velocity.magnitude > flightSpeed)
                 rb.velocity = rb.velocity.normalized * flightSpeed;
             //rb.velocity = (rb.velocity + transform.forward * flightSpeed).normalized * flightSpeed;
 
-          
             // Simulate no takeoff without reahcing min speed
-            if (flightSpeed < flightMinTakeOffSpeed && rb.velocity.y > 0)
+            if (flightSpeed < flightMinTakeOffSpeed)
             {
-                rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-                rb.AddForce(Physics.gravity * flightSpeed * flightSpeed); // to counteract drag
+                if (rb.velocity.y > 0f)
+                {
+                    rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);                
+                }
             }
+
 
             //FixBanking();
 
-            
+
         }
         else
         {

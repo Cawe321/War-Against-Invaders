@@ -238,3 +238,4 @@ MonoBehaviour:
   finalDamage: 0
   owner: {fileID: 0}
   outputForce: 50000
+  lifespan: 10

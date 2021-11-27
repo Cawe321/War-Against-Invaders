@@ -72,7 +72,7 @@ public class GameplayManager : SingletonObject<GameplayManager>
         gameplayPhase = GAMEPLAY_PHASE.WAIT;
 
         defenderSpawnWave = new Dictionary<EntityTypes, int>();
-        defenderSpawnWave.Add(EntityTypes.StealthWing, 3);
+        defenderSpawnWave.Add(EntityTypes.F16, 1);
 
         invaderSpawnWave = new Dictionary<EntityTypes, int>();
         invaderSpawnWave.Add(EntityTypes.Mako, 3);
@@ -83,7 +83,7 @@ public class GameplayManager : SingletonObject<GameplayManager>
 
     IEnumerator dummyPlayerLoad()
     {
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(5f);
         playersLoaded = true;
     }
 
@@ -102,7 +102,6 @@ public class GameplayManager : SingletonObject<GameplayManager>
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("FPS:" + (1f / Time.deltaTime));
         switch (gameplayPhase)
         {
             case GAMEPLAY_PHASE.WAIT:
@@ -340,12 +339,16 @@ public class GameplayManager : SingletonObject<GameplayManager>
 
     public EntityHealth GetRandomSpaceshipPart()
     {
-        return null;
+        EntityHealth[] arrayOfDestructibles = spaceshipEntity.GetComponentsInChildren<EntityHealth>();
+        int random = UnityEngine.Random.Range(0, arrayOfDestructibles.Length - 1);
+        return arrayOfDestructibles[random];
     }
 
     public EntityHealth GetRandomCoreDockComponent()
     {
-        return null;
+        EntityCore[] arrayOfDestructibles = dockEntity.GetComponentsInChildren<EntityCore>();
+        int random = UnityEngine.Random.Range(0, arrayOfDestructibles.Length - 1);
+        return arrayOfDestructibles[random].GetComponent<EntityHealth>();
     }
     #endregion
 }

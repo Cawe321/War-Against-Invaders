@@ -18,13 +18,14 @@ public class PlaneDefenderBombingState : BaseState
     /* Script Values */
     PlaneEntity planeEntity;
 
-    BaseEntity targetEntity;
+    EntityHealth targetEntity;
+
 
     public override void Enter(params object[] inputs)
     {
         // Init from inputs
         planeEntity = inputs[0] as PlaneEntity;
-        targetEntity = inputs[1] as BaseEntity;
+        targetEntity = inputs[1] as EntityHealth;
 
         if (targetEntity == null)
         {
@@ -40,6 +41,11 @@ public class PlaneDefenderBombingState : BaseState
             // Change to next state
             stateMachine.ChangeStateByName("PlaneRunwayState");
             return;
+        }
+
+        if (targetEntity == null || !targetEntity.isAlive)
+        {
+            stateMachine.ChangeStateByName("PlaneTravelState");
         }
 
         // moves towards predicted target position & accelerate

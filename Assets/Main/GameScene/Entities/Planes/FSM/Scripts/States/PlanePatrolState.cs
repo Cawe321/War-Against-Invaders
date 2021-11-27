@@ -20,6 +20,8 @@ public class PlanePatrolState : BaseState
     BaseEntity patrolEntity;
     float circlingAngle = 0f;
 
+    float yOffset = 500f;
+
     public override void Enter(params object[] inputs)
     {
         // Init from the inputs
@@ -27,7 +29,7 @@ public class PlanePatrolState : BaseState
         patrolEntity = inputs[1] as BaseEntity;
 
         // Init values
-        circlingAngle = 0f;
+        circlingAngle = Random.Range(0f, circlingAngle);
     }
     public override void UpdateLogic()
     {
@@ -63,24 +65,26 @@ public class PlanePatrolState : BaseState
         planeEntity.Accelerate();
 
         // Check if any object is near, fly away if that's the case
-        Collider[] allColliders = Physics.OverlapSphere(planeEntity.transform.position, 200f);
-        Collider closestCollider = null;
-        float closestDistance = 0f;
+        Collider[] allColliders = Physics.OverlapSphere(planeEntity.transform.position, 100f);
+        bool toAvoid = false;
+        Vector3 averageDirection = Vector3.zero;
         foreach (Collider collider in allColliders)
         {
-            if (collider != planeEntity.GetComponent<Collider>() && !collider.transform.IsChildOf(planeEntity.transform) && (closestCollider == null || closestDistance > (collider.transform.position - planeEntity.transform.position).sqrMagnitude))
+            if (collider != planeEntity.GetComponent<Collider>() && !collider.transform.IsChildOf(planeEntity.transform))
             {
-                closestCollider = collider;
-                closestDistance = (collider.transform.position - planeEntity.transform.position).sqrMagnitude;
+                toAvoid = true;
+                averageDirection += (planeEntity.transform.position - collider.transform.position).normalized;
             }
         }
-        if (closestCollider != null) // Fly away to avoid collision
-            planeEntity.RotateToTargetDirection(planeEntity.transform.position - closestCollider.ClosestPoint(planeEntity.transform.position));
+        if (toAvoid) // Fly away to avoid collision
+        {
+            planeEntity.RotateToTargetDirection(averageDirection.normalized);
+        }
         else
         {
             //Travel in a circle == Patrol
             Vector3 targetPosition = new Vector3(Mathf.Cos(circlingAngle) * radiusOfPatrol + patrolEntity.transform.position.x,
-                                                  patrolEntity.transform.position.y + 50f,
+                                                  patrolEntity.transform.position.y + yOffset,
                                                   Mathf.Sin(circlingAngle) * radiusOfPatrol + patrolEntity.transform.position.z);
             planeEntity.RotateToTargetPosition(targetPosition);
         }

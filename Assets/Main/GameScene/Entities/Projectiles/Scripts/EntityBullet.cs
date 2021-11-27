@@ -10,17 +10,35 @@ public class EntityBullet : EntityProjectile
 
     Collider collider;
     Rigidbody rb = null;
+    TrailRenderer trail;
 
     private Vector3 prevPos;
 
     [SerializeField]
     private float lifespan = 10f;
+    private float currLifespan;
+
+    private void Awake()
+    {
+        currLifespan = lifespan;
+    }
 
     private void FixedUpdate()
     {
         lifespan -= Time.fixedDeltaTime;
         if (lifespan < 0f)
+        {
+            if (trail == null)
+                trail = GetComponent<TrailRenderer>();
+            trail.enabled = false;
+
+            if (rb == null)
+                rb = GetComponent<Rigidbody>();
+            rb.velocity = Vector3.zero;
             gameObject.SetActive(false);
+            Debug.Log("GONE");
+
+        }
         if (prevPos != Vector3.zero)
         {
             RaycastHit hit;
@@ -66,19 +84,26 @@ public class EntityBullet : EntityProjectile
 
     public override void ActivateProjectile(EntityWeapon parent)
     {
+        lifespan = currLifespan;
         if (rb == null)
             rb = GetComponent<Rigidbody>();
         if (collider == null)
             collider = GetComponent<Collider>();
 
+
         // A hard false
         owner = parent.owner;
+        transform.forward = parent.transform.forward;
         collider.isTrigger = false;
         Rigidbody ownerRB = parent.owner.GetComponent<Rigidbody>();
         if (ownerRB != null)
             rb.velocity = parent.owner.GetComponent<Rigidbody>().velocity;
         rb.AddForce(transform.forward * outputForce, ForceMode.Acceleration);
         //rb.AddForce(Vector3.zero, ForceMode.Impulse);
+
+        if (trail == null)
+            trail = GetComponent<TrailRenderer>();
+        trail.enabled = true;
     }
 
     public void OnCollisionEnter(Collision collision)
@@ -125,5 +150,6 @@ public class EntityBullet : EntityProjectile
             targetHealth.TakeDamage(owner, finalDamage, impulse * 0.1f);
 
         gameObject.SetActive(false);
+
     }
 }

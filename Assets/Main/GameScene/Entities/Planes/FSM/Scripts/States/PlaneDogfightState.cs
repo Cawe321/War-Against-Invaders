@@ -11,7 +11,7 @@ public class PlaneDogfightState : BaseState
     public PlaneDogfightState(StateMachine stateMachine) : base("PlaneDogfightState",stateMachine) { }
 
     /* Setting Values*/
-    const float maxShootAngle = 10f;
+    const float maxShootAngle = 30f;
 
     /* In-script Values*/
     PlaneEntity planeEntity;
@@ -66,7 +66,7 @@ public class PlaneDogfightState : BaseState
         }
 
         // Check if any object is near, fly away if that's the case
-        Collider[] allColliders = Physics.OverlapSphere(planeEntity.transform.position, 200f);
+        Collider[] allColliders = Physics.OverlapSphere(planeEntity.transform.position, 100f);
         bool toAvoid = false;
         Vector3 averageDirection = Vector3.zero;
         foreach (Collider collider in allColliders)
@@ -74,7 +74,7 @@ public class PlaneDogfightState : BaseState
             if (collider != planeEntity.GetComponent<Collider>() && !collider.transform.IsChildOf(planeEntity.transform))
             {
                 toAvoid = true;
-                averageDirection += (collider.transform.position - planeEntity.transform.position).normalized;
+                averageDirection += (planeEntity.transform.position - collider.transform.position).normalized;
             }
         }
         if (toAvoid) // Fly away to avoid collision

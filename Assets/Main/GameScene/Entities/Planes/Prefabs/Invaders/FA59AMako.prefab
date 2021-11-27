@@ -367,7 +367,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7490060700919083650}
   m_LocalRotation: {x: -0.000000081460335, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 50, z: -50.00001}
+  m_LocalPosition: {x: 0, y: 100, z: -100}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 8882686173977353500}
@@ -405,7 +405,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8421498864198137707}
   m_LocalRotation: {x: 0.000000081460335, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.08, z: 0}
+  m_LocalPosition: {x: 0, y: 1.04, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children:
   - {fileID: 408127157601863388}
@@ -452,6 +452,7 @@ MonoBehaviour:
   entityHealthList: []
   entityWeaponList: []
   initialised: 0
+  autoGetWeapons: 1
 --- !u!54 &1317468881875836835
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -492,7 +493,7 @@ MonoBehaviour:
   flightEnginePower: 500
   flightMinTakeOffSpeed: 20
   cmCamera: {fileID: 2627899913324882704}
-  mirrorCameraPosition: {fileID: 736588347704093670}
+  mirrorCameraPosition: {fileID: 4082053723675632107}
   radarCameraPosition: {fileID: 736588347704093670}
   LWing: {fileID: 1338337409449736374}
   RWing: {fileID: 6990566530943476774}
@@ -617,7 +618,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2983780925960167842, guid: 60929acb86f4bd8458b6b9e597828e64, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.7459996
+      value: 0.3729998
       objectReference: {fileID: 0}
     - target: {fileID: 2983780925960167842, guid: 60929acb86f4bd8458b6b9e597828e64, type: 3}
       propertyPath: m_LocalPosition.z
@@ -625,11 +626,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2983780925960167842, guid: 60929acb86f4bd8458b6b9e597828e64, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.22975284
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2983780925960167842, guid: 60929acb86f4bd8458b6b9e597828e64, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000043989785
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4972132986972304689, guid: 60929acb86f4bd8458b6b9e597828e64, type: 3}
       propertyPath: m_Follow

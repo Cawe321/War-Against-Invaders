@@ -92,9 +92,9 @@ public class SpaceshipEntity : MonoBehaviour
 
                     if (!baseEntity.CheckHealth()) // Check if Spaceship is dead
                         StartFallDown();
-                    else if((transform.position - targetDest).sqrMagnitude < 0.1f) // Check if Spaceship has reached the destination.
+                    else if((transform.position - targetDest).sqrMagnitude < 1f) // Check if Spaceship has reached the destination.
                         ReachedDestination();
-                            
+                    //Debug.LogWarning("Warning:" + (transform.position - targetDest).sqrMagnitude);
                     float functioningThrusters = 0;
                     foreach (GameObject thruster in thrusters)
                     {
@@ -117,6 +117,8 @@ public class SpaceshipEntity : MonoBehaviour
 
                     // Enter moving to destination code
                     rb.MovePosition(transform.position + (moveSpeed * (targetDest - transform.position).normalized));
+
+                    
 
                     break;
                 }
@@ -184,5 +186,6 @@ public class SpaceshipEntity : MonoBehaviour
     void ReachedDestination()
     {
         GameplayManager.instance.EndMatch(TEAM_TYPE.INVADERS);
+        phase = PHASE.REACHED_DESTINATION;
     }
 }

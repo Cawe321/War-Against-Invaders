@@ -57,43 +57,40 @@ public class StealthwingFSM : StateMachine
 
     public override bool ChangeStateByName(string newStateName)
     {
-        foreach (BaseState state in states)
+
+        switch (newStateName)
         {
-            if (state.stateName == newStateName)
-            {
-                switch (state.stateName)
+            case "PlaneTravelState":
                 {
-                    case "PlaneTravelState":
-                        {
-                            ChangeState(state, planeEntity, enemyEntity);
-                            break;
-                        }
-                    case "PlanePatrolState":
-                        {
-                            ChangeState(state, planeEntity, enemyEntity);
-                            break;
-                        }
-                    case "PlaneRunwayState":
-                        {
-                            ChangeState(state, planeEntity);
-                            break;
-                        }
-                    case "PlaneDogfightState":
-                        {
-                            ChangeState(state, planeEntity);
-                            break;
-                        }
-                    case "PlaneBombingState":
-                        {
-                            ChangeStateByName("PlaneDogfightState");
-                            break;
-                        }
+                    ChangeState(FindStateByName(newStateName), planeEntity, enemyEntity);
+                    break;
                 }
-                return true;
-            }
+            case "PlanePatrolState":
+                {
+                    ChangeState(FindStateByName(newStateName), planeEntity, enemyEntity);
+                    break;
+                }
+            case "PlaneRunwayState":
+                {
+                    ChangeState(FindStateByName(newStateName), planeEntity);
+                    break;
+                }
+            case "PlaneDogfightState":
+                {
+                    ChangeState(FindStateByName(newStateName), planeEntity);
+                    break;
+                }
+            case "PlaneBombingState":
+                {
+                    ChangeStateByName("PlaneDogfightState");
+                    break;
+                }
+
+            default:
+                Debug.LogError("StateMachine: ChangeStateByName was called, but the state " + newStateName + "corresponding to the string given was not found!.");
+                return false;
         }
-        Debug.LogError("StateMachine: ChangeStateByName was called, but the state " + newStateName + "corresponding to the string given was not found!.");
-        return false;
+        return true;
     }
 
 }

@@ -8,8 +8,11 @@ public class StateMachine : MonoBehaviour
 
     protected BaseState currentState;
 
+    protected int updateFrameCooldown;
+
     protected virtual void Start()
     {
+        updateFrameCooldown = 0;
         currentState = GetInitialState();
         if (currentState != null)
             currentState.Enter();
@@ -19,8 +22,18 @@ public class StateMachine : MonoBehaviour
     {
         if (currentState != null)
         {
-            currentState.UpdateLogic();
-            Debug.Log(transform.name + "'s StateMachine: " + currentState.stateName);
+            if (updateFrameCooldown > 0)
+            {
+                --updateFrameCooldown;
+            }
+            else
+            {
+                currentState.UpdateLogic();
+                Debug.Log(transform.name + "'s StateMachine: " + currentState.stateName);
+
+                // Reset the cooldown for frame update
+                updateFrameCooldown = Random.Range(5, 10);
+            }
         }
     }
 
@@ -69,4 +82,14 @@ public class StateMachine : MonoBehaviour
         string content = currentState != null ? currentState.stateName : "(no current state)";
         GUILayout.Label($"<color='black'><size=40>{content}</size></color>");
     }*/
+
+    protected virtual BaseState FindStateByName(string stateName)
+    {
+        foreach (BaseState state in states)
+        {
+            if (state.stateName == stateName)
+                return state;
+        }
+        return null;
+    }
 }
