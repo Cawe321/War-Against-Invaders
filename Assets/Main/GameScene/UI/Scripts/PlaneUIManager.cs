@@ -66,12 +66,14 @@ public class PlaneUIManager : SingletonObject<PlaneUIManager>
         UIContainer.SetActive(true);
         this.planeEntity = planeEntity;
         mirrorCamera.gameObject.SetActive(true);
+        MainHUDManager.instance.ToggleSpawnWaveUI(false);
     }
 
     public void DisableUI()
     {
         UIContainer.SetActive(false);
         planeEntity = null;
+        MainHUDManager.instance.ToggleSpawnWaveUI(true);
     }
 
 

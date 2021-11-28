@@ -21,7 +21,7 @@ public class PlayerManager : SingletonObject<PlayerManager>
         coins += amountToAdd;
 
         // INVOKE NOTIFICATION MANAGER
-        // CODE HERE
+        NotificationManager.instance.AddToNotification(reason, "+ " + amountToAdd + " coins", "You now have " + coins + " coins.");
     }
 
     public void RemoveCoins(int amountToRemove)

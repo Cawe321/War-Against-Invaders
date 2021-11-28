@@ -35,25 +35,29 @@ public class GameplayManager : SingletonObject<GameplayManager>
     /* In-script Values */
     EntityList entityList;
 
-    float defenderSpawnCooldown;
-    float invaderSpawnCooldown;
+    [HideInInspector]
+    public float defenderSpawnCooldown;
+    [HideInInspector]
+    public float invaderSpawnCooldown;
 
     /// <summary>
     /// List of entities to spawn for defenders
     /// </summary>
     public Dictionary<EntityTypes, int> defenderSpawnWave;
-    float defenderSpawnCooldownMultiplier = 1f;
+    [HideInInspector]
+    public float defenderSpawnCooldownMultiplier = 1f;
 
     /// <summary>
     /// List of entities to spawn for invaders
     /// </summary>
     public Dictionary<EntityTypes, int> invaderSpawnWave;
-    float invaderSpawnCooldownMultiplier = 1f;
+    [HideInInspector]
+    public float invaderSpawnCooldownMultiplier = 1f;
 
     float carePackageCooldownCounter;
     int carePackageAmount = 500;
 
-
+    public float gameTimer = 0f;
     public enum GAMEPLAY_PHASE
     {
         WAIT,
@@ -85,6 +89,7 @@ public class GameplayManager : SingletonObject<GameplayManager>
         invaderSpawnWave = new Dictionary<EntityTypes, int>();
         invaderSpawnWave.Add(EntityTypes.Mako, 3);
 
+        gameTimer = 0f;
         //StartIntro();
         StartCoroutine(dummyPlayerLoad());
     }
@@ -123,17 +128,23 @@ public class GameplayManager : SingletonObject<GameplayManager>
                 {
                     if (spaceshipEntity.StartMoving()) // Check if spaceship is ready to start moving. If ready, automatically starts moving
                     {
+                        NotificationManager.instance.AddToNotification("Welcome To War!", "Good luck out there!");
+
                         gameplayPhase = GAMEPLAY_PHASE.GAME;
                         SpawnTheEntityWave(TEAM_TYPE.DEFENDERS);
                         SpawnTheEntityWave(TEAM_TYPE.INVADERS);
                         defenderSpawnCooldown = originalSpawnCooldown;
                         invaderSpawnCooldown = originalSpawnCooldown;
 
+
                     }
                     break;
                 }
             case GAMEPLAY_PHASE.GAME:
                 {
+                    // Timer
+                    gameTimer += Time.deltaTime;
+
                     // Spawn Wave Logic
                     // Each warehouse destroyed will result in a 20% increase of the original cooldown time
                     // Base 40% cooldown for defender cooldown multiplier
@@ -154,9 +165,10 @@ public class GameplayManager : SingletonObject<GameplayManager>
 
                     // Care Package Logic
                     carePackageCooldownCounter -= Time.fixedDeltaTime;
-                    if (carePackageCooldownCounter < Mathf.Epsilon)
+                    if (carePackageCooldownCounter < 0f)
                     {
-                        PlayerManager.instance.AddCoins(carePackageAmount, "Care Package has just arrived with a message \"Don\'t die!\"!");
+                        carePackageCooldownCounter = ResourceReference.instance.currencySettings.carePackageCooldown;
+                        PlayerManager.instance.AddCoins(carePackageAmount, "Care Package has just arrived!");
                         EnemyAIBehaviour.instance.AddCoins(carePackageAmount);
                     }
 
@@ -212,6 +224,7 @@ public class GameplayManager : SingletonObject<GameplayManager>
     /// </summary>
     void SpawnTheEntityWave(TEAM_TYPE team)
     {
+        List<string> entitiesString = new List<string>();
         List<EntityTypes> objectsToSpawn = new List<EntityTypes>();
         Vector3 originalSpawnPos = Vector3.zero;
         Quaternion quaternion = new Quaternion();
@@ -223,6 +236,7 @@ public class GameplayManager : SingletonObject<GameplayManager>
             {
                 for (int count = 0; count < defenderSpawnWave[entity]; ++count)
                     objectsToSpawn.Add(entity);
+                entitiesString.Add("+ " + defenderSpawnWave[entity] + " " + entity.ToString());
             }
         }
         else if (team == TEAM_TYPE.INVADERS)
@@ -233,6 +247,7 @@ public class GameplayManager : SingletonObject<GameplayManager>
             {
                 for (int count = 0; count < invaderSpawnWave[entity]; ++count)
                     objectsToSpawn.Add(entity);
+                entitiesString.Add("+ " + invaderSpawnWave[entity] + " " + entity.ToString());
             }
         }
 
@@ -256,6 +271,15 @@ public class GameplayManager : SingletonObject<GameplayManager>
                 StartCoroutine(WaitForTwoFramesToStartPlane(go.GetComponent<PlaneEntity>()));
             }
         }
+
+        
+        AnnounceToPlayerSpawnWave(team , entitiesString);
+    }
+
+    void AnnounceToPlayerSpawnWave(TEAM_TYPE team, List<string>entitiesString)
+    {
+        if (PlayerManager.instance.playerTeam == team)
+            NotificationManager.instance.AddToNotification("Reinforcements have arrived!", entitiesString);
     }
 
     IEnumerator WaitForTwoFramesToStartPlane(PlaneEntity planeEntity)

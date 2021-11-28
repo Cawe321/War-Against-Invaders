@@ -21,5 +21,7 @@ MonoBehaviour:
   _scoutPurchaseCost: 500
   _balancedPurchaseCost: 750
   _assaultPurchaseCost: 1000
+  _lightTurretRepairCost: 5000
+  _heavyTurretRepairCost: 5000
   _carePackageAmount: 750
-  _carePackageCooldown: 360
+  _carePackageCooldown: 4
