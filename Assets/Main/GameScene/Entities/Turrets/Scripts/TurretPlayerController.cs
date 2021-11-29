@@ -22,12 +22,12 @@ public class TurretPlayerController : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (turretEntity.isLocalPlayerControl)
+        if (turretEntity.isLocalPlayerControl && PlayerManager.instance.isFocused)
         {
             
             if (!wasPlayerControlled)
             {
-                // player just gain control
+                // player just gained control
                 EnabledPlayerControl();
             }
 

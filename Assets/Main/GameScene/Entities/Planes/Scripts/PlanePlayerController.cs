@@ -17,7 +17,7 @@ public class PlanePlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (planeEntity.isLocalPlayerControl)
+        if (planeEntity.isLocalPlayerControl && PlayerManager.instance.isFocused)
         {
             if (Input.GetButtonDown("Engine"))
             {

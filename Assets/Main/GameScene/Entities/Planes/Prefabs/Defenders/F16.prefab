@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 300
   isCoreComponent: 1
   stabilityScore: 1
@@ -226,6 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 300
   isCoreComponent: 1
   stabilityScore: 1
@@ -373,6 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 300
   isCoreComponent: 1
   stabilityScore: 1
@@ -519,6 +522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 300
   isCoreComponent: 1
   stabilityScore: 1
@@ -666,7 +670,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCanControl: 1
-  entityType: 1
+  entityType: 2
   requiredStability: 20
   team: 2
   maxFuel: 0
@@ -756,6 +760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 400
   isCoreComponent: 1
   stabilityScore: 1

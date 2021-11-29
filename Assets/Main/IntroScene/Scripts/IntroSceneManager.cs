@@ -36,6 +36,7 @@ public class IntroSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SettingsManager.LoadSettingsAndApply();
         audioSource = GetComponent<AudioSource>();
 
         if (corridorManager == null)

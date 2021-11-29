@@ -442,7 +442,7 @@ MonoBehaviour:
   testLoop: 0
   autoLinearAppearDelay: 1
   forceUnscaledTime: 0
-  appearDelay_SpeedMultiplier: 1
+  appearDelay_SpeedMultiplier: 0.5
   disappearDelay_SpeedMultiplier: 1
   currentState: 3
   useDelays: 1
@@ -863,7 +863,7 @@ MonoBehaviour:
   testLoop: 0
   autoLinearAppearDelay: 0
   forceUnscaledTime: 0
-  appearDelay_SpeedMultiplier: 1
+  appearDelay_SpeedMultiplier: 0.5
   disappearDelay_SpeedMultiplier: 1
   currentState: 3
   useDelays: 1
@@ -1202,7 +1202,7 @@ MonoBehaviour:
   testLoop: 0
   autoLinearAppearDelay: 1
   forceUnscaledTime: 0
-  appearDelay_SpeedMultiplier: 1
+  appearDelay_SpeedMultiplier: 0.5
   disappearDelay_SpeedMultiplier: 1
   currentState: 3
   useDelays: 1

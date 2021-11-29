@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCanControl: 1
-  entityType: 4
+  entityType: 5
   requiredStability: 20
   team: 2
   maxFuel: 0
@@ -146,6 +146,7 @@ MonoBehaviour:
   entityHealthList: []
   entityWeaponList: []
   initialised: 0
+  autoGetWeapons: 1
 --- !u!114 &4039113663840476071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,6 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 20000
   isCoreComponent: 1
   stabilityScore: 1

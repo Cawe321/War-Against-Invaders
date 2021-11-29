@@ -18,7 +18,7 @@ public class LaserTurretPlayerController : TurretPlayerController
     protected override void Update()
     {
         
-        if (turretEntity.isLocalPlayerControl)
+        if (turretEntity.isLocalPlayerControl && PlayerManager.instance.isFocused)
         {
             if (!wasPlayerControlled)
             {

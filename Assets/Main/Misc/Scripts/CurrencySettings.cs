@@ -33,6 +33,14 @@ public class CurrencySettings : ScriptableObject
     int _lightTurretRepairCost;
     [SerializeField]
     int _heavyTurretRepairCost;
+    [Header("Other Full Repair Costs")]
+    [SerializeField]
+    int _warehouseRepairCost;
+    [SerializeField]
+    int _thrusterRepairCost;
+    [SerializeField]
+    int _fuelTankRepairCost;
+
 
     [Header("Care Package")]
     [SerializeField]
@@ -57,6 +65,10 @@ public class CurrencySettings : ScriptableObject
     public int assaultPurchaseCost { get { return _assaultPurchaseCost; } }
     public int lightTurretRepairCost { get { return _lightTurretRepairCost; } }
     public int heavyTurretRepairCost { get { return _heavyTurretRepairCost; } }
+
+    public int warehouseRepairCost { get { return _warehouseRepairCost; } }
+    public int thrusterRepairCost { get { return _thrusterRepairCost; } }
+    public int fuelTankRepairCost { get { return _fuelTankRepairCost; } }
 
     public int carePackageAmount { get { return _carePackageAmount; } }
     public int carePackageCooldown { get { return _carePackageCooldown; } }

@@ -33,6 +33,26 @@ public class EntityList : ScriptableObject
         }
         return null;
     }
+
+    public EntityObject GetEntityObject(EntityTypes entityType)
+    {
+        foreach (EntityObject entity in entityObjects)
+        {
+            if (entity.entityType == entityType)
+                return entity;
+        }
+        return null;
+    }
+
+    public EntityObject GetEntityObjectByName(string theName)
+    {
+        foreach (EntityObject entity in entityObjects)
+        {
+            if (entity.entityName == theName)
+                return entity;
+        }
+        return null;
+    }
 }
 
 [System.Serializable]
@@ -53,7 +73,7 @@ public class EntityObject
     public TEAM_TYPE entityTeam;
 
     [Tooltip("Icon of Entity")]
-    public Image entityIcon;
+    public Sprite entityIcon;
 
     [Header("References")]
     [Tooltip("The prefab to be used in game.")]

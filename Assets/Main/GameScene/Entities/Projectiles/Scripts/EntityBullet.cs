@@ -120,7 +120,7 @@ public class EntityBullet : EntityProjectile
             if (oppositionHealth != null)
             {
 
-                if (!oppositionHealth.immortalObject || oppositionHealth.baseEntity.team != owner.team)
+                if (!oppositionHealth.immortalObject && oppositionHealth.baseEntity.team != owner.team)
                 {
                     OnHit(oppositionHealth, rb.velocity);
                     return;

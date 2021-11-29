@@ -31,9 +31,9 @@ public class SpaceshipEntity : MonoBehaviour
     [Tooltip("Destination of the spaceship. Y coord position will be ignored.")]
     Transform destination;
 
-    [SerializeField]
+
     [Tooltip("Speed of the spaceship moving")]
-    float moveSpeed;
+    public float moveSpeed;
     float originalMoveSpeed;
     public enum PHASE
     {
@@ -118,7 +118,10 @@ public class SpaceshipEntity : MonoBehaviour
                     // Enter moving to destination code
                     rb.MovePosition(transform.position + (moveSpeed * (targetDest - transform.position).normalized));
 
-                    
+                    // CODE HERE to remove when finalizing project
+                    // Cheat code for spaceship to reach dest
+                    if (Input.GetKeyDown(KeyCode.Home))
+                        rb.MovePosition(destination.position);
 
                     break;
                 }

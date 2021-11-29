@@ -17,42 +17,42 @@ MonoBehaviour:
     entityType: 3
     entityDescription: Nothing to say here.
     entityTeam: 2
-    entityIcon: {fileID: 0}
+    entityIcon: {fileID: 21300000, guid: ec27deab9b21c854395d4f01d92f8f57, type: 3}
     gameModel: {fileID: 8833522019778185314, guid: f304eb2f29b5ed145a5aa922355f8065, type: 3}
     displayModel: {fileID: 1203802547736348323, guid: 40e23bdddf1c7b64e8415ba9a64b46d6, type: 3}
   - entityName: F16
     entityType: 2
     entityDescription: Nothing to say here.
     entityTeam: 2
-    entityIcon: {fileID: 0}
+    entityIcon: {fileID: 21300000, guid: 55edbb9a05f2c3d46ba0ea04c7e6a073, type: 3}
     gameModel: {fileID: 8648475845583234039, guid: 5633710eb1c63e3438b37ce841077200, type: 3}
     displayModel: {fileID: 4514817367369034372, guid: 4b918346c0bed2b45844f99ce451ec3a, type: 3}
   - entityName: Whitebeard
     entityType: 4
     entityDescription: Nothing to say here.
     entityTeam: 2
-    entityIcon: {fileID: 0}
+    entityIcon: {fileID: 21300000, guid: 1825827f8a8a89f4a92618f6f060bf84, type: 3}
     gameModel: {fileID: 2162456091370205430, guid: 18ecda28111d8094fabf48ac53f613e5, type: 3}
     displayModel: {fileID: 6295537424973051493, guid: a11a7987883a70744ba927a6cfc6ba51, type: 3}
   - entityName: X-Wing
     entityType: 9
     entityDescription: Nothing to say here.
     entityTeam: 3
-    entityIcon: {fileID: 0}
+    entityIcon: {fileID: 21300000, guid: 92cc6a92a4d33d048b0832bc2d9bd2d4, type: 3}
     gameModel: {fileID: 7156498954158920595, guid: 5d444e66609e9d34eb0846f7d6187d07, type: 3}
     displayModel: {fileID: 1763334496711809685, guid: b49a40687e488fb42b685e8f14a1f731, type: 3}
   - entityName: Death Row
     entityType: 7
     entityDescription: Nothing to say here.
     entityTeam: 3
-    entityIcon: {fileID: 0}
+    entityIcon: {fileID: 21300000, guid: 9c2464669f4b4e245a30331770e2977f, type: 3}
     gameModel: {fileID: 241471991855331731, guid: 61a52c6d913291e4eb453bec6e692e27, type: 3}
     displayModel: {fileID: 361713764994546088, guid: 211a72bbc6342934294eb02d4cb264ce, type: 3}
   - entityName: Mako
     entityType: 8
     entityDescription: Nothing to say here.
     entityTeam: 3
-    entityIcon: {fileID: 0}
+    entityIcon: {fileID: 21300000, guid: 663c86f59bb352d4586cbfadb0903dbf, type: 3}
     gameModel: {fileID: 8421498864198137707, guid: 00e61f2888521ab459d8ee3a24b36adc, type: 3}
     displayModel: {fileID: 5273375340416205511, guid: 005e26c7b4cd40644b9c66270db6a5d8, type: 3}
   - entityName: Machine Gun Turret

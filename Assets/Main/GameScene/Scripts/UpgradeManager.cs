@@ -77,7 +77,7 @@ public class UpgradeManager : SingletonObject<UpgradeManager>
             GameplayManager.instance.AddToSpawnWave(ResourceReference.instance.entityList.GetEntityTeam(entityType), entityType);
 
             // CODE HERE to announce to players a purchase has been made.
-
+            NotificationManager.instance.AddToNotification("Your purchase has been made!", "You now have " + PlayerManager.instance.coins + " coins");
         }
     }
     #endregion
@@ -114,4 +114,13 @@ public class UpgradeManager : SingletonObject<UpgradeManager>
 
 
     #endregion
+
+    public void RepairEntity(EntityHealth entity, int cost, float repairedHealth)
+    {
+        if (PlayerManager.instance.coins >= cost)
+        {
+            PlayerManager.instance.RemoveCoins(cost);
+            entity.AddHealth(repairedHealth);
+        }
+    }
 }

@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class MainHUDManager : SingletonObject<MainHUDManager>
 {
+    [Header("External References")]
+    [SerializeField] RectTransform shopUI;
+
     [Header("References")]
     [SerializeField]
     TextMeshProUGUI coinText;
@@ -17,6 +20,7 @@ public class MainHUDManager : SingletonObject<MainHUDManager>
     RectTransform spawnWaveTimerParent;
 
     bool openSettings = false;
+    bool openShop = false;
     // Update is called once per frame
     void Update()
     {
@@ -53,9 +57,22 @@ public class MainHUDManager : SingletonObject<MainHUDManager>
         }
     }
 
-    public void ToggleShopMenu(bool toOpen)
+    public void ToggleShopMenu()
     {
-        // CODE HERE to toggle shop menu
+        // CODE HERE to toggle shop menu\
+        openShop = !openShop;
+        if (openShop)
+        {
+            PlayerManager.instance.isFocused = false;
+            shopUI.gameObject.SetActive(true);
+
+        }
+        else
+        {
+            if (!openSettings)
+                PlayerManager.instance.isFocused = true;
+            shopUI.gameObject.SetActive(false);
+        }
     }
 
     public void ToggleSettingsMenu()
@@ -64,10 +81,13 @@ public class MainHUDManager : SingletonObject<MainHUDManager>
         if (openSettings)
         {
             SceneManager.LoadSceneAsync("SettingScene", LoadSceneMode.Additive);
+            PlayerManager.instance.isFocused = false;
         }
         else
         {
             SceneManager.UnloadSceneAsync("SettingScene");
+            if (!openShop)
+                PlayerManager.instance.isFocused = true;
         }
     }
 

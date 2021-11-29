@@ -13,6 +13,8 @@ public class PlayerManager : SingletonObject<PlayerManager>
     public string playerName = "";
     public TEAM_TYPE playerTeam;
 
+    public bool isFocused = true;
+
     #region CURRENCY_MANAGEMENT
     public int coins { get; private set; }
 

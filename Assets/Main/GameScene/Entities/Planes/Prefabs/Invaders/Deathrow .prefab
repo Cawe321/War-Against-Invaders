@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCanControl: 1
-  entityType: 6
+  entityType: 7
   requiredStability: 20
   team: 3
   maxFuel: 0
@@ -170,6 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 400
   isCoreComponent: 1
   stabilityScore: 1
@@ -515,6 +516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 300
   isCoreComponent: 1
   stabilityScore: 1
@@ -631,6 +633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 300
   isCoreComponent: 1
   stabilityScore: 1
@@ -1155,6 +1158,10 @@ PrefabInstance:
     - target: {fileID: 5514195324680558584, guid: fc248dd590a878a4098f727128c9ac2c, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5514195324680558588, guid: fc248dd590a878a4098f727128c9ac2c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc248dd590a878a4098f727128c9ac2c, type: 3}

@@ -38,6 +38,11 @@ public class SettingsManager : SingletonObject<SettingsManager>
             fullScreen = Screen.fullScreen;
 
         Screen.SetResolution(allResolutions[resolutionIndex].width, allResolutions[resolutionIndex].height, fullScreen);
+
+        if (PlayerPrefs.HasKey("MasterVolume"))
+            AudioListener.volume = PlayerPrefs.GetFloat("MasterVolume");
+        else
+            AudioListener.volume = 100f;
     }
 
     void Start()

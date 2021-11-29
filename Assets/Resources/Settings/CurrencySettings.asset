@@ -23,5 +23,8 @@ MonoBehaviour:
   _assaultPurchaseCost: 1000
   _lightTurretRepairCost: 5000
   _heavyTurretRepairCost: 5000
+  _warehouseRepairCost: 10000
+  _thrusterRepairCost: 10000
+  _fuelTankRepairCost: 10000
   _carePackageAmount: 750
   _carePackageCooldown: 4

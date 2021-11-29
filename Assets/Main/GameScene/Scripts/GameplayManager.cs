@@ -7,13 +7,15 @@ using UnityEngine;
 
 public class GameplayManager : SingletonObject<GameplayManager>
 {
+    [Header("UI References")]
+    [SerializeField]
+    MatchSummaryManager matchSummaryManager;
+
     [Header("References")]
 
-    [SerializeField]
-    DockEntity dockEntity;
+    public DockEntity dockEntity;
     
-    [SerializeField]
-    SpaceshipEntity spaceshipEntity;
+    public SpaceshipEntity spaceshipEntity;
 
     [SerializeField]
     CanvasGroup waitForPlayersCanvas;
@@ -247,7 +249,7 @@ public class GameplayManager : SingletonObject<GameplayManager>
             {
                 for (int count = 0; count < invaderSpawnWave[entity]; ++count)
                     objectsToSpawn.Add(entity);
-                entitiesString.Add("+ " + invaderSpawnWave[entity] + " " + entity.ToString());
+                entitiesString.Add("> " + invaderSpawnWave[entity] + " " + entity.ToString());
             }
         }
 
@@ -295,6 +297,8 @@ public class GameplayManager : SingletonObject<GameplayManager>
     /// <param name="team">(TEAM_TYPE) The Winning Team</param>
     public void EndMatch(TEAM_TYPE winningTeam)
     {
+        if (gameplayPhase != GAMEPLAY_PHASE.GAME)
+            return;
         switch (winningTeam)
         {
             case TEAM_TYPE.DEFENDERS:
@@ -313,6 +317,21 @@ public class GameplayManager : SingletonObject<GameplayManager>
                     break;
                 }
         }
+
+        if (PlayerManager.instance.playerTeam == winningTeam)
+        {
+            // Win
+            // CODE HERE to give player the current he deserves
+        }
+        else
+        {
+            // Lose
+            // CODE HERE to give player the current he deserves
+        }
+
+        // Calls for UI to appear
+        matchSummaryManager.gameObject.SetActive(true);
+        matchSummaryManager.ActivateUI(PlayerManager.instance.playerTeam == winningTeam);
     }
 
 

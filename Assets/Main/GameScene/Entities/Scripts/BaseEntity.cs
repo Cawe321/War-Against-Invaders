@@ -201,6 +201,23 @@ public class BaseEntity : MonoBehaviour
         return isAlive;
     }
 
+    /// <summary>
+    /// Returns the percentage of the current stability
+    /// </summary>
+    /// <returns>Percentage of current stability. 0.01f = 1%</returns>
+    public float GetCurrentStability()
+    {
+        float currStability = 0f;
+        foreach (EntityHealth entityHealth in entityHealthList)
+        {
+            if (entityHealth.isAlive)
+            {
+                currStability += entityHealth.stabilityScore;
+            }
+        }
+        return currStability / maxStability;
+    }
+
     void Init()
     {
         currFuel = maxFuel;
@@ -234,6 +251,7 @@ public class BaseEntity : MonoBehaviour
     {
         PlayerManager.instance.TakeOverEntity(this);
     }
+
     public void DisconnectLocalPlayer()
     {
         if (isLocalPlayerControlling)
