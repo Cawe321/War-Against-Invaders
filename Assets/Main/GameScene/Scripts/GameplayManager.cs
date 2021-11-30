@@ -75,6 +75,7 @@ public class GameplayManager : SingletonObject<GameplayManager>
     // Start is called before the first frame update
     void Start()
     {
+
         entityList = ResourceReference.instance.entityList;
 
         carePackageAmount = ResourceReference.instance.currencySettings.carePackageAmount;
@@ -321,12 +322,16 @@ public class GameplayManager : SingletonObject<GameplayManager>
         if (PlayerManager.instance.playerTeam == winningTeam)
         {
             // Win
-            // CODE HERE to give player the current he deserves
+            DataManager.instance.playerData.commonCurrency += ResourceReference.instance.currencySettings.victoryCommonCurrencyReward;
+            DataManager.instance.playerData.premiumCurrency += ResourceReference.instance.currencySettings.victoryPremiumCurrencyReward;
+            DataManager.instance.SavePlayerData();
         }
         else
         {
             // Lose
-            // CODE HERE to give player the current he deserves
+            DataManager.instance.playerData.commonCurrency += ResourceReference.instance.currencySettings.defeatCommonCurrencyReward;
+            DataManager.instance.playerData.premiumCurrency += ResourceReference.instance.currencySettings.defeatPremiumCurrencyReward;
+            DataManager.instance.SavePlayerData();
         }
 
         // Calls for UI to appear

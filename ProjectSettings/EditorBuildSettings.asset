@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Main/_Scenes/MainMenu_Defenders.unity
     guid: fcc7dcd16866ff1429398d342a7f3354
   - enabled: 1
+    path: Assets/Main/_Scenes/MainMenu_Invaders.unity
+    guid: 1bdaf0c0538d1644c99cb9c89ba06317
+  - enabled: 1
     path: Assets/Main/_Scenes/GameScene.unity
     guid: 4b94aa63e4b780549b171232cb96df5b
   - enabled: 1

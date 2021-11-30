@@ -17,9 +17,6 @@ public class IntroSceneManager : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField]
-    string SceneToSwitchTo;
-
-    [SerializeField]
     float sceneSwitchCooldown = 1f;
 
     [SerializeField]
@@ -89,7 +86,11 @@ public class IntroSceneManager : MonoBehaviour
         yield return new WaitForSeconds(sceneSwitchCooldown);
 
         // Switch scenes
-        SceneTransitionManager.instance.SwitchScene(SceneToSwitchTo, SceneTransitionManager.ENTRANCE_TYPE.FADE_IN, SceneTransitionManager.EXIT_TYPE.FADE_OUT);
+        if (DataManager.instance.playerData.lastTeam == TEAM_TYPE.DEFENDERS)
+            SceneTransitionManager.instance.SwitchScene("MainMenu_Defenders", SceneTransitionManager.ENTRANCE_TYPE.FADE_IN, SceneTransitionManager.EXIT_TYPE.FADE_OUT);
+        else
+            SceneTransitionManager.instance.SwitchScene("MainMenu_Invaders", SceneTransitionManager.ENTRANCE_TYPE.FADE_IN, SceneTransitionManager.EXIT_TYPE.FADE_OUT);
+
     }
     #endregion
 }

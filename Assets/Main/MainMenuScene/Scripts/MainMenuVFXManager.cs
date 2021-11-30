@@ -37,7 +37,7 @@ public class MainMenuVFXManager : MonoBehaviour
     public bool vfxEnded { get { return vfxStatus == VFX_STATUS.ENDED; } }
 
     /*In-script Values*/
-    enum VFX_STATUS
+    public enum VFX_STATUS
     {
         WAITING_TO_START,
         WARP_DRIVE,
@@ -46,7 +46,8 @@ public class MainMenuVFXManager : MonoBehaviour
         BLOOM_DECREASE,
         ENDED,
     }
-    VFX_STATUS vfxStatus = VFX_STATUS.WAITING_TO_START;
+    [HideInInspector]
+    public VFX_STATUS vfxStatus = VFX_STATUS.WAITING_TO_START;
 
     float cooldownVariable;
     Coroutine vfxCoroutine;

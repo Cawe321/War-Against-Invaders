@@ -128,6 +128,11 @@ public class SceneTransitionManager : MonoBehaviour
     #region PRIVATE_HELPER_FUNCTIONS
     IEnumerator StartSwitchingScenes(string sceneName, ENTRANCE_TYPE entranceType, EXIT_TYPE exitType)
     {
+        if (textMesh)
+            textMesh.text = "0%";
+        if (progressBar)
+            progressBar.localScale = new Vector3(0f, progressBar.localScale.y, progressBar.localScale.z);
+
         // Handle entrance of loading screen
         switch (entranceType)
         {
@@ -200,7 +205,7 @@ public class SceneTransitionManager : MonoBehaviour
         canvasGroup.alpha = 1f;
 
         float speed = 1f / fadeOutDuration;
-        while (canvasGroup.alpha >= 0f)
+        while (canvasGroup.alpha > 0f)
         {
             yield return new WaitForFixedUpdate();
             canvasGroup.alpha -= speed * Time.fixedDeltaTime;

@@ -26,7 +26,7 @@ public class SettingsManager : SingletonObject<SettingsManager>
         else
         {
             for (int i = 0; i < allResolutions.Length; ++i)
-                if (Screen.currentResolution.width == allResolutions[i].width && Screen.currentResolution.height == allResolutions[i].height)
+                if (Screen.currentResolution.width == allResolutions[i].width && Screen.currentResolution.height == allResolutions[i].height && Screen.currentResolution.refreshRate == allResolutions[i].refreshRate)
                     resolutionIndex = i;
 
         }
@@ -42,7 +42,7 @@ public class SettingsManager : SingletonObject<SettingsManager>
         if (PlayerPrefs.HasKey("MasterVolume"))
             AudioListener.volume = PlayerPrefs.GetFloat("MasterVolume");
         else
-            AudioListener.volume = 100f;
+            AudioListener.volume = 0.5f;
     }
 
     void Start()
@@ -69,7 +69,16 @@ public class SettingsManager : SingletonObject<SettingsManager>
 
     public void SetResolution(int resolutionIndex)
     {
-        Resolution resolution = resolutions[resolutionIndex];
+        List<Resolution> filteredResolution = new List<Resolution>();
+        for (int i = 0; i < resolutions.Length; i++)
+        {
+            // I only want this refresh rate
+            if (Screen.currentResolution.refreshRate == resolutions[i].refreshRate)
+            {
+                filteredResolution.Add(resolutions[i]);
+            }
+        }
+        Resolution resolution = filteredResolution[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 
@@ -106,6 +115,11 @@ public class SettingsManager : SingletonObject<SettingsManager>
         if (PlayerPrefs.HasKey("MasterVolume"))
             masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume") * 100f;
         else
-            masterVolumeSlider.value = 100f;
+            masterVolumeSlider.value = 50f;
+    }
+
+    public void OnDisable()
+    {
+        SaveSettings();
     }
 }

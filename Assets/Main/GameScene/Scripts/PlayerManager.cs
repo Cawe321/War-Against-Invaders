@@ -18,6 +18,12 @@ public class PlayerManager : SingletonObject<PlayerManager>
     #region CURRENCY_MANAGEMENT
     public int coins { get; private set; }
 
+    public override void Awake()
+    {
+        base.Awake();
+        playerTeam = DataManager.instance.chosenGameTeam;    
+    }
+
     public void AddCoins(int amountToAdd, string reason)
     {
         coins += amountToAdd;
