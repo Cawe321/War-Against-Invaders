@@ -20,6 +20,17 @@ public class SettingsManager : SingletonObject<SettingsManager>
     public static void LoadSettingsAndApply()
     {
         Resolution[] allResolutions = Screen.resolutions;
+        List<Resolution> filteredResolutions = new List<Resolution>();
+        for (int i = 0; i < allResolutions.Length; i++)
+        {
+            // I only want this refresh rate
+            if (Screen.currentResolution.refreshRate == allResolutions[i].refreshRate)
+            {
+                filteredResolutions.Add(allResolutions[i]);
+            }
+
+        }
+
         int resolutionIndex = 0;
         if (PlayerPrefs.HasKey("Resolution"))
             resolutionIndex = PlayerPrefs.GetInt("Resolution");
@@ -37,7 +48,7 @@ public class SettingsManager : SingletonObject<SettingsManager>
         else
             fullScreen = Screen.fullScreen;
 
-        Screen.SetResolution(allResolutions[resolutionIndex].width, allResolutions[resolutionIndex].height, fullScreen);
+        Screen.SetResolution(filteredResolutions[resolutionIndex].width, filteredResolutions[resolutionIndex].height, fullScreen);
 
         if (PlayerPrefs.HasKey("MasterVolume"))
             AudioListener.volume = PlayerPrefs.GetFloat("MasterVolume");

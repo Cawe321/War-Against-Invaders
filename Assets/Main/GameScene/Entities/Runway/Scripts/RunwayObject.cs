@@ -67,6 +67,11 @@ public class RunwayObject : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Collided");
+    }
+
     private void OnCollisionStay(Collision collision)
     {
         BaseEntity colliderEntity = collision.gameObject.GetComponent<EntityHealth>().baseEntity;

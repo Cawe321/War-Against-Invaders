@@ -166,8 +166,8 @@ public class PlaneEntity : MonoBehaviour
                 rb.AddForce((flightSpeed * transform.forward - rb.velocity) * flightEnginePower);
             else
                 rb.AddForce(flightSpeed / flightMinTakeOffSpeed * transform.forward * flightEnginePower);
-            if (flightSpeed > flightMinTakeOffSpeed && rb.velocity.magnitude > flightSpeed)
-                rb.velocity = rb.velocity.normalized * flightSpeed;
+            //if (flightSpeed > flightMinTakeOffSpeed && rb.velocity.magnitude > flightSpeed)
+                //rb.velocity = rb.velocity.normalized * flightSpeed;
             //rb.velocity = (rb.velocity + transform.forward * flightSpeed).normalized * flightSpeed;
 
             // Simulate no takeoff without reahcing min speed

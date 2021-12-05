@@ -54,7 +54,7 @@ public class PlaneDogfightState : BaseState
     }
     public override void UpdateLogic()
     {
-        if (!enemyPlaneEntity.baseEntity.CheckHealth() || enemyPlaneEntity == null)
+        if (enemyPlaneEntity == null || !enemyPlaneEntity.baseEntity.CheckHealth())
         {
             // Enemy is dead
             stateMachine.ChangeStateByName("PlaneTravelState");
@@ -85,11 +85,11 @@ public class PlaneDogfightState : BaseState
         {
             // if still remaining on this state, do what this state does
             // moves towards predicted target position & accelerate
-            planeEntity.RotateToTargetPosition(enemyPlaneEntity.transform.position + (enemyPlaneEntity.transform.forward * enemyPlaneEntity.flightSpeed));
+            planeEntity.RotateToTargetPosition(enemyPlaneEntity.transform.position);
             planeEntity.Accelerate(); // No need to check for max flight speed since it has already been handled in this function
         }
 
-        if (Vector3.Angle((enemyPlaneEntity.transform.position + (enemyPlaneEntity.transform.forward * enemyPlaneEntity.flightSpeed)) - planeEntity.transform.position, planeEntity.transform.forward) <= maxShootAngle)
+        if (Vector3.Angle(enemyPlaneEntity.transform.position - planeEntity.transform.position, planeEntity.transform.forward) <= maxShootAngle)
         {
             // Enemy is within shooting range, fire all primary weapons
             planeEntity.FireAllWeapons(EntityWeapon.WEAPON_TYPE.PRIMARY);

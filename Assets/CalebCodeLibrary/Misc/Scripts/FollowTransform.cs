@@ -7,9 +7,24 @@ public class FollowTransform : MonoBehaviour
     [SerializeField]
     Transform transformToFollow;
 
+    Rigidbody rb;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();    
+    }
+
     void FixedUpdate()
     {
-        transform.position = transformToFollow.position;
-        transform.rotation = transformToFollow.rotation;
+        if (rb == null)
+        {
+            transform.position = transformToFollow.position;
+            transform.rotation = transformToFollow.rotation;
+        }
+        else
+        {
+            rb.MovePosition(transformToFollow.position);
+            rb.MoveRotation(transformToFollow.rotation);
+        }
     }
 }

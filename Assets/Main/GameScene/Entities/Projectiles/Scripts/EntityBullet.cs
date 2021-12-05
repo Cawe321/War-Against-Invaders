@@ -10,7 +10,6 @@ public class EntityBullet : EntityProjectile
 
     Collider collider;
     Rigidbody rb = null;
-    TrailRenderer trail;
 
     private Vector3 prevPos;
 
@@ -28,10 +27,6 @@ public class EntityBullet : EntityProjectile
         lifespan -= Time.fixedDeltaTime;
         if (lifespan < 0f)
         {
-            if (trail == null)
-                trail = GetComponent<TrailRenderer>();
-            trail.enabled = false;
-
             if (rb == null)
                 rb = GetComponent<Rigidbody>();
             rb.velocity = Vector3.zero;
@@ -54,9 +49,10 @@ public class EntityBullet : EntityProjectile
                     if (oppositionHealth != null)
                     {
                         
-                        if (oppositionHealth.baseEntity.team != owner.team)
+                        if (!oppositionHealth.immortalObject && oppositionHealth.baseEntity.team != owner.team)
                         {
                             OnHit(oppositionHealth, rb.velocity);
+                            Debug.Log("hitted something");
                             return;
                         }
                     }
@@ -90,6 +86,7 @@ public class EntityBullet : EntityProjectile
         if (collider == null)
             collider = GetComponent<Collider>();
 
+        rb.angularVelocity = Vector3.zero;
 
         // A hard false
         owner = parent.owner;
@@ -97,13 +94,9 @@ public class EntityBullet : EntityProjectile
         collider.isTrigger = false;
         Rigidbody ownerRB = parent.owner.GetComponent<Rigidbody>();
         if (ownerRB != null)
-            rb.velocity = parent.owner.GetComponent<Rigidbody>().velocity;
+            rb.velocity = ownerRB.velocity;
         rb.AddForce(transform.forward * outputForce, ForceMode.Acceleration);
         //rb.AddForce(Vector3.zero, ForceMode.Impulse);
-
-        if (trail == null)
-            trail = GetComponent<TrailRenderer>();
-        trail.enabled = true;
     }
 
     public void OnCollisionEnter(Collision collision)
