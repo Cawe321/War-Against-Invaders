@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 300
   isCoreComponent: 1
   stabilityScore: 1
@@ -286,6 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 300
   isCoreComponent: 1
   stabilityScore: 1
@@ -525,6 +527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 400
   isCoreComponent: 1
   stabilityScore: 1
@@ -567,6 +570,11 @@ MonoBehaviour:
   flightStabilitySpeed: 500
   flightEnginePower: 500
   flightMinTakeOffSpeed: 20
+  cmCamera: {fileID: 0}
+  mirrorCameraPosition: {fileID: 0}
+  radarCameraPosition: {fileID: 0}
+  LWing: {fileID: 0}
+  RWing: {fileID: 0}
   baseEntity: {fileID: 0}
   stateMachine: {fileID: 0}
   flightSpeed: 0
@@ -580,7 +588,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 220723637}
   serializedVersion: 2
-  m_Mass: 100
+  m_Mass: 25
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -617,6 +625,7 @@ MonoBehaviour:
   entityHealthList: []
   entityWeaponList: []
   initialised: 0
+  autoGetWeapons: 1
 --- !u!64 &220723645
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1008,6 +1017,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 300
   isCoreComponent: 1
   stabilityScore: 1
@@ -1108,9 +1118,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c8808b66d1811d46a4a8da6b4ef353d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freeRoamCamera: {fileID: 0}
+  planeUI: {fileID: 0}
   playerName: Cawe
   playerTeam: 0
-  freeRoam: 1
+  isFocused: 1
 --- !u!4 &371007849
 Transform:
   m_ObjectHideFlags: 0
@@ -1231,6 +1243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 300
   isCoreComponent: 1
   stabilityScore: 1
@@ -16592,6 +16605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 300
   isCoreComponent: 1
   stabilityScore: 1
@@ -16709,6 +16723,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 300
   isCoreComponent: 1
   stabilityScore: 1
@@ -16825,6 +16840,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 300
   isCoreComponent: 1
   stabilityScore: 1
@@ -17064,6 +17080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 400
   isCoreComponent: 1
   stabilityScore: 1
@@ -17106,6 +17123,11 @@ MonoBehaviour:
   flightStabilitySpeed: 500
   flightEnginePower: 500
   flightMinTakeOffSpeed: 20
+  cmCamera: {fileID: 0}
+  mirrorCameraPosition: {fileID: 0}
+  radarCameraPosition: {fileID: 0}
+  LWing: {fileID: 0}
+  RWing: {fileID: 0}
   baseEntity: {fileID: 0}
   stateMachine: {fileID: 0}
   flightSpeed: 0
@@ -17119,7 +17141,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1390460617}
   serializedVersion: 2
-  m_Mass: 100
+  m_Mass: 25
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -17156,6 +17178,7 @@ MonoBehaviour:
   entityHealthList: []
   entityWeaponList: []
   initialised: 0
+  autoGetWeapons: 1
 --- !u!64 &1390460625
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -17322,6 +17345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 300
   isCoreComponent: 1
   stabilityScore: 1
@@ -17807,6 +17831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 300
   isCoreComponent: 1
   stabilityScore: 1
@@ -17924,6 +17949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 300
   isCoreComponent: 1
   stabilityScore: 1
@@ -18151,6 +18177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 300
   isCoreComponent: 1
   stabilityScore: 1
@@ -18286,6 +18313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 400
   isCoreComponent: 1
   stabilityScore: 1
@@ -18328,6 +18356,11 @@ MonoBehaviour:
   flightStabilitySpeed: 500
   flightEnginePower: 500
   flightMinTakeOffSpeed: 20
+  cmCamera: {fileID: 0}
+  mirrorCameraPosition: {fileID: 0}
+  radarCameraPosition: {fileID: 0}
+  LWing: {fileID: 0}
+  RWing: {fileID: 0}
   baseEntity: {fileID: 0}
   stateMachine: {fileID: 0}
   flightSpeed: 0
@@ -18341,7 +18374,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2014375746}
   serializedVersion: 2
-  m_Mass: 100
+  m_Mass: 25
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -18378,6 +18411,7 @@ MonoBehaviour:
   entityHealthList: []
   entityWeaponList: []
   initialised: 0
+  autoGetWeapons: 1
 --- !u!64 &2014375754
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -18461,6 +18495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 300
   isCoreComponent: 1
   stabilityScore: 1
@@ -33426,6 +33461,7 @@ MonoBehaviour:
   entityHealthList: []
   entityWeaponList: []
   initialised: 0
+  autoGetWeapons: 1
 --- !u!64 &3661007230701418075
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -33463,6 +33499,11 @@ MonoBehaviour:
   flightStabilitySpeed: 500
   flightEnginePower: 500
   flightMinTakeOffSpeed: 20
+  cmCamera: {fileID: 0}
+  mirrorCameraPosition: {fileID: 0}
+  radarCameraPosition: {fileID: 0}
+  LWing: {fileID: 0}
+  RWing: {fileID: 0}
   baseEntity: {fileID: 0}
   stateMachine: {fileID: 0}
   flightSpeed: 0
@@ -33496,6 +33537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 400
   isCoreComponent: 1
   stabilityScore: 1
@@ -33718,6 +33760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 300
   isCoreComponent: 1
   stabilityScore: 1
@@ -33958,6 +34001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 300
   isCoreComponent: 1
   stabilityScore: 1

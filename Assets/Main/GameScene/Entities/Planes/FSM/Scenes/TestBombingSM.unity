@@ -123,6 +123,182 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &158699195 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9190648692237773795, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
+  m_PrefabInstance: {fileID: 1009266736}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &441762161
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 441762162}
+  m_Layer: 0
+  m_Name: '*** MANAGERS ***'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &441762162
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441762161}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 158699195}
+  - {fileID: 769724466}
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &769724465
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 769724466}
+  - component: {fileID: 769724467}
+  m_Layer: 0
+  m_Name: EnemyAIBehaviour
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &769724466
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769724465}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 441762162}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &769724467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769724465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b102b3651ef57048b77931ca75f1095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isActive: 1
+  coinBank: 0
+  numberOfSimulatedPlayers: 0
+--- !u!1001 &1009266736
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 441762162}
+    m_Modifications:
+    - target: {fileID: 2415944643287313089, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
+      propertyPath: dockEntity
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2415944643287313089, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
+      propertyPath: spaceshipEntity
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2415944643287313089, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
+      propertyPath: matchSummaryManager
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2415944643287313089, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
+      propertyPath: waitForPlayersCanvas
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2415944643287313089, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
+      propertyPath: invadersSpawnLocation
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2415944643287313089, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
+      propertyPath: defendersSpawnLocation
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9190648692237773794, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
+      propertyPath: planeUI
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9190648692237773794, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
+      propertyPath: playerTeam
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9190648692237773794, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
+      propertyPath: freeRoamCamera
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9190648692237773795, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9190648692237773795, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.042566
+      objectReference: {fileID: 0}
+    - target: {fileID: 9190648692237773795, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.210262
+      objectReference: {fileID: 0}
+    - target: {fileID: 9190648692237773795, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -40.1499
+      objectReference: {fileID: 0}
+    - target: {fileID: 9190648692237773795, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9190648692237773795, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9190648692237773795, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9190648692237773795, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9190648692237773795, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9190648692237773795, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9190648692237773795, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9190648692237773796, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
+      propertyPath: m_Name
+      value: Managers
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1642d2fd0562c0d42a86fa88166999b5, type: 3}
 --- !u!1 &1662533117
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,6 +406,7 @@ GameObject:
   - component: {fileID: 1880034572}
   - component: {fileID: 1880034571}
   - component: {fileID: 1880034570}
+  - component: {fileID: 1880034576}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -278,6 +455,7 @@ MonoBehaviour:
   entityHealthList: []
   entityWeaponList: []
   initialised: 0
+  autoGetWeapons: 1
 --- !u!65 &1880034572
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -354,6 +532,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1880034576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880034569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  immortalObject: 0
+  maxHealth: 100
+  isCoreComponent: 0
+  stabilityScore: 1
+  destructionType: 0
+  meshDestroy: {fileID: 0}
+  currHealth: 0
+  baseEntity: {fileID: 0}
 --- !u!1 &1975426339
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,6 +694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 225
   isCoreComponent: 1
   stabilityScore: 1
@@ -694,6 +893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 225
   isCoreComponent: 1
   stabilityScore: 1
@@ -10861,6 +11061,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 225
   isCoreComponent: 1
   stabilityScore: 1
@@ -10977,6 +11178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 225
   isCoreComponent: 1
   stabilityScore: 1
@@ -11170,6 +11372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 300
   isCoreComponent: 1
   stabilityScore: 1
@@ -11216,6 +11419,11 @@ MonoBehaviour:
   flightStabilitySpeed: 500
   flightEnginePower: 500
   flightMinTakeOffSpeed: 20
+  cmCamera: {fileID: 0}
+  mirrorCameraPosition: {fileID: 0}
+  radarCameraPosition: {fileID: 0}
+  LWing: {fileID: 0}
+  RWing: {fileID: 0}
   baseEntity: {fileID: 0}
   stateMachine: {fileID: 0}
   flightSpeed: 0
@@ -11262,6 +11470,7 @@ MonoBehaviour:
   entityHealthList: []
   entityWeaponList: []
   initialised: 0
+  autoGetWeapons: 1
 --- !u!54 &5295605811911332559
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -11270,7 +11479,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5295605811911332552}
   serializedVersion: 2
-  m_Mass: 100
+  m_Mass: 25
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -11541,6 +11750,11 @@ MonoBehaviour:
   flightStabilitySpeed: 500
   flightEnginePower: 500
   flightMinTakeOffSpeed: 20
+  cmCamera: {fileID: 0}
+  mirrorCameraPosition: {fileID: 0}
+  radarCameraPosition: {fileID: 0}
+  LWing: {fileID: 0}
+  RWing: {fileID: 0}
   baseEntity: {fileID: 0}
   stateMachine: {fileID: 0}
   flightSpeed: 0
@@ -11570,6 +11784,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f159005ec316eb845b7bddb883bd546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortalObject: 0
   maxHealth: 300
   isCoreComponent: 1
   stabilityScore: 1
@@ -11674,6 +11889,7 @@ MonoBehaviour:
   entityHealthList: []
   entityWeaponList: []
   initialised: 0
+  autoGetWeapons: 1
 --- !u!54 &6546179522610906335
 Rigidbody:
   m_ObjectHideFlags: 0

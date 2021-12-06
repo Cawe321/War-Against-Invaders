@@ -70,7 +70,7 @@ public class PlaneBombingDemoSM : StateMachine
                 {
                     case "PlaneBombingState":
                         {
-                            ChangeState(state, planeEntity, target);
+                            ChangeState(state, planeEntity, target.gameObject.GetComponent<EntityHealth>());
                             break;
                         }
                 }
