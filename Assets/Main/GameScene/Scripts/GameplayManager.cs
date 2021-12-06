@@ -322,16 +322,14 @@ public class GameplayManager : SingletonObject<GameplayManager>
         if (PlayerManager.instance.playerTeam == winningTeam)
         {
             // Win
-            DataManager.instance.playerData.commonCurrency += ResourceReference.instance.currencySettings.victoryCommonCurrencyReward;
-            DataManager.instance.playerData.premiumCurrency += ResourceReference.instance.currencySettings.victoryPremiumCurrencyReward;
-            DataManager.instance.SavePlayerData();
+            DataManager.instance.AddCommonCurrency(ResourceReference.instance.currencySettings.victoryCommonCurrencyReward);
+            DataManager.instance.AddPremiumCurrency(ResourceReference.instance.currencySettings.victoryPremiumCurrencyReward);
         }
         else
         {
             // Lose
-            DataManager.instance.playerData.commonCurrency += ResourceReference.instance.currencySettings.defeatCommonCurrencyReward;
-            DataManager.instance.playerData.premiumCurrency += ResourceReference.instance.currencySettings.defeatPremiumCurrencyReward;
-            DataManager.instance.SavePlayerData();
+            DataManager.instance.AddCommonCurrency(ResourceReference.instance.currencySettings.defeatCommonCurrencyReward);
+            DataManager.instance.AddPremiumCurrency(ResourceReference.instance.currencySettings.defeatPremiumCurrencyReward);
         }
 
         // Calls for UI to appear

@@ -412,22 +412,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3322508710928655595, guid: 56c85bb7aa3b4694187a4eae739f3e74, type: 3}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3322508710928655595, guid: 56c85bb7aa3b4694187a4eae739f3e74, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3322508710928655595, guid: 56c85bb7aa3b4694187a4eae739f3e74, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3322508710928655595, guid: 56c85bb7aa3b4694187a4eae739f3e74, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -71.30005
-      objectReference: {fileID: 0}
     - target: {fileID: 4335344621340524121, guid: 56c85bb7aa3b4694187a4eae739f3e74, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -448,26 +432,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4335344622091612140, guid: 56c85bb7aa3b4694187a4eae739f3e74, type: 3}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4335344622091612140, guid: 56c85bb7aa3b4694187a4eae739f3e74, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4335344622091612140, guid: 56c85bb7aa3b4694187a4eae739f3e74, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4335344622091612140, guid: 56c85bb7aa3b4694187a4eae739f3e74, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -58.43994
-      objectReference: {fileID: 0}
-    - target: {fileID: 4335344622352664557, guid: 56c85bb7aa3b4694187a4eae739f3e74, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 364.89575
-      objectReference: {fileID: 0}
     - target: {fileID: 4335344622521864602, guid: 56c85bb7aa3b4694187a4eae739f3e74, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -483,10 +447,6 @@ PrefabInstance:
     - target: {fileID: 4335344622535149307, guid: 56c85bb7aa3b4694187a4eae739f3e74, type: 3}
       propertyPath: m_Name
       value: SettingsCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 4335344622535149309, guid: 56c85bb7aa3b4694187a4eae739f3e74, type: 3}
-      propertyPath: m_MatchWidthOrHeight
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4335344622535149311, guid: 56c85bb7aa3b4694187a4eae739f3e74, type: 3}
       propertyPath: m_Pivot.x

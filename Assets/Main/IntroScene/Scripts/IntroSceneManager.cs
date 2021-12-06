@@ -13,6 +13,12 @@ public class IntroSceneManager : MonoBehaviour
     IntroCorridorManager corridorManager = null;
 
     [SerializeField]
+    RectTransform WAITING_UI;
+
+    [SerializeField]
+    RectTransform LOGIN_UI;
+
+    [SerializeField]
     InterfaceAnimManager[] UIAnimManagers;
 
     [Header("Settings")]
@@ -30,9 +36,20 @@ public class IntroSceneManager : MonoBehaviour
 
     AudioSource audioSource;
 
+    public enum PHASE
+    {
+        LOGIN,
+        WAIT_TO_START,
+    }
+    public PHASE introPhase;
+
     // Start is called before the first frame update
     void Start()
     {
+        introPhase = PHASE.LOGIN;
+        LOGIN_UI.gameObject.SetActive(true);
+        WAITING_UI.gameObject.SetActive(false);
+
         SettingsManager.LoadSettingsAndApply();
         audioSource = GetComponent<AudioSource>();
 
@@ -43,8 +60,27 @@ public class IntroSceneManager : MonoBehaviour
         }
 
         corridorManager.StartCorridorAnim();
+    }
+
+    public void LoginSuccessful()
+    {
+        DataManager.instance.LoadPlayerData();
+        StartCoroutine(WaitForLoginSuccessful());
+    }
+
+    IEnumerator WaitForLoginSuccessful()
+    {
+        while (!DataManager.instance.isLoggedIn)
+            yield return new WaitForEndOfFrame();
+
+        introPhase = PHASE.WAIT_TO_START;
+        LOGIN_UI.gameObject.SetActive(false);
+        WAITING_UI.gameObject.SetActive(true);
+
         foreach (InterfaceAnimManager UIAnimManager in UIAnimManagers)
+        {
             UIAnimManager.startAppear();
+        }
         audioSource.clip = openSound;
         audioSource.Play();
     }
@@ -85,8 +121,9 @@ public class IntroSceneManager : MonoBehaviour
         // Wait for specified cooldown
         yield return new WaitForSeconds(sceneSwitchCooldown);
 
+        
         // Switch scenes
-        if (DataManager.instance.playerData.lastTeam == TEAM_TYPE.DEFENDERS)
+        if (DataManager.instance.lastTeam == TEAM_TYPE.DEFENDERS)
             SceneTransitionManager.instance.SwitchScene("MainMenu_Defenders", SceneTransitionManager.ENTRANCE_TYPE.FADE_IN, SceneTransitionManager.EXIT_TYPE.FADE_OUT);
         else
             SceneTransitionManager.instance.SwitchScene("MainMenu_Invaders", SceneTransitionManager.ENTRANCE_TYPE.FADE_IN, SceneTransitionManager.EXIT_TYPE.FADE_OUT);

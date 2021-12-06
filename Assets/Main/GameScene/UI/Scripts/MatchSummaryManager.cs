@@ -45,7 +45,7 @@ public class MatchSummaryManager : MonoBehaviour
         // CODE HERE to switch between different main menus
         if (SceneTransitionManager.instance != null)
         {
-            if (DataManager.instance.playerData.lastTeam == TEAM_TYPE.DEFENDERS)
+            if (DataManager.instance.lastTeam == TEAM_TYPE.DEFENDERS)
                 SceneTransitionManager.instance.SwitchScene("MainMenu_Defenders", SceneTransitionManager.ENTRANCE_TYPE.FADE_IN, SceneTransitionManager.EXIT_TYPE.FADE_OUT);
             else
                 SceneTransitionManager.instance.SwitchScene("MainMenu_Invaders", SceneTransitionManager.ENTRANCE_TYPE.FADE_IN, SceneTransitionManager.EXIT_TYPE.FADE_OUT);

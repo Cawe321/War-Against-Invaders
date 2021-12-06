@@ -49,9 +49,9 @@ public class MainMenuManager : SingletonObject<MainMenuManager>
 
     public void UpdatePlayerDataDisplay()
     {
-        playerNameText.text = DataManager.instance.playerData.playerName;
-        playerCommonCurrencyText.text = "Spare Parts:\n" + DataManager.instance.playerData.commonCurrency;
-        playerPremiumCurrencyText.text = "Techno Cubes:\n" + DataManager.instance.playerData.premiumCurrency;
+        playerNameText.text = DataManager.instance.playerName;
+        playerCommonCurrencyText.text = "Spare Parts:\n" + DataManager.instance.commonCurrency;
+        playerPremiumCurrencyText.text = "Techno Cubes:\n" + DataManager.instance.premiumCurrency;
     }
 
     public void SwitchTeamMainMenu(bool toDefenders)
@@ -60,12 +60,14 @@ public class MainMenuManager : SingletonObject<MainMenuManager>
             return;
         if (toDefenders)
         {
-            DataManager.instance.chosenGameTeam = DataManager.instance.playerData.lastTeam = TEAM_TYPE.DEFENDERS;
+            DataManager.instance.chosenGameTeam = TEAM_TYPE.DEFENDERS;
+            DataManager.instance.SetLastTeam(DataManager.instance.chosenGameTeam);
             SceneTransitionManager.instance.SwitchScene("MainMenu_Defenders", SceneTransitionManager.ENTRANCE_TYPE.FADE_IN, SceneTransitionManager.EXIT_TYPE.FADE_OUT);
         }
         else
         {
-            DataManager.instance.chosenGameTeam = DataManager.instance.playerData.lastTeam = TEAM_TYPE.INVADERS;
+            DataManager.instance.chosenGameTeam = TEAM_TYPE.INVADERS;
+            DataManager.instance.SetLastTeam(DataManager.instance.chosenGameTeam);
             SceneTransitionManager.instance.SwitchScene("MainMenu_Invaders", SceneTransitionManager.ENTRANCE_TYPE.FADE_IN, SceneTransitionManager.EXIT_TYPE.FADE_OUT);
         }
     }
