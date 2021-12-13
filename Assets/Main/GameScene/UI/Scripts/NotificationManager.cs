@@ -69,6 +69,7 @@ public class NotificationManager : SingletonObject<NotificationManager>
                     notification.messageText.text += message + "\n";
                 notification.gameObject.SetActive(true);
                 notification.animManager.startAppear();
+                AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._gameplayNotificationOpenSound);
             }
         }
     }
@@ -99,6 +100,7 @@ public class NotificationManager : SingletonObject<NotificationManager>
         {
             --notification.ranking;
         }
+        AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._gameplayNotificationCloseSound);
     }
 
     NotificationUI GetAvailableNotificationUI()

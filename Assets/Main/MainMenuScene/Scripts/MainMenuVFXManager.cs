@@ -8,6 +8,7 @@ using UnityStandardAssets.ImageEffects;
 
 public class MainMenuVFXManager : MonoBehaviour
 {
+    [SerializeField] bool isDefender;
     [Header("References")]
     [SerializeField] Camera mainCamera;
     [SerializeField] WarpDriveVFXController warpDrive;
@@ -94,7 +95,10 @@ public class MainMenuVFXManager : MonoBehaviour
         mainCamera.transform.localPosition = originalCameraPos;
         vfxStatus = VFX_STATUS.ENDED;
         onVFXEnd.Invoke();
-        
+        if (isDefender)
+            AudioManager.instance.PlayBGM(AudioManager.instance.audioFiles._defenderMainMenuBGM);
+        else
+            AudioManager.instance.PlayBGM(AudioManager.instance.audioFiles._invaderMainMenuBGM);
     }
 
     IEnumerator RunVFX()
@@ -130,6 +134,11 @@ public class MainMenuVFXManager : MonoBehaviour
                                 mapContainer.gameObject.SetActive(true);
                                 bloomVolume.profile = defaultVolumeProfile;
                                 cooldownVariable = 0f;
+                                if (isDefender)
+                                    AudioManager.instance.PlayBGM(AudioManager.instance.audioFiles._defenderMainMenuBGM);
+                                else
+                                    AudioManager.instance.PlayBGM(AudioManager.instance.audioFiles._invaderMainMenuBGM);
+
                             }
                            
                         }

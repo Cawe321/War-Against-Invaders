@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5626edd80e756849a2f911a460b4bdd, type: 3}
   m_Name: CurrencySettings
   m_EditorClassIdentifier: 
-  _victoryCommonCurrencyReward: 0
-  _victoryPremiumCurrencyReward: 0
-  _defeatCommonCurrencyReward: 0
-  _defeatPremiumCurrencyReward: 0
+  _victoryCommonCurrencyReward: 1000
+  _victoryPremiumCurrencyReward: 10
+  _defeatCommonCurrencyReward: 500
+  _defeatPremiumCurrencyReward: 5
   _planeDestroyedReward: 500
   _turretDestroyedReward: 5000
   _scoutPurchaseCost: 500
@@ -26,5 +26,5 @@ MonoBehaviour:
   _warehouseRepairCost: 10000
   _thrusterRepairCost: 10000
   _fuelTankRepairCost: 10000
-  _carePackageAmount: 750
-  _carePackageCooldown: 4
+  _carePackageAmount: 1000
+  _carePackageCooldown: 30

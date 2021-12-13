@@ -28,6 +28,7 @@ public class MatchSummaryManager : MonoBehaviour
         }
         canvasGroup.alpha = 0f;
         StartCoroutine(FadeIn());
+        AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._uiOpenSound);
     }
 
     IEnumerator FadeIn()
@@ -52,5 +53,6 @@ public class MatchSummaryManager : MonoBehaviour
         }
         else
             SceneManager.LoadScene("MainMenu_Defenders");
+        AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._uiCloseSound);
     }
 }

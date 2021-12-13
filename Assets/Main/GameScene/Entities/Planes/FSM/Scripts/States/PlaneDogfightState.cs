@@ -86,7 +86,8 @@ public class PlaneDogfightState : BaseState
             // if still remaining on this state, do what this state does
             // moves towards predicted target position & accelerate
             planeEntity.RotateToTargetPosition(enemyPlaneEntity.transform.position);
-            planeEntity.Accelerate(); // No need to check for max flight speed since it has already been handled in this function
+            for (int i = 0; i < stateMachine.updateFrameCooldown; ++i)
+                planeEntity.Accelerate(); // No need to check for max flight speed since it has already been handled in this function
         }
 
         if (Vector3.Angle(enemyPlaneEntity.transform.position - planeEntity.transform.position, planeEntity.transform.forward) <= maxShootAngle)

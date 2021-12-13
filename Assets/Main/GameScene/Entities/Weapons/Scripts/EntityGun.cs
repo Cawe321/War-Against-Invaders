@@ -6,14 +6,18 @@ using UnityEngine;
 /// <summary>
 /// The default weapon class that shoots projectiles.
 /// </summary>
+[RequireComponent(typeof(AudioSource))]
 public class EntityGun : EntityWeapon
 {
     [SerializeField]
     float projectileSpread = 0.1f;
 
+    AudioSource weaponAudio;
+
     protected void Start()
     {
         base.Start();
+        weaponAudio = GetComponent<AudioSource>();
     }
 
     private void FixedUpdate()
@@ -26,7 +30,7 @@ public class EntityGun : EntityWeapon
 
     public override void FireWeapon(BaseEntity parent)
     {
-        if (currWeaponCooldown <= 0f && currAmmunition >= 0)
+        if (currWeaponCooldown <= 0f && currAmmunition > 0)
         {
             --currAmmunition;
             //owner = parent;
@@ -40,6 +44,8 @@ public class EntityGun : EntityWeapon
             Vector3 rotationEuler = new Vector3(Random.Range(-projectileSpread, projectileSpread), Random.Range(-projectileSpread, projectileSpread), 0f);
             entityProjectile.transform.Rotate(rotationEuler);
             entityProjectile.ActivateProjectile(this);
+
+            weaponAudio.Play();
         }
     }
 

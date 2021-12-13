@@ -8,7 +8,8 @@ public class StateMachine : MonoBehaviour
 
     protected BaseState currentState;
 
-    protected int updateFrameCooldown;
+    [HideInInspector]
+    public int updateFrameCooldown;
 
     protected virtual void Start()
     {
@@ -28,11 +29,12 @@ public class StateMachine : MonoBehaviour
             }
             else
             {
-                currentState.UpdateLogic();
                 Debug.Log(transform.name + "'s StateMachine: " + currentState.stateName);
 
                 // Reset the cooldown for frame update
                 updateFrameCooldown = Random.Range(5, 10);
+
+                currentState.UpdateLogic();
             }
         }
     }

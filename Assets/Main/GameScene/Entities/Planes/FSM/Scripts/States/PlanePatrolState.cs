@@ -62,7 +62,8 @@ public class PlanePatrolState : BaseState
             circlingAngle -= 360;
 
         // keep on accelerating because why not?
-        planeEntity.Accelerate();
+        for (int i = 0; i < stateMachine.updateFrameCooldown; ++i)
+            planeEntity.Accelerate();
 
         // Check if any object is near, fly away if that's the case
         Collider[] allColliders = Physics.OverlapSphere(planeEntity.transform.position, 100f);

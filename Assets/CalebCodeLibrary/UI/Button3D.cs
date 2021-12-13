@@ -31,6 +31,7 @@ public class Button3D : MonoBehaviour
     {
         OnHoverEnter.Invoke();
         transform.localScale = new Vector3(transform.localScale.x * scaleUp.x, transform.localScale.y * scaleUp.y, transform.localScale.z * scaleUp.z);
+        AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._buttonHoverSFX);
     }
 
     private void OnMouseExit()
@@ -42,5 +43,6 @@ public class Button3D : MonoBehaviour
     private void OnMouseDown()
     {
         OnMouseClick.Invoke();
+        AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._buttonClickSFX);
     }
 }

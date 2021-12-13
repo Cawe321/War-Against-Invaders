@@ -47,7 +47,7 @@ MonoBehaviour:
   objectContainer: {fileID: 6617615258458254709}
   originalObject: {fileID: 2066930970849448047}
   defaultNumberOfObjects: 0
-  defaultDamage: 1
+  defaultDamage: 100
   maxAmmunition: 0
   currAmmunition: 0
   owner: {fileID: 0}

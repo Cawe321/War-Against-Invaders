@@ -65,7 +65,10 @@ public class PlaneRunwayState : BaseState
                             circlingAngle -= 360;
                         // Continue flying around the runway at an altitude
                         if (planeEntity.flightSpeed > planeEntity.flightMinTakeOffSpeed + 10f) // Slowly reduce speed
-                            planeEntity.Decelerate();
+                        {
+                            for (int i = 0; i < stateMachine.updateFrameCooldown; ++i)
+                                planeEntity.Decelerate();
+                        }
 
                         Vector3 targetPosition = new Vector3(Mathf.Cos(circlingAngle) * circlingRadius + runwayManager.transform.position.x,
                                                                 runwayManager.transform.position.y + 50f,
@@ -116,7 +119,10 @@ public class PlaneRunwayState : BaseState
                         // Reduce the plane speed to its minimum flight speed
                         {
                             if (planeEntity.flightSpeed > planeEntity.flightMinTakeOffSpeed)
-                                planeEntity.Decelerate();
+                            {
+                                for (int i = 0; i < stateMachine.updateFrameCooldown; ++i)
+                                    planeEntity.Decelerate();
+                            }
                             if (planeEntity.flightSpeed < planeEntity.flightMinTakeOffSpeed)
                                 planeEntity.SetFlightSpeed(planeEntity.flightMinTakeOffSpeed);
                         }
@@ -141,7 +147,10 @@ public class PlaneRunwayState : BaseState
                         // Reduce the plane speed to 0f
                         {
                             if (planeEntity.flightSpeed > Mathf.Epsilon)
-                                planeEntity.Decelerate();
+                            {
+                                for (int i = 0; i < stateMachine.updateFrameCooldown; ++i)
+                                    planeEntity.Decelerate();
+                            }
                             if (planeEntity.flightSpeed < Mathf.Epsilon)
                                 planeEntity.SetFlightSpeed(0f);
                         }
@@ -175,7 +184,8 @@ public class PlaneRunwayState : BaseState
                     else
                     {
                         // Increase the plane speed
-                        planeEntity.Accelerate();
+                        for (int i = 0; i < stateMachine.updateFrameCooldown; ++i)
+                            planeEntity.Accelerate();
 
                         // Continue Taking Off
                         planeEntity.RotateToTargetDirection((assignedRunway.exitPosition.position - assignedRunway.landingTargetPosition.position).normalized);

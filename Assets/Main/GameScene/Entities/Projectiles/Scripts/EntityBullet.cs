@@ -10,6 +10,7 @@ public class EntityBullet : EntityProjectile
 
     Collider collider;
     Rigidbody rb = null;
+    TrailRenderer trailRenderer;
 
     private Vector3 prevPos;
 
@@ -55,6 +56,10 @@ public class EntityBullet : EntityProjectile
                             Debug.Log("hitted something");
                             return;
                         }
+                        else
+                        {
+                            OnHit(null, Vector3.zero);
+                        }
                     }
                     else
                     {
@@ -85,12 +90,16 @@ public class EntityBullet : EntityProjectile
             rb = GetComponent<Rigidbody>();
         if (collider == null)
             collider = GetComponent<Collider>();
+        if (trailRenderer == null)
+            trailRenderer = GetComponent<TrailRenderer>();
+
+        trailRenderer.Clear();
 
         rb.angularVelocity = Vector3.zero;
 
         // A hard false
         owner = parent.owner;
-        transform.forward = parent.transform.forward;
+        //transform.forward = parent.transform.forward;
         collider.isTrigger = false;
         Rigidbody ownerRB = parent.owner.GetComponent<Rigidbody>();
         if (ownerRB != null)
@@ -117,6 +126,10 @@ public class EntityBullet : EntityProjectile
                 {
                     OnHit(oppositionHealth, rb.velocity);
                     return;
+                }
+                else
+                {
+                    OnHit(null, Vector3.zero);
                 }
             }
             else

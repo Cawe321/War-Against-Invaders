@@ -2501,6 +2501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73e904236c7e4e047aabc742ca22b17b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDefender: 1
   mainCamera: {fileID: 723043640}
   warpDrive: {fileID: 5869830695520039152}
   earth: {fileID: 1364354281}

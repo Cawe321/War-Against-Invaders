@@ -48,7 +48,8 @@ public class PlaneInvaderBombingState : BaseState
 
         // moves towards predicted target position & accelerate
         planeEntity.RotateToTargetPosition(targetEntity.transform.position);
-        planeEntity.Accelerate(); // No need to check for max flight speed since it has already been handled in this function
+        for (int i = 0; i < stateMachine.updateFrameCooldown; ++i)
+            planeEntity.Accelerate(); // No need to check for max flight speed since it has already been handled in this function
 
         if (Vector3.Angle(targetEntity.transform.position - planeEntity.transform.position, planeEntity.transform.forward) <= maxShootAngle)
         {

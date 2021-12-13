@@ -97,7 +97,8 @@ public class PlaneTravelState : BaseState
                 // if still remaining on this state, do what this state does
                 // moves towards target position & accelerate
                 planeEntity.RotateToTargetPosition(targetPosOffset);
-                planeEntity.Accelerate(); // No need to check for max flight speed since it has already been handled in this function
+                for (int i = 0; i < stateMachine.updateFrameCooldown; ++i)
+                    planeEntity.Accelerate(); // No need to check for max flight speed since it has already been handled in this function
             }
         }
 

@@ -70,6 +70,7 @@ public class MainMenuManager : SingletonObject<MainMenuManager>
             DataManager.instance.SetLastTeam(DataManager.instance.chosenGameTeam);
             SceneTransitionManager.instance.SwitchScene("MainMenu_Invaders", SceneTransitionManager.ENTRANCE_TYPE.FADE_IN, SceneTransitionManager.EXIT_TYPE.FADE_OUT);
         }
+        AudioManager.instance.StopBGM();
     }
 
     public void ToggleBattleMenu(bool toOpen)
@@ -81,11 +82,14 @@ public class MainMenuManager : SingletonObject<MainMenuManager>
     public void BattleSelection(BattleModeSelection_Class selectionClass)
     {
         selectedBattlemode = selectionClass.selection;
+        AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._buttonClickSFX);
     }
 
     public void GoButton()
     {
-        switch(selectedBattlemode)
+        AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._uiCloseSound);
+        AudioManager.instance.StopBGM();
+        switch (selectedBattlemode)
         {
             case BattleModeSelection_Class.BATTLEMODE_SELECTION.SINGLEPLAYER:
                 {
@@ -93,6 +97,7 @@ public class MainMenuManager : SingletonObject<MainMenuManager>
                     return;
                 }
         }
+       
     }
 
     public void ToggleSettingsMenu()
@@ -101,10 +106,12 @@ public class MainMenuManager : SingletonObject<MainMenuManager>
         if (openSettings)
         {
             SceneManager.LoadSceneAsync("SettingScene", LoadSceneMode.Additive);
+            AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._uiOpenSound);
         }
         else
         {
             SceneManager.UnloadSceneAsync("SettingScene");
+            AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._uiCloseSound);
         }
     }
 }

@@ -438,6 +438,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MiniExplosionVFX
       objectReference: {fileID: 0}
+    - target: {fileID: 4851780503602277444, guid: 4b51027cca24a3c4f905165580e55abf, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4851780503602277445, guid: 4b51027cca24a3c4f905165580e55abf, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -481,6 +485,46 @@ PrefabInstance:
     - target: {fileID: 4851780503602277445, guid: 4b51027cca24a3c4f905165580e55abf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4851780504800992316, guid: 4b51027cca24a3c4f905165580e55abf, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4851780504800992316, guid: 4b51027cca24a3c4f905165580e55abf, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 4851780504800992316, guid: 4b51027cca24a3c4f905165580e55abf, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4851780504800992316, guid: 4b51027cca24a3c4f905165580e55abf, type: 3}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4851780504800992316, guid: 4b51027cca24a3c4f905165580e55abf, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 4851780504800992316, guid: 4b51027cca24a3c4f905165580e55abf, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minScalar
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 4851780505308589366, guid: 4b51027cca24a3c4f905165580e55abf, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4851780505308589366, guid: 4b51027cca24a3c4f905165580e55abf, type: 3}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4851780505308589366, guid: 4b51027cca24a3c4f905165580e55abf, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4851780505308589366, guid: 4b51027cca24a3c4f905165580e55abf, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minScalar
+      value: 300
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b51027cca24a3c4f905165580e55abf, type: 3}

@@ -1,15 +1,16 @@
-using JetBrains.Annotations;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements.Experimental;
+
 
 /// <summary>
 /// Entity script for planes. Requires <see cref="BaseEntity"/>.
 /// </summary>
 [RequireComponent(typeof(BaseEntity))]
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(AudioSource))]
 public class PlaneEntity : MonoBehaviour
 {
     [Header("Base Settings")]
@@ -43,6 +44,8 @@ public class PlaneEntity : MonoBehaviour
     /* in-script values*/
     Rigidbody rb;
 
+    AudioSource jetEngineAudio;
+
     float storedFlightSpeed;
 
     [HideInInspector]
@@ -74,6 +77,8 @@ public class PlaneEntity : MonoBehaviour
         baseEntity = GetComponent<BaseEntity>();
         rb = GetComponent<Rigidbody>();
         stateMachine = GetComponent<StateMachine>();
+        jetEngineAudio = GetComponent<AudioSource>();
+        jetEngineAudio.clip = AudioManager.instance.audioFiles._flightEngineSound;
         jetEngineVFXControllers = GetComponentsInChildren<JetEngineVFXController>();
         rb.inertiaTensor = new Vector3(30f, 30f, 30f);
         StartCoroutine(WaitForBaseEntity(baseEntity));
@@ -144,8 +149,8 @@ public class PlaneEntity : MonoBehaviour
             {
                 jet.percentage = speedPercent;
             }
+            jetEngineAudio.volume = flightSpeed / flightMaxSpeed;
 
-            
             if (flightSpeed < flightMinTakeOffSpeed && transform.forward.y > -0.95f)
                 rb.AddRelativeTorque(Vector3.right * Mathf.Abs(1f - transform.forward.y) * flightEnginePower);
 
@@ -189,8 +194,9 @@ public class PlaneEntity : MonoBehaviour
             foreach (JetEngineVFXController jet in jetEngineVFXControllers)
             {
                 jet.percentage = 0f;
+                
             }
-
+            jetEngineAudio.volume = 0f;
         }
 
         
@@ -325,7 +331,7 @@ public class PlaneEntity : MonoBehaviour
         {
             // Turning off engine
             rb.useGravity = true;
-            if (storedFlightSpeed > flightMinTakeOffSpeed)
+            if (flightSpeed > flightMinTakeOffSpeed)
                 storedFlightSpeed = flightMinTakeOffSpeed;
             else
                 storedFlightSpeed = flightSpeed;

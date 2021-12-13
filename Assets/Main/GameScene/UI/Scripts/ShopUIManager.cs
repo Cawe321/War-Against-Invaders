@@ -37,6 +37,7 @@ public class ShopUIManager : MonoBehaviour
     {
         statusReportMenu.gameObject.SetActive(true);
         reinforcementMenu.gameObject.SetActive(false);
+        AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._buttonClickSFX);
 
     }
 
@@ -44,5 +45,6 @@ public class ShopUIManager : MonoBehaviour
     {
         reinforcementMenu.gameObject.SetActive(true);
         statusReportMenu.gameObject.SetActive(false);
+        AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._buttonClickSFX);
     }
 }

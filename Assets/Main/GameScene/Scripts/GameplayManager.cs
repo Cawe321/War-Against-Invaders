@@ -87,10 +87,16 @@ public class GameplayManager : SingletonObject<GameplayManager>
         gameplayPhase = GAMEPLAY_PHASE.WAIT;
 
         defenderSpawnWave = new Dictionary<EntityTypes, int>();
-        defenderSpawnWave.Add(EntityTypes.F16, 1);
+        AddToSpawnWave(TEAM_TYPE.DEFENDERS, EntityTypes.F16, 3);
+        AddToSpawnWave(TEAM_TYPE.DEFENDERS, EntityTypes.StealthWing, 2);
+        //defenderSpawnWave.Add(EntityTypes.F16, 3);
+        //defenderSpawnWave.Add(EntityTypes.StealthWing, 2);
 
         invaderSpawnWave = new Dictionary<EntityTypes, int>();
-        invaderSpawnWave.Add(EntityTypes.Mako, 3);
+        AddToSpawnWave(TEAM_TYPE.INVADERS, EntityTypes.Deathrow, 3);
+        AddToSpawnWave(TEAM_TYPE.INVADERS, EntityTypes.Mako, 2);
+        //invaderSpawnWave.Add(EntityTypes.Deathrow, 3);
+        //invaderSpawnWave.Add(EntityTypes.Mako, 2);
 
         gameTimer = 0f;
         //StartIntro();
@@ -139,7 +145,7 @@ public class GameplayManager : SingletonObject<GameplayManager>
                         defenderSpawnCooldown = originalSpawnCooldown;
                         invaderSpawnCooldown = originalSpawnCooldown;
 
-
+                        AudioManager.instance.PlayBGM(AudioManager.instance.audioFiles._gameSceneBGM);
                     }
                     break;
                 }

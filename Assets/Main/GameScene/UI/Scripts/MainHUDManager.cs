@@ -65,13 +65,14 @@ public class MainHUDManager : SingletonObject<MainHUDManager>
         {
             PlayerManager.instance.isFocused = false;
             shopUI.gameObject.SetActive(true);
-
+            AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._uiOpenSound);
         }
         else
         {
             if (!openSettings)
                 PlayerManager.instance.isFocused = true;
             shopUI.gameObject.SetActive(false);
+            AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._uiCloseSound);
         }
     }
 
@@ -82,12 +83,14 @@ public class MainHUDManager : SingletonObject<MainHUDManager>
         {
             SceneManager.LoadSceneAsync("SettingScene", LoadSceneMode.Additive);
             PlayerManager.instance.isFocused = false;
+            AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._uiOpenSound);
         }
         else
         {
             SceneManager.UnloadSceneAsync("SettingScene");
             if (!openShop)
                 PlayerManager.instance.isFocused = true;
+            AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._uiCloseSound);
         }
     }
 
