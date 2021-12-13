@@ -51,6 +51,10 @@ public class TurretEntity : MonoBehaviour
                 GiveCoinsOnDestruction();
             }
         }
+        else
+        {
+            baseEntity.ReloadAllWeapons();
+        }
     }
     /// <summary>
     /// Gives coins on destruction of this turret entity

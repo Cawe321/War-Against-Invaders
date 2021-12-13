@@ -29,6 +29,7 @@ public class EntityExplosion : MonoBehaviour
         explosionVFX.transform.position = position;
         explosionVFX.transform.localScale = new Vector3(explosionRadius, explosionRadius, explosionRadius);
         explosionVFX.SetActive(true);
+        explosionVFX.GetComponent<AudioSource>().Play();
         DestroyAfterSeconds destroyScript = explosionVFX.AddComponent<DestroyAfterSeconds>();
         destroyScript.DestroyAfterWaiting(5);
         AreaDamage();

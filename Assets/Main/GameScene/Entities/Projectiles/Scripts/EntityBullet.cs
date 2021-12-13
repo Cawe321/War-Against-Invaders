@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[RequireComponent(typeof(AudioSource))]
 public class EntityBullet : EntityProjectile
 {
     [SerializeField]
@@ -18,8 +18,11 @@ public class EntityBullet : EntityProjectile
     private float lifespan = 10f;
     private float currLifespan;
 
+    AudioSource hitAudio;
+
     private void Awake()
     {
+        hitAudio = GetComponent<AudioSource>();
         currLifespan = lifespan;
     }
 
@@ -155,6 +158,7 @@ public class EntityBullet : EntityProjectile
         if (targetHealth != null)
             targetHealth.TakeDamage(owner, finalDamage, impulse * 0.1f);
 
+        hitAudio.Play();
         gameObject.SetActive(false);
 
     }
