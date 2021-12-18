@@ -50,7 +50,7 @@ public class IntroSceneManager : MonoBehaviour
         LOGIN_UI.gameObject.SetActive(true);
         WAITING_UI.gameObject.SetActive(false);
 
-        SettingsManager.LoadSettingsAndApply();
+        //SettingsManager.LoadSettingsAndApply();
         audioSource = GetComponent<AudioSource>();
 
         if (corridorManager == null)

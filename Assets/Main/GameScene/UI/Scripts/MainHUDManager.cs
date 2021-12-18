@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainHUDManager : SingletonObject<MainHUDManager>
 {
@@ -18,6 +19,10 @@ public class MainHUDManager : SingletonObject<MainHUDManager>
     TextMeshProUGUI spawnWaveTimer;
     [SerializeField]
     RectTransform spawnWaveTimerParent;
+    [SerializeField]
+    Button spectateButton;
+    [SerializeField]
+    TextMeshProUGUI spectateButtonText;
 
     bool openSettings = false;
     bool openShop = false;
@@ -54,6 +59,15 @@ public class MainHUDManager : SingletonObject<MainHUDManager>
                 Debug.LogError("MainHUDManager: SpawnWaveTimer is not defined to handle the team of the current player!");
             }
             spawnWaveTimer.text = "Reinforcements E.T.A:\n<i>" + seconds.ToString() + "</i>";
+        }
+
+        // Spectate Button
+        {
+            spectateButton.gameObject.SetActive(!PlayerManager.instance.isControllingEntity);
+            if (PlayerManager.instance.freeRoamCamera.isSpectate)
+                spectateButtonText.text = "| ON";
+            else
+                spectateButtonText.text = "| OFF";
         }
     }
 
@@ -97,5 +111,17 @@ public class MainHUDManager : SingletonObject<MainHUDManager>
     public void ToggleSpawnWaveUI(bool visible)
     {
         spawnWaveTimerParent.gameObject.SetActive(visible);
+    }
+
+    public void ToggleSpectate()
+    {
+        if (PlayerManager.instance.freeRoamCamera.isSpectate)
+        {
+            PlayerManager.instance.freeRoamCamera.StopSpectate();
+        }
+        else
+        {
+            PlayerManager.instance.freeRoamCamera.StartSpectate();
+        }
     }
 }

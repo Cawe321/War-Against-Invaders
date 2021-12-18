@@ -47,6 +47,12 @@ public class PlayerManager : SingletonObject<PlayerManager>
     {
         if (baseEntity.CheckControlAccess())
         {
+            if (freeRoamCamera.isSpectate)
+            {
+                freeRoamCamera.StopSpectate();
+            }
+
+
             controllingEntity = baseEntity;
             baseEntity.playerControlling = playerName;
             Debug.Log("Player has taken over");
@@ -73,6 +79,7 @@ public class PlayerManager : SingletonObject<PlayerManager>
 
     public void DisconnectFromEntity()
     {
+        
         controllingEntity.playerControlling = "";
 
         PlaneEntity planeEntity = controllingEntity.GetComponent<PlaneEntity>();

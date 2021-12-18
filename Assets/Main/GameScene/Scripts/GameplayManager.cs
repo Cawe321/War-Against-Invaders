@@ -20,6 +20,9 @@ public class GameplayManager : SingletonObject<GameplayManager>
     [SerializeField]
     CanvasGroup waitForPlayersCanvas;
 
+    public GameObject defenderPlaneContainer;
+    public GameObject invaderPlaneContainer;
+
     [Header("Settings")]
     [SerializeField]
     Transform defendersSpawnLocation;
@@ -266,17 +269,29 @@ public class GameplayManager : SingletonObject<GameplayManager>
             if (i == 0)
             {
                 GameObject go = Instantiate(entityList.GetCombatEntityObject(objectsToSpawn[i]), originalSpawnPos, quaternion);
+                if (team == TEAM_TYPE.DEFENDERS)
+                    go.transform.parent = defenderPlaneContainer.transform;
+                else if (team == TEAM_TYPE.INVADERS)
+                    go.transform.parent = invaderPlaneContainer.transform;
                 StartCoroutine(WaitForTwoFramesToStartPlane(go.GetComponent<PlaneEntity>()));
             }
             else if (i % 2 == 1)
             {
                 distance += spawnDistanceOffset;
                 GameObject go = Instantiate(entityList.GetCombatEntityObject(objectsToSpawn[i]), originalSpawnPos + new Vector3(distance, 0f, 0f), quaternion);
+                if (team == TEAM_TYPE.DEFENDERS)
+                    go.transform.parent = defenderPlaneContainer.transform;
+                else if (team == TEAM_TYPE.INVADERS)
+                    go.transform.parent = invaderPlaneContainer.transform;
                 StartCoroutine(WaitForTwoFramesToStartPlane(go.GetComponent<PlaneEntity>()));
             }
             else
             {
                 GameObject go = Instantiate(entityList.GetCombatEntityObject(objectsToSpawn[i]), originalSpawnPos + new Vector3(-distance, 0f, 0f), quaternion);
+                if (team == TEAM_TYPE.DEFENDERS)
+                    go.transform.parent = defenderPlaneContainer.transform;
+                else if (team == TEAM_TYPE.INVADERS)
+                    go.transform.parent = invaderPlaneContainer.transform;
                 StartCoroutine(WaitForTwoFramesToStartPlane(go.GetComponent<PlaneEntity>()));
             }
         }
