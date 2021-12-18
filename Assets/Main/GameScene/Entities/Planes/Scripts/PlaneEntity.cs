@@ -306,19 +306,19 @@ public class PlaneEntity : MonoBehaviour
         Vector3 localDir = transform.InverseTransformDirection(targetDir);
         if (localDir.x < Mathf.Epsilon && localDir.x > -Mathf.Epsilon && localDir.z < 0f) // target is directly behind
         {
-            UpdateRotation(Mathf.Clamp(localDir.z, -1f, 1f), Mathf.Clamp(localDir.y, -1f, 1f));
+            UpdateRotation(Mathf.Clamp(localDir.z, -0.5f, 0.5f), Mathf.Clamp(localDir.y, -0.5f, 0.5f));
         }
         else
         {
             if (localDir.z < 0f)
             {
                 if (localDir.x < 0f)
-                    UpdateRotation(Mathf.Clamp(localDir.x - Mathf.Abs(localDir.z), -1f, 1f), Mathf.Clamp(localDir.y, -1f, 1f));
+                    UpdateRotation(Mathf.Clamp(localDir.x - Mathf.Abs(localDir.z), -0.5f, 0.5f), Mathf.Clamp(localDir.y, -0.5f, 0.5f));
                 else
-                    UpdateRotation(Mathf.Clamp(localDir.x + Mathf.Abs(localDir.z), -1f, 1f), Mathf.Clamp(localDir.y, -1f, 1f));
+                    UpdateRotation(Mathf.Clamp(localDir.x + Mathf.Abs(localDir.z), -0.5f, 0.5f), Mathf.Clamp(localDir.y, -0.5f, 0.5f));
             }
             else
-                UpdateRotation(Mathf.Clamp(localDir.x, -1f, 1f), Mathf.Clamp(localDir.y, -1f, 1f));
+                UpdateRotation(Mathf.Clamp(localDir.x, -0.5f, 0.5f), Mathf.Clamp(localDir.y, -0.5f, 0.5f));
         }
 
 

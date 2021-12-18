@@ -88,21 +88,21 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_10e1431fd5e44955a472306c1edba956: 50
-    - Vector1_24596a87f0f44708b7593d6f8f3f3bf4: 0
+    - Vector1_10e1431fd5e44955a472306c1edba956: 45.5
+    - Vector1_24596a87f0f44708b7593d6f8f3f3bf4: 0.1
     - Vector1_275332479bc04db19d9dd7851efce514: 0.003
-    - Vector1_3227d0744bda4042bd3b761e5c51329a: -22.9
-    - Vector1_578d935ecfa14666bf2d5ee7e8e0bd80: 250
-    - Vector1_5ba0e04f4ada45c49ab14f23ea0fa4db: 0.0075
+    - Vector1_3227d0744bda4042bd3b761e5c51329a: -33.3
+    - Vector1_578d935ecfa14666bf2d5ee7e8e0bd80: 100
+    - Vector1_5ba0e04f4ada45c49ab14f23ea0fa4db: 0.005
     - Vector1_7499b77c544a4ff5bc1cead302468bbd: 1
-    - Vector1_81915c92d4dd4b0c959da617da2dc551: 0.0175
+    - Vector1_81915c92d4dd4b0c959da617da2dc551: 1
     - Vector1_9739357dee3c4fd182c7e192661203ea: 0
-    - Vector1_9ebb81fa8d53401dab87115846833988: 1
+    - Vector1_9ebb81fa8d53401dab87115846833988: 0.01
     - Vector1_a7120747d43b49b7ae8749e3e2494154: 2
-    - Vector1_c088a93aa87946a4a4d0c05bc74249d1: 300
-    - Vector1_d3604d8e3346488893e5d3457fa0c21c: 10
+    - Vector1_c088a93aa87946a4a4d0c05bc74249d1: 1000
+    - Vector1_d3604d8e3346488893e5d3457fa0c21c: 1
     - Vector1_ecd0423b26e340cf9b8f97c5bcba4718: 1
-    - Vector1_f6e8d08b2649476cb3f1f593f7865921: -46.91
+    - Vector1_f6e8d08b2649476cb3f1f593f7865921: -72.4
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -130,12 +130,12 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_3ebcc4e0440447c9958b61b0a8a3e4dc: {r: 0, g: 0.67999667, b: 0.8490566, a: 1}
+    - Color_3ebcc4e0440447c9958b61b0a8a3e4dc: {r: 0, g: 0.797235, b: 1, a: 1}
     - Color_8e380c78337f42c884f757da540acac1: {r: 1, g: 0, b: 0, a: 1}
     - Color_9848450c2e71471db388af1d23166065: {r: 0.043502998, g: 0.21529193, b: 0.49056602, a: 1}
     - Color_de54cd62ef6a4374a05b95023af01ec7: {r: 0, g: 0.7999997, b: 1, a: 1}
     - Vector2_10f80d1aae0e4187b8da378277bb1204: {r: 1, g: 3, b: 0, a: 0}
-    - Vector2_b0831f70128c423fbb3165b61096e9e2: {r: 0.3, g: 1, b: 0, a: 0}
+    - Vector2_b0831f70128c423fbb3165b61096e9e2: {r: 0.15, g: 0.5, b: 0, a: 0}
     - Vector2_c2aebd98ac334427a722723602e1902b: {r: 0.3, g: 1, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

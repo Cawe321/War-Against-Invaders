@@ -49,8 +49,7 @@ public class InvaderStatusReport : MonoBehaviour
             {
                 if (selectedButton.transform == fuelTanksHealthText[i].transform.parent)
                 {
-                    if ((int)fuelTanks[i].currHealth == (int)fuelTanks[i].maxHealth)
-                        confirmMenu.AskRepair(fuelTanks[i], "Fuel Tank" , ResourceReference.instance.currencySettings.fuelTankRepairCost);
+                    confirmMenu.AskRepair(fuelTanks[i], "Fuel Tank" , ResourceReference.instance.currencySettings.fuelTankRepairCost);
                     return;
                 }
             }
@@ -60,8 +59,7 @@ public class InvaderStatusReport : MonoBehaviour
             {
                 if (selectedButton.transform == thrustersHealthText[i].transform.parent)
                 {
-                    if ((int)thrusters[i].currHealth == (int)thrusters[i].maxHealth)
-                        confirmMenu.AskRepair(thrusters[i], "Thruster", ResourceReference.instance.currencySettings.thrusterRepairCost);
+                    confirmMenu.AskRepair(thrusters[i], "Thruster", ResourceReference.instance.currencySettings.thrusterRepairCost);
                     return;
                 }
             }

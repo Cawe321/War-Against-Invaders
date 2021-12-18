@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   immortalObject: 0
-  maxHealth: 150
+  maxHealth: 75
   isCoreComponent: 1
   stabilityScore: 1
   destructionType: 0
@@ -308,7 +308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   immortalObject: 0
-  maxHealth: 150
+  maxHealth: 75
   isCoreComponent: 1
   stabilityScore: 1
   destructionType: 0
@@ -544,7 +544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   immortalObject: 0
-  maxHealth: 200
+  maxHealth: 100
   isCoreComponent: 1
   stabilityScore: 1
   destructionType: 1

@@ -100,13 +100,12 @@ public class EntityBullet : EntityProjectile
 
         rb.angularVelocity = Vector3.zero;
 
-        // A hard false
         owner = parent.owner;
         //transform.forward = parent.transform.forward;
         collider.isTrigger = false;
         Rigidbody ownerRB = parent.owner.GetComponent<Rigidbody>();
         if (ownerRB != null)
-            rb.velocity = ownerRB.velocity;
+            rb.velocity = transform.forward * ownerRB.velocity.magnitude;
         rb.AddForce(transform.forward * outputForce, ForceMode.Acceleration);
         //rb.AddForce(Vector3.zero, ForceMode.Impulse);
     }

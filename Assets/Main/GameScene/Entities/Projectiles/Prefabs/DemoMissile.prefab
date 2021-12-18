@@ -4930,7 +4930,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionVFXPrefab: {fileID: 4851780503602277444, guid: 4b51027cca24a3c4f905165580e55abf, type: 3}
   owner: {fileID: 0}
-  explosionRadius: 20
+  explosionRadius: 100
   damage: 0
 --- !u!1001 &5970931166546303173
 PrefabInstance:

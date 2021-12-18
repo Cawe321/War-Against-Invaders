@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   immortalObject: 0
-  maxHealth: 300
+  maxHealth: 150
   isCoreComponent: 1
   stabilityScore: 1
   destructionType: 0
@@ -228,7 +228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   immortalObject: 0
-  maxHealth: 300
+  maxHealth: 150
   isCoreComponent: 1
   stabilityScore: 1
   destructionType: 0
@@ -376,7 +376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   immortalObject: 0
-  maxHealth: 300
+  maxHealth: 150
   isCoreComponent: 1
   stabilityScore: 1
   destructionType: 0
@@ -523,7 +523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   immortalObject: 0
-  maxHealth: 300
+  maxHealth: 150
   isCoreComponent: 1
   stabilityScore: 1
   destructionType: 0
@@ -762,7 +762,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   immortalObject: 0
-  maxHealth: 400
+  maxHealth: 200
   isCoreComponent: 1
   stabilityScore: 1
   destructionType: 1

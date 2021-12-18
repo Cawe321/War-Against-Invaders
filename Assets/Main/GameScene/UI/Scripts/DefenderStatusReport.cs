@@ -41,9 +41,8 @@ public class DefenderStatusReport : MonoBehaviour
         for (int i = 0; i < warehouseHealthText.Length; ++i)
         {
             if (selectedButton.transform == warehouseHealthText[i].transform.parent)
-            {
-                if ((int)warehouses[i].currHealth == (int)warehouses[i].maxHealth)
-                    confirmMenu.AskRepair(warehouses[i], "Warehouse", ResourceReference.instance.currencySettings.warehouseRepairCost);
+            {     
+                confirmMenu.AskRepair(warehouses[i], "Warehouse", ResourceReference.instance.currencySettings.warehouseRepairCost);
                 return;
             }
         }

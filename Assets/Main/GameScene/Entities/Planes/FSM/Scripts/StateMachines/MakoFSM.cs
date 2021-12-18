@@ -46,7 +46,6 @@ public class MakoFSM : StateMachine
         if (isLastFramePlayerControlled == true && planeEntity.baseEntity.isAnyPlayerControlling == false)
         {
             ChangeStateByName(GetInitialState().stateName);
-            return;
         }
 
         if (!planeEntity.baseEntity.isAnyPlayerControlling)
