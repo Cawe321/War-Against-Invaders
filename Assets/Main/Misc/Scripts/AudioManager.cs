@@ -40,24 +40,27 @@ public class AudioManager : SingletonObject<AudioManager>
 
     IEnumerator SwitchBGM(AudioClip newBGM)
     {
-        if (player_BGM.clip != null)
+        if (newBGM != player_BGM.clip)
         {
-            while (true)
+            if (player_BGM.clip != null)
             {
-                yield return new WaitForEndOfFrame();
-                if (player_BGM.volume > Mathf.Epsilon)
-                    player_BGM.volume -= Time.deltaTime * SwitchBGMDuration * BGMVolume;
-                else
+                while (true)
                 {
-                    StopBGM();
-                    break;
+                    yield return new WaitForEndOfFrame();
+                    if (player_BGM.volume > Mathf.Epsilon)
+                        player_BGM.volume -= Time.deltaTime * SwitchBGMDuration * BGMVolume;
+                    else
+                    {
+                        player_BGM.Stop();
+                        break;
+                    }
                 }
             }
+            player_BGM.clip = newBGM;
+            player_BGM.volume = BGMVolume;
+            if (newBGM != null)
+                player_BGM.Play();
         }
-        player_BGM.clip = newBGM;
-        player_BGM.volume = BGMVolume;
-        if (newBGM != null)
-            player_BGM.Play();
     }
 
     private void Start()

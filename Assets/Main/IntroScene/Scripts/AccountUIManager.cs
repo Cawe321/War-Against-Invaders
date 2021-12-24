@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class AccountUIManager : MonoBehaviour
@@ -17,6 +18,7 @@ public class AccountUIManager : MonoBehaviour
 
     public void LoginSubmit()
     {
+        ProcessingMenu.SetActive(true);
         var request = new LoginWithEmailAddressRequest
         {
             Email = LoginEmailInput.text,
@@ -34,6 +36,9 @@ public class AccountUIManager : MonoBehaviour
     private void OnLoginSuccess(LoginResult result)
     {
         DataManager.instance.userPlayFabID = result.PlayFabId;
+        PlayerPrefs.SetString("LastEmail", LoginEmailInput.text);
+        PlayerPrefs.Save();
+        ProcessingMenu.SetActive(false);
         OpenNoticeMenu("Login success!", NOTICE_MENU_TYPE.LOGIN_SUCCESS);
     }
     #endregion
@@ -53,7 +58,7 @@ public class AccountUIManager : MonoBehaviour
             RegisterErrorMessageText.text = "Password is too short! It requires at least 6 characters.";
             return;
         }
-
+        ProcessingMenu.SetActive(true);
         var request = new RegisterPlayFabUserRequest
         {
             Email = RegisterEmailInput.text,
@@ -67,6 +72,7 @@ public class AccountUIManager : MonoBehaviour
     private void OnRegisterSuccess(RegisterPlayFabUserResult result)
     {
         DataManager.instance.userPlayFabID = result.PlayFabId;
+        ProcessingMenu.SetActive(false);
         OpenNoticeMenu("Registration complete! You are now logged in.", NOTICE_MENU_TYPE.REGISTER_SUCCESS);
     }
 
@@ -85,6 +91,7 @@ public class AccountUIManager : MonoBehaviour
 
     public void ForgotSubmit()
     {
+        ProcessingMenu.SetActive(true);
         var request = new SendAccountRecoveryEmailRequest
         {
             Email = ForgotEmailInput.text,
@@ -101,6 +108,7 @@ public class AccountUIManager : MonoBehaviour
 
     private void OnForgotReset(SendAccountRecoveryEmailResult obj)
     {
+        ProcessingMenu.SetActive(false);
         OpenNoticeMenu("An email with instructions has been sent to you.", NOTICE_MENU_TYPE.FORGOTPASSWORD_SUCCESS);
     }
     #endregion
@@ -108,6 +116,7 @@ public class AccountUIManager : MonoBehaviour
     [Header("References - Misc")]
     public RectTransform NoticeMenu;
     public Text NoticeMenuText;
+    public GameObject ProcessingMenu;
     public enum NOTICE_MENU_TYPE
     {
         LOGIN_SUCCESS,
@@ -119,13 +128,71 @@ public class AccountUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        ProcessingMenu.SetActive(false);
+
+        if (PlayerPrefs.HasKey("LastEmail"))
+        {
+            LoginEmailInput.text = PlayerPrefs.GetString("LastEmail");
+        }
+        LoginEmailInput.Select();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // Login
+        {
+            if (EventSystem.current.currentSelectedGameObject == LoginEmailInput.gameObject)
+            {
+                if (Input.GetKeyDown(KeyCode.Tab))
+                {
+                    LoginPasswordInput.Select();
+                }
+            }
+            else if (EventSystem.current.currentSelectedGameObject == LoginPasswordInput.gameObject)
+            {
+                if (Input.GetKeyDown(KeyCode.Return))
+                {
+                    LoginSubmit();
+                }
+            }
+        }
+
+        // Register
+        {
+            if (EventSystem.current.currentSelectedGameObject == RegisterEmailInput.gameObject)
+            {
+                if (Input.GetKeyDown(KeyCode.Tab))
+                {
+                    RegisterNameInput.Select();
+                }
+            }
+            if (EventSystem.current.currentSelectedGameObject == RegisterNameInput.gameObject)
+            {
+                if (Input.GetKeyDown(KeyCode.Tab))
+                {
+                    RegisterPasswordInput.Select();
+                }
+            }
+            if (EventSystem.current.currentSelectedGameObject == RegisterPasswordInput.gameObject)
+            {
+                if (Input.GetKeyDown(KeyCode.Return))
+                {
+                    RegisterSubmit();
+                }
+            }
+        }
+
+        // Forgot Password
+        {
+            if (EventSystem.current.currentSelectedGameObject == ForgotEmailInput.gameObject)
+            {
+                if (Input.GetKeyDown(KeyCode.Return))
+                {
+                    ForgotSubmit();
+                }
+            }
+        }
     }
 
     public void OpenRegister()

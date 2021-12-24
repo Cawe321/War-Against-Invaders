@@ -90,7 +90,7 @@ public class InventoryManager : MonoBehaviour
     void Start()
     {
         if (DataManager.instance != null)
-            inventoryTeam = DataManager.instance.lastTeam;
+            inventoryTeam = DataManager.instance.chosenGameTeam;
 
         inventoryAnimManager = GetComponent<InventoryAnimManager>();
         inventoryAnimManager.finishAnim.AddListener(OnAnimDone);
