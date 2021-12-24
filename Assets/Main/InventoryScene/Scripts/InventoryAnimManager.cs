@@ -7,14 +7,14 @@ public class InventoryAnimManager : MonoBehaviour
 {
     public UnityEvent finishAnim;
     
-    public enum INVENTORY_PHASE
+    public enum ANIM_PHASE
     {
         OPENING_DOOR,
         MOVEMENT,
         VIEWING,
     };
     [HideInInspector]
-    public INVENTORY_PHASE inventoryPhase;
+    public ANIM_PHASE animPhase;
 
     Camera mainCamera;
 
@@ -37,16 +37,23 @@ public class InventoryAnimManager : MonoBehaviour
     {
         // Cache the camera
         mainCamera = Camera.main;
-        inventoryPhase = INVENTORY_PHASE.OPENING_DOOR;
+        animPhase = ANIM_PHASE.OPENING_DOOR;
         cameraDirection = cameraDestination.position - mainCamera.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch (inventoryPhase)
+        if (animPhase != ANIM_PHASE.VIEWING) // If anim is playing
         {
-            case INVENTORY_PHASE.OPENING_DOOR:
+            if (Input.GetMouseButtonDown(0)) // If left mouse button clicked, skip anim
+                SkipAnim();
+        }
+        else return;
+            
+        switch (animPhase)
+        {
+            case ANIM_PHASE.OPENING_DOOR:
                 {
                     currDoorDistance += doorDistance * (Time.deltaTime / doorDuration);
                     leftDoor.transform.localPosition = new Vector3(-currDoorDistance, leftDoor.transform.localPosition.y, leftDoor.transform.localPosition.z);
@@ -54,18 +61,17 @@ public class InventoryAnimManager : MonoBehaviour
 
                     if (currDoorDistance > doorDistance)
                     {
-                        inventoryPhase = INVENTORY_PHASE.MOVEMENT;
+                        animPhase = ANIM_PHASE.MOVEMENT;
                     }
 
                     break;
                 }
-            case INVENTORY_PHASE.MOVEMENT:
+            case ANIM_PHASE.MOVEMENT:
                 {
                     mainCamera.transform.localPosition += cameraDirection * (Time.deltaTime / movementDuration);
                     if ((mainCamera.transform.position - cameraDestination.transform.position).sqrMagnitude < 1f)
                     {
-                        mainCamera.transform.position = cameraDestination.transform.position;
-                        AnimationDone();
+                        SkipAnim();
                     }
                     break;
                 }
@@ -75,7 +81,13 @@ public class InventoryAnimManager : MonoBehaviour
 
     void AnimationDone()
     {
-        inventoryPhase = INVENTORY_PHASE.VIEWING;
+        animPhase = ANIM_PHASE.VIEWING;
         finishAnim.Invoke();
+    }
+
+    void SkipAnim()
+    {
+        mainCamera.transform.position = cameraDestination.transform.position;
+        AnimationDone();
     }
 }

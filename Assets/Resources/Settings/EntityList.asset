@@ -26,7 +26,7 @@ MonoBehaviour:
     entityTeam: 2
     entityIcon: {fileID: 21300000, guid: 55edbb9a05f2c3d46ba0ea04c7e6a073, type: 3}
     gameModel: {fileID: 8648475845583234039, guid: 5633710eb1c63e3438b37ce841077200, type: 3}
-    displayModel: {fileID: 4514817367369034372, guid: 4b918346c0bed2b45844f99ce451ec3a, type: 3}
+    displayModel: {fileID: 4514817367369034372, guid: 7dc7fba9bec8eba49b82f43f75ea232b, type: 3}
   - entityName: Whitebeard
     entityType: 4
     entityDescription: Nothing to say here.

@@ -13,9 +13,9 @@ public class Button3D : MonoBehaviour
     [SerializeField] Vector3 scaleUp = new Vector3(1.25f, 1.25f, 1.25f);
 
     [Header("Events")]
-    [SerializeField] UnityEvent OnHoverEnter;
-    [SerializeField] UnityEvent OnHoverExit;
-    [SerializeField] UnityEvent OnMouseClick;
+    [SerializeField] public UnityEvent OnHoverEnter;
+    [SerializeField] public UnityEvent OnHoverExit;
+    [SerializeField] public UnityEvent OnMouseClick;
 
     Vector3 originalScale;
 

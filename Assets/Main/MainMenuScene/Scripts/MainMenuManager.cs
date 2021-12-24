@@ -73,6 +73,15 @@ public class MainMenuManager : SingletonObject<MainMenuManager>
         AudioManager.instance.StopBGM();
     }
 
+    public void GoToInventory()
+    {
+        if (openSettings)
+            return;
+        DataManager.instance.chosenGameTeam = TEAM_TYPE.DEFENDERS;
+        DataManager.instance.SetLastTeam(DataManager.instance.chosenGameTeam);
+        SceneTransitionManager.instance.SwitchScene("InventoryScene", SceneTransitionManager.ENTRANCE_TYPE.FADE_IN, SceneTransitionManager.EXIT_TYPE.FADE_OUT);
+    }
+
     public void ToggleBattleMenu(bool toOpen)
     {
         if (!openSettings)
