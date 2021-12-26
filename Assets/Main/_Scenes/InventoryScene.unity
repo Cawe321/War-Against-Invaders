@@ -6590,6 +6590,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityList: {fileID: 11400000, guid: bf1bd3294b95ec648ab272ad676165dc, type: 2}
   inventoryTeam: 3
+  equipmentColor: {fileID: 11400000, guid: eca7902d8afa2814aa7044950e3bdc9e, type: 2}
   objectContainer: {fileID: 1813384993}
   modelSelectionUI: {fileID: 1890386398}
   modelTitle: {fileID: 3747871358171149687}

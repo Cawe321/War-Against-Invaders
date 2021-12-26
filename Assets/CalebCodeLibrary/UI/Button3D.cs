@@ -26,6 +26,10 @@ public class Button3D : MonoBehaviour
         originalScale = transform.localScale;
         animManager = GetComponent<InterfaceAnimManager>();
     }
+    public void OnDisable()
+    {
+        transform.localScale = originalScale;
+    }
 
     private void OnMouseEnter()
     {

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c00b96eea1bf99b47b992d17169033c1, type: 3}
+  m_Name: GachaTypeContainer
+  m_EditorClassIdentifier: 
+  gachaTypeContainer:
+  - {fileID: 11400000, guid: ae6b7be418de8d54792d034911be81e2, type: 2}
+  - {fileID: 11400000, guid: 084d81f7694db0441a4279de0b0e0700, type: 2}
+  - {fileID: 11400000, guid: 7ee820aaacc564f4c909573f66f047b8, type: 2}
+  - {fileID: 11400000, guid: 823c1f367e5f8424897c99cbe5aa6fc6, type: 2}
+  - {fileID: 11400000, guid: 84084014c10628d43b16d9aac5514d5a, type: 2}
+  - {fileID: 11400000, guid: 6841f8c97a6b2e04bb42d2f87b8f2f9d, type: 2}
+  - {fileID: 11400000, guid: ff2956edb4a4a62498eb26bbe484ddd8, type: 2}
+  - {fileID: 11400000, guid: 74b1d62a5e642284a962f945c5a18239, type: 2}

@@ -20,6 +20,8 @@ public class DataManager : SingletonObject<DataManager>
 
     public UnityEvent inventoryLoaded;
 
+    public UnityEvent currencyLoaded;
+
     /// <summary>
     /// Access this value only after inventoryLoaded has been invoked!
     /// </summary>
@@ -108,6 +110,13 @@ public class DataManager : SingletonObject<DataManager>
         entityEquipment.subStats = new STAT[0];
         entityEquipment.teamType = TEAM_TYPE.DEFENDERS;
         SavePlayerInventory(new EntityEquipment[] { entityEquipment });*/
+    }
+
+    public void LoadCurrencyData()
+    {
+        currencyData = false;
+        var inventoryRequest = new GetUserInventoryRequest();
+        PlayFabClientAPI.GetUserInventory(inventoryRequest, LoadInventorySuccess, OnError);
     }
 
     public void SavePlayerInventory(EntityEquipment[] entityEquipments, PlaneEquipmentEntity[] planeEquipmentEntities)
@@ -213,6 +222,7 @@ public class DataManager : SingletonObject<DataManager>
         commonCurrency = obj.VirtualCurrency["SP"];
         premiumCurrency = obj.VirtualCurrency["TC"];
         currencyData = true;
+        currencyLoaded.Invoke();
     }
 
     private void OnError(PlayFabError obj)

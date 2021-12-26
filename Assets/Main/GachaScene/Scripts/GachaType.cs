@@ -1,21 +1,18 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "GachaTypeContainer", menuName = "WarAgainstInvaders/Gacha/GachaTypeContainer", order = 0)]
-public class GachaTypeContainer : ScriptableObject
+[CreateAssetMenu(fileName = "GachaType", menuName = "WarAgainstInvaders/Gacha/GachaType", order = 0)]
+public class GachaType : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Header("Frontend Settings")]
+    public string gachaTitle;
+    [TextArea]
+    public string gachaDescription;
+    public Sprite imageBanner;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [Header("Backend Settings")]
+    public TEAM_TYPE teamType;
+    public string cloudscriptFunctionName;
+
 }
-

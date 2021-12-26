@@ -12,6 +12,7 @@ public class InventoryManager : MonoBehaviour
 
     public TEAM_TYPE inventoryTeam;
 
+    public EquipmentColor equipmentColor;
     [Header("References")]
     public Transform objectContainer;
     [Space]
@@ -121,6 +122,7 @@ public class InventoryManager : MonoBehaviour
 
         DataManager.instance.inventoryLoaded.AddListener(InventoryLoaded);
         DataManager.instance.inventorySaved.AddListener(InventorySaved);
+        DataManager.instance.currencyLoaded.AddListener(CurrencyLoaded);
         ReloadInventory();
     }
 
@@ -133,13 +135,23 @@ public class InventoryManager : MonoBehaviour
 
     void InventoryLoaded()
     {
+        LoadCurrency();
+
         if (inventoryPhase != INVENTORY_PHASE.ANIM)
             SelectPlane();
         if (lastEquipmentTypeSelector != null)
             ShowInventoryOfType(lastEquipmentTypeSelector);
         if (equipStatsEntity != null)
             ItemSelected(equipStatsEntity);
-            
+    }
+
+    void LoadCurrency()
+    {
+        DataManager.instance.LoadCurrencyData();
+    }
+
+    void CurrencyLoaded()
+    {
         processingMenu.SetActive(false);
     }
 
@@ -234,25 +246,7 @@ public class InventoryManager : MonoBehaviour
         {
             wingUI.entityEquipment = wingEntity;
             wingImage.sprite = wingIcon;
-            // Setting the borders depending on the item rarity
-            switch (wingEntity.equipmentRarity)
-            {
-                case EntityEquipment.EQUIPMENT_RARITY.COMMON:
-                    {
-                        wingBorder.color = Color.white;
-                        break;
-                    }
-                case EntityEquipment.EQUIPMENT_RARITY.RARE:
-                    {
-                        wingBorder.color = Color.blue;
-                        break;
-                    }
-                case EntityEquipment.EQUIPMENT_RARITY.LEGENDARY:
-                    {
-                        wingBorder.color = Color.yellow;
-                        break;
-                    }
-            }
+            wingBorder.color = equipmentColor.GetColorOfRarity(wingEntity.equipmentRarity);
         }
         else
         {
@@ -266,25 +260,7 @@ public class InventoryManager : MonoBehaviour
         {
             lightUI.entityEquipment = lightEntity;
             lightImage.sprite = lightWeaponIcon;
-            // Setting the borders depending on the item rarity
-            switch (lightEntity.equipmentRarity)
-            {
-                case EntityEquipment.EQUIPMENT_RARITY.COMMON:
-                    {
-                        lightBorder.color = Color.white;
-                        break;
-                    }
-                case EntityEquipment.EQUIPMENT_RARITY.RARE:
-                    {
-                        lightBorder.color = Color.blue;
-                        break;
-                    }
-                case EntityEquipment.EQUIPMENT_RARITY.LEGENDARY:
-                    {
-                        lightBorder.color = Color.yellow;
-                        break;
-                    }
-            }
+            lightBorder.color = equipmentColor.GetColorOfRarity(lightEntity.equipmentRarity);
         }
         else
         {
@@ -298,25 +274,7 @@ public class InventoryManager : MonoBehaviour
         {
             heavyUI.entityEquipment = heavyEntity;
             heavyImage.sprite = heavyWeaponIcon;
-            // Setting the borders depending on the item rarity
-            switch (heavyEntity.equipmentRarity)
-            {
-                case EntityEquipment.EQUIPMENT_RARITY.COMMON:
-                    {
-                        heavyBorder.color = Color.white;
-                        break;
-                    }
-                case EntityEquipment.EQUIPMENT_RARITY.RARE:
-                    {
-                        heavyBorder.color = Color.blue;
-                        break;
-                    }
-                case EntityEquipment.EQUIPMENT_RARITY.LEGENDARY:
-                    {
-                        heavyBorder.color = Color.yellow;
-                        break;
-                    }
-            }
+            heavyBorder.color = equipmentColor.GetColorOfRarity(heavyEntity.equipmentRarity);
         }
         else
         {
@@ -420,26 +378,7 @@ public class InventoryManager : MonoBehaviour
             newUI.entityEquipment = entityEquipment;
             newUI.level.text = $"Level { entityEquipment.level }";
             newUI.icon.sprite = icon;
-
-            // Setting the borders depending on the item rarity
-            switch (entityEquipment.equipmentRarity)
-            {
-                case EntityEquipment.EQUIPMENT_RARITY.COMMON:
-                    {
-                        newUI.border.color = Color.white;
-                        break;
-                    }
-                case EntityEquipment.EQUIPMENT_RARITY.RARE:
-                    {
-                        newUI.border.color = Color.blue;
-                        break;
-                    }
-                case EntityEquipment.EQUIPMENT_RARITY.LEGENDARY:
-                    {
-                        newUI.border.color = Color.yellow;
-                        break;
-                    }
-            }
+            newUI.border.color = equipmentColor.GetColorOfRarity(entityEquipment.equipmentRarity);
             newUI.gameObject.SetActive(true);
         }
     }
@@ -557,24 +496,7 @@ public class InventoryManager : MonoBehaviour
 
             // Set the border
             {
-                switch (selectedUI.entityEquipment.equipmentRarity)
-                {
-                    case EntityEquipment.EQUIPMENT_RARITY.COMMON:
-                        {
-                            equipStatsBorder.color = Color.white;
-                            break;
-                        }
-                    case EntityEquipment.EQUIPMENT_RARITY.RARE:
-                        {
-                            equipStatsBorder.color = Color.blue;
-                            break;
-                        }
-                    case EntityEquipment.EQUIPMENT_RARITY.LEGENDARY:
-                        {
-                            equipStatsBorder.color = Color.yellow;
-                            break;
-                        }
-                }
+                equipStatsBorder.color = equipmentColor.GetColorOfRarity(selectedUI.entityEquipment.equipmentRarity);
             }
 
             // Set the level
