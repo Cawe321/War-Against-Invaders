@@ -56,14 +56,14 @@ namespace PlayFab
             var callSettings = PlayFabSettings.staticSettings;
             if (!context.IsEntityLoggedIn()) throw new PlayFabException(PlayFabExceptionCode.NotLoggedIn,"Must be logged in to call this method");
 
-            var localApiServerString = PlayFabSettings.LocalApiServer;
+            /*var localApiServerString = PlayFabSettings.LocalApiServer;
             if (!string.IsNullOrEmpty(localApiServerString))
             {
                 var baseUri = new Uri(localApiServerString);
                 var fullUri = new Uri(baseUri, "/CloudScript/ExecuteFunction".TrimStart('/'));
                 PlayFabHttp.MakeApiCallWithFullUri(fullUri.AbsoluteUri, request, AuthType.EntityToken, resultCallback, errorCallback, customData, extraHeaders, context, callSettings);
                 return;
-            }
+            }*/
 
             PlayFabHttp.MakeApiCall("/CloudScript/ExecuteFunction", request, AuthType.EntityToken, resultCallback, errorCallback, customData, extraHeaders, context, callSettings);
         }

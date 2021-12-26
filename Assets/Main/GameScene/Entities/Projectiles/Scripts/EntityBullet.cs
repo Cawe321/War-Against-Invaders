@@ -34,6 +34,7 @@ public class EntityBullet : EntityProjectile
             if (rb == null)
                 rb = GetComponent<Rigidbody>();
             rb.velocity = Vector3.zero;
+            trailRenderer.Clear();
             gameObject.SetActive(false);
             Debug.Log("GONE");
 
@@ -157,7 +158,9 @@ public class EntityBullet : EntityProjectile
         if (targetHealth != null)
             targetHealth.TakeDamage(owner, finalDamage, impulse * 0.1f);
 
+        rb.velocity = Vector3.zero;
         hitAudio.Play();
+        trailRenderer.Clear();
         gameObject.SetActive(false);
 
     }

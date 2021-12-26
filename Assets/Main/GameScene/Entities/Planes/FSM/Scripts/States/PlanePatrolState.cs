@@ -71,7 +71,7 @@ public class PlanePatrolState : BaseState
         Vector3 averageDirection = Vector3.zero;
         foreach (Collider collider in allColliders)
         {
-            if (collider != planeEntity.GetComponent<Collider>() && !collider.transform.IsChildOf(planeEntity.transform))
+            if (collider != planeEntity.GetComponent<Collider>() && !collider.transform.IsChildOf(planeEntity.transform) && collider.gameObject.layer == 0)
             {
                 toAvoid = true;
                 averageDirection += (planeEntity.transform.position - collider.ClosestPoint(planeEntity.transform.position)).normalized;

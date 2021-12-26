@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Main/_Scenes/InventoryScene.unity
     guid: 97fefa7cb3ef2a045adcc4e05eeac00f
+  - enabled: 1
+    path: Assets/Main/GachaScene/TestScenes/TestCloudScript.unity
+    guid: 3856aecbdbf601c459a927a5ba3e03d9
   m_configObjects: {}

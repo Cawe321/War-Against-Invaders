@@ -24,6 +24,9 @@ public class MainHUDManager : SingletonObject<MainHUDManager>
     [SerializeField]
     TextMeshProUGUI spectateButtonText;
 
+    public GameObject spectateUI;
+    public Text spectateInfoText;
+
     bool openSettings = false;
     bool openShop = false;
     // Update is called once per frame
@@ -115,13 +118,17 @@ public class MainHUDManager : SingletonObject<MainHUDManager>
 
     public void ToggleSpectate()
     {
+        if (GameplayManager.instance.gameplayPhase != GameplayManager.GAMEPLAY_PHASE.GAME)
+            return;
         if (PlayerManager.instance.freeRoamCamera.isSpectate)
         {
             PlayerManager.instance.freeRoamCamera.StopSpectate();
+            spectateUI.SetActive(false);
         }
         else
         {
             PlayerManager.instance.freeRoamCamera.StartSpectate();
+            spectateUI.SetActive(true);
         }
     }
 }

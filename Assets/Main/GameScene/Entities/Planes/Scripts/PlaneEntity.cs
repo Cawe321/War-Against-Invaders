@@ -70,10 +70,13 @@ public class PlaneEntity : MonoBehaviour
     /// public values
     /// </summary>
     public bool isLocalPlayerControl { get { return baseEntity.isLocalPlayerControlling; } }
-    
+
+    Vector2 planeControlMovement;
+
     // Start is called before the first frame update
     void Start()
     {
+        planeControlMovement = Vector2.zero;
         baseEntity = GetComponent<BaseEntity>();
         rb = GetComponent<Rigidbody>();
         stateMachine = GetComponent<StateMachine>();
@@ -286,6 +289,11 @@ public class PlaneEntity : MonoBehaviour
         if (flightSpeed < 1f)
             return;
 
+        if (isLocalPlayerControl)
+            planeControlMovement = new Vector2(xPercent, yPercent);
+
+        xPercent = Mathf.Clamp(xPercent, -1f, 1f);
+        yPercent = Mathf.Clamp(yPercent, -1f, 1f);
         /*rb.AddTorque(rb.transform.up * flightTurnSpeed * xPercent, ForceMode.Acceleration);
         rb.AddTorque(rb.transform.forward * flightTurnSpeed * -xPercent, ForceMode.Acceleration);
         rb.AddTorque(-rb.transform.right * flightTurnSpeed * yPercent, ForceMode.Acceleration);*/
@@ -303,25 +311,30 @@ public class PlaneEntity : MonoBehaviour
     
     public void RotateToTargetDirection(Vector3 targetDir)
 {
+        Vector2 targetControl = Vector2.zero;
         Vector3 localDir = transform.InverseTransformDirection(targetDir);
         if (localDir.x < Mathf.Epsilon && localDir.x > -Mathf.Epsilon && localDir.z < 0f) // target is directly behind
         {
-            UpdateRotation(Mathf.Clamp(localDir.z, -0.5f, 0.5f), Mathf.Clamp(localDir.y, -0.5f, 0.5f));
+            targetControl = new Vector2(Mathf.Clamp(localDir.z, -1f, 1f), Mathf.Clamp(localDir.y, -1f, 1f));
+            //UpdateRotation(Mathf.Clamp(localDir.z, -1f, 1f), Mathf.Clamp(localDir.y, -1f, 1f));
         }
         else
         {
             if (localDir.z < 0f)
             {
                 if (localDir.x < 0f)
-                    UpdateRotation(Mathf.Clamp(localDir.x - Mathf.Abs(localDir.z), -0.5f, 0.5f), Mathf.Clamp(localDir.y, -0.5f, 0.5f));
+                    targetControl = new Vector2(Mathf.Clamp(localDir.x - Mathf.Abs(localDir.z), -1f, 1f), Mathf.Clamp(localDir.y, -1f, 1f));
+                //UpdateRotation(Mathf.Clamp(localDir.x - Mathf.Abs(localDir.z), -1f, 1f), Mathf.Clamp(localDir.y, -1f, 1f));
                 else
-                    UpdateRotation(Mathf.Clamp(localDir.x + Mathf.Abs(localDir.z), -0.5f, 0.5f), Mathf.Clamp(localDir.y, -0.5f, 0.5f));
+                    targetControl = new Vector2(Mathf.Clamp(localDir.x + Mathf.Abs(localDir.z), -1f, 1f), Mathf.Clamp(localDir.y, -1f, 1f));
+                   //UpdateRotation(Mathf.Clamp(localDir.x + Mathf.Abs(localDir.z), -1f, 1f), Mathf.Clamp(localDir.y, -1f, 1f));
             }
             else
-                UpdateRotation(Mathf.Clamp(localDir.x, -0.5f, 0.5f), Mathf.Clamp(localDir.y, -0.5f, 0.5f));
+                //UpdateRotation(Mathf.Clamp(localDir.x, -1f, 1f), Mathf.Clamp(localDir.y, -1f, 1f));
+                targetControl = new Vector2(Mathf.Clamp(localDir.x, -1f, 1f), Mathf.Clamp(localDir.y, -1f, 1f));
         }
-
-
+        planeControlMovement += (targetControl - planeControlMovement) * 0.05f;
+        UpdateRotation(planeControlMovement.x, planeControlMovement.y);
     }
 
     public void ToggleEngine()
@@ -350,7 +363,8 @@ public class PlaneEntity : MonoBehaviour
 
     public void FireAllWeapons(EntityWeapon.WEAPON_TYPE weaponType)
     {
-        baseEntity.FireAllWeapons(weaponType);
+        if (baseEntity && baseEntity.CheckHealth())
+            baseEntity.FireAllWeapons(weaponType);
     }
 
     public void OnCollisionEnter(Collision collision)

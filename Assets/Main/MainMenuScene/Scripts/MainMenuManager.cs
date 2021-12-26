@@ -45,6 +45,12 @@ public class MainMenuManager : SingletonObject<MainMenuManager>
         {
             mainMenuVFXManager.ForceEndVFX();
         }
+
+        // CODE HERE to remove once testing of cloudscript works
+        if (Input.GetKeyDown(KeyCode.Home))
+        {
+            SceneManager.LoadScene("TestCloudScript");
+        }
     }
 
     public void UpdatePlayerDataDisplay()

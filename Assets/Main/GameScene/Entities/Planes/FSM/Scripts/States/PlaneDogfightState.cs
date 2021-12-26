@@ -71,12 +71,14 @@ public class PlaneDogfightState : BaseState
         Vector3 averageDirection = Vector3.zero;
         foreach (Collider collider in allColliders)
         {
-            if (collider != planeEntity.GetComponent<Collider>() && !collider.transform.IsChildOf(planeEntity.transform))
+            if (collider != planeEntity.GetComponent<Collider>() && !collider.transform.IsChildOf(planeEntity.transform) && collider.gameObject.layer == 0)
             {
                 toAvoid = true;
-                averageDirection += (planeEntity.transform.position - collider.ClosestPoint(planeEntity.transform.position)).normalized;
+                averageDirection += (planeEntity.transform.position - collider.ClosestPoint(planeEntity.transform.position)).normalized * 0.5f;
             }
         }
+        Vector3 targetAimPosition = enemyPlaneEntity.transform.position + (enemyPlaneEntity.flightSpeed * 0.5f * enemyPlaneEntity.transform.forward);
+
         if (toAvoid) // Fly away to avoid collision
         {
             planeEntity.RotateToTargetDirection(averageDirection.normalized);
@@ -85,12 +87,12 @@ public class PlaneDogfightState : BaseState
         {
             // if still remaining on this state, do what this state does
             // moves towards predicted target position & accelerate
-            planeEntity.RotateToTargetPosition(enemyPlaneEntity.transform.position);
+            planeEntity.RotateToTargetPosition(targetAimPosition);
             for (int i = 0; i < stateMachine.updateFrameCooldown; ++i)
                 planeEntity.Accelerate(); // No need to check for max flight speed since it has already been handled in this function
         }
 
-        if (Vector3.Angle(enemyPlaneEntity.transform.position - planeEntity.transform.position, planeEntity.transform.forward) <= maxShootAngle)
+        if (Vector3.Angle(targetAimPosition - planeEntity.transform.position, planeEntity.transform.forward) <= maxShootAngle)
         {
             // Enemy is within shooting range, fire all primary weapons
             planeEntity.FireAllWeapons(EntityWeapon.WEAPON_TYPE.PRIMARY);

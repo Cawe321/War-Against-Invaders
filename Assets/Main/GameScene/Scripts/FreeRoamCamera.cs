@@ -133,66 +133,109 @@ public class FreeRoamCamera : MonoBehaviour
     void TellPlayerSpectate(bool hasPlanesToSpectate)
     {
         // CODE HERE to show no available planes to spectate for UI
+        if (!hasPlanesToSpectate)
+            MainHUDManager.instance.spectateInfoText.text = "No available planes to spectate.";
+        else
+        {
+            if (spectateEntity.baseEntity.isAnyPlayerControlling)
+                MainHUDManager.instance.spectateInfoText.text = "Currently operated by " + spectateEntity.baseEntity.playerControlling;
+            else
+                MainHUDManager.instance.spectateInfoText.text = "Currently operated by no one";
+        }
     }
 
     public void SpectateLeft()
     {
         // DIsable the old spectate camera
-        spectateEntity.cmCamera.SetActive(false);
-
-        // Calculating ID
-        int id = spectateEntity.transform.GetSiblingIndex();
-        if (id > 0)
-            --id;
-        else
+        if (spectateEntity != null)
         {
-            if (PlayerManager.instance.playerTeam == TEAM_TYPE.DEFENDERS)
-                id = GameplayManager.instance.defenderPlaneContainer.transform.childCount - 1;
-            else if (PlayerManager.instance.playerTeam == TEAM_TYPE.INVADERS)
-                id = GameplayManager.instance.invaderPlaneContainer.transform.childCount - 1;
+            spectateEntity.cmCamera.SetActive(false);
+
+            // Calculating ID
+            int id = spectateEntity.transform.GetSiblingIndex();
+            if (id > 0)
+                --id;
+            else
+            {
+                if (PlayerManager.instance.playerTeam == TEAM_TYPE.DEFENDERS)
+                    id = GameplayManager.instance.defenderPlaneContainer.transform.childCount - 1;
+                else if (PlayerManager.instance.playerTeam == TEAM_TYPE.INVADERS)
+                    id = GameplayManager.instance.invaderPlaneContainer.transform.childCount - 1;
+            }
+
+            if (id < 0)
+            {
+                // No planes to spectate
+                TellPlayerSpectate(false);
+                spectateEntity = null;
+                return;
+            }
+            else
+            {
+                // Assigning the id and camera
+                if (PlayerManager.instance.playerTeam == TEAM_TYPE.DEFENDERS)
+                    spectateEntity = GameplayManager.instance.defenderPlaneContainer.transform.GetChild(id).GetComponent<PlaneEntity>();
+                else if (PlayerManager.instance.playerTeam == TEAM_TYPE.INVADERS)
+                    spectateEntity = GameplayManager.instance.invaderPlaneContainer.transform.GetChild(id).GetComponent<PlaneEntity>();
+
+                TellPlayerSpectate(true);
+            }
+            // Enable the new camera
+            spectateEntity.cmCamera.SetActive(true);
         }
 
-        // Assigning the id and camera
-        if (PlayerManager.instance.playerTeam == TEAM_TYPE.DEFENDERS)
-            spectateEntity = GameplayManager.instance.defenderPlaneContainer.transform.GetChild(id).GetComponent<PlaneEntity>();
-        else if (PlayerManager.instance.playerTeam == TEAM_TYPE.INVADERS)       
-            spectateEntity = GameplayManager.instance.invaderPlaneContainer.transform.GetChild(id).GetComponent<PlaneEntity>();
 
-        // Enable the new camera
-        spectateEntity.cmCamera.SetActive(true);
+
+        
         
     }
 
     public void SpectateRight()
     {
-        // DIsable the old spectate camera
-        spectateEntity.cmCamera.SetActive(false);
-
-        // Calculating ID
-        int id = spectateEntity.transform.GetSiblingIndex();
-        if (PlayerManager.instance.playerTeam == TEAM_TYPE.DEFENDERS)
+        if (spectateEntity != null)
         {
-            if (id < GameplayManager.instance.defenderPlaneContainer.transform.childCount - 2)
-                ++id;
-            else
-                id = 0;
-        }
-        else if (PlayerManager.instance.playerTeam == TEAM_TYPE.INVADERS)
-        {
-            if (id < GameplayManager.instance.invaderPlaneContainer.transform.childCount - 2)
-                ++id;
-            else
-                id = 0;
-        }
+            // DIsable the old spectate camera
+            spectateEntity.cmCamera.SetActive(false);
 
-        // Assigning the id and camera
-        if (PlayerManager.instance.playerTeam == TEAM_TYPE.DEFENDERS)
-            spectateEntity = GameplayManager.instance.defenderPlaneContainer.transform.GetChild(id).GetComponent<PlaneEntity>();
-        else if (PlayerManager.instance.playerTeam == TEAM_TYPE.INVADERS)
-            spectateEntity = GameplayManager.instance.invaderPlaneContainer.transform.GetChild(id).GetComponent<PlaneEntity>();
+            // Calculating ID
+            int id = spectateEntity.transform.GetSiblingIndex();
+            if (PlayerManager.instance.playerTeam == TEAM_TYPE.DEFENDERS)
+            {
+                if (GameplayManager.instance.defenderPlaneContainer.transform.childCount == 0)
+                {
+                    TellPlayerSpectate(false);
+                    return;
+                }
 
-        // Enable the new camera
-        spectateEntity.cmCamera.SetActive(true);
+                if (id < GameplayManager.instance.defenderPlaneContainer.transform.childCount - 2)
+                    ++id;
+                else
+                    id = 0;
+            }
+            else if (PlayerManager.instance.playerTeam == TEAM_TYPE.INVADERS)
+            {
+                if (GameplayManager.instance.invaderPlaneContainer.transform.childCount == 0)
+                {
+                    TellPlayerSpectate(false);
+                    return;
+                }
+
+                if (id < GameplayManager.instance.invaderPlaneContainer.transform.childCount - 2)
+                    ++id;
+                else
+                    id = 0;
+            }
+
+            // Assigning the id and camera
+            if (PlayerManager.instance.playerTeam == TEAM_TYPE.DEFENDERS)
+                spectateEntity = GameplayManager.instance.defenderPlaneContainer.transform.GetChild(id).GetComponent<PlaneEntity>();
+            else if (PlayerManager.instance.playerTeam == TEAM_TYPE.INVADERS)
+                spectateEntity = GameplayManager.instance.invaderPlaneContainer.transform.GetChild(id).GetComponent<PlaneEntity>();
+
+            // Enable the new camera
+            spectateEntity.cmCamera.SetActive(true);
+        }
+       
     }
 
     public void StartSpectate()
@@ -202,12 +245,17 @@ public class FreeRoamCamera : MonoBehaviour
 
     public void StopSpectate()
     {
+        MainHUDManager.instance.spectateUI.SetActive(false);
         isSpectate = false;
         if (spectateEntity != null)
             spectateEntity.cmCamera.SetActive(false);
 
-        transform.position = spectateEntity.cmCamera.transform.position;
-        transform.rotation = spectateEntity.cmCamera.transform.rotation;
-        spectateEntity = null;
+        if (spectateEntity != null)
+        {
+            transform.position = spectateEntity.cmCamera.transform.position;
+            transform.rotation = spectateEntity.cmCamera.transform.rotation;
+            spectateEntity = null;
+        }
+
     }
 }
