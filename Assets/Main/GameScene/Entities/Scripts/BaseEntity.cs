@@ -33,10 +33,6 @@ public class BaseEntity : MonoBehaviour
     public float dmgReduction;
     [HideInInspector]
     public float flightSpeedIncrease;
-    [HideInInspector]
-    public float pointsIncrease;
-    [HideInInspector]
-    public float ammunitionIncrease;
     /// <summary>
     /// Buff to reduce fuel consumption.
     /// </summary>

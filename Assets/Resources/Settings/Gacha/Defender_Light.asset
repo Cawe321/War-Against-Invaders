@@ -16,4 +16,4 @@ MonoBehaviour:
   gachaDescription: Chance at getting defender light weapon equipments.
   imageBanner: {fileID: 0}
   teamType: 2
-  cloudscriptFunctionName: Gacha_Defender_Light
+  cloudscriptFunctionName: Gacha_DefenderLight

@@ -16,4 +16,4 @@ MonoBehaviour:
   gachaDescription: Chance at getting invader heavy weapon equipments.
   imageBanner: {fileID: 0}
   teamType: 3
-  cloudscriptFunctionName: Gacha_Invader_Heavy
+  cloudscriptFunctionName: Gacha_InvaderHeavy

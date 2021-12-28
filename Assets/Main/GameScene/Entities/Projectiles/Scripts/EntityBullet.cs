@@ -20,14 +20,18 @@ public class EntityBullet : EntityProjectile
 
     AudioSource hitAudio;
 
+    bool bulletActive = false;
     private void Awake()
     {
+        bulletActive = false;
         hitAudio = GetComponent<AudioSource>();
         currLifespan = lifespan;
     }
 
     private void FixedUpdate()
     {
+        if (!bulletActive)
+            return;
         lifespan -= Time.fixedDeltaTime;
         if (lifespan < 0f)
         {
@@ -36,6 +40,7 @@ public class EntityBullet : EntityProjectile
             rb.velocity = Vector3.zero;
             trailRenderer.Clear();
             gameObject.SetActive(false);
+            bulletActive = false;
             Debug.Log("GONE");
 
         }
@@ -46,7 +51,7 @@ public class EntityBullet : EntityProjectile
             {
                 Physics.Raycast(prevPos, transform.position - prevPos, out hit, (transform.position - prevPos).magnitude);
                 
-                if (!hit.collider.transform.IsChildOf(owner.transform))
+                if (!hit.collider.transform.IsChildOf(owner.transform) && hit.collider.transform.parent != transform.parent)
                 {
                     // Didnt hit its owner
                     // This projectile has hitted something.
@@ -57,7 +62,7 @@ public class EntityBullet : EntityProjectile
                         if (!oppositionHealth.immortalObject && oppositionHealth.baseEntity.team != owner.team)
                         {
                             OnHit(oppositionHealth, rb.velocity);
-                            Debug.Log("hitted something");
+                            Debug.Log("hitted something: " + hit.collider.name);
                             return;
                         }
                         else
@@ -109,10 +114,14 @@ public class EntityBullet : EntityProjectile
             rb.velocity = transform.forward * ownerRB.velocity.magnitude;
         rb.AddForce(transform.forward * outputForce, ForceMode.Acceleration);
         //rb.AddForce(Vector3.zero, ForceMode.Impulse);
+        rb.MovePosition(parent.transform.position);
+        bulletActive = true;
     }
 
     public void OnCollisionEnter(Collision collision)
     {
+        if (!bulletActive)
+            return;
         // The projectile has hitted itself. Ignore collision.
         if (collision.transform.IsChildOf(owner.transform))
             Physics.IgnoreCollision(collider, collision.collider);
@@ -161,6 +170,7 @@ public class EntityBullet : EntityProjectile
         rb.velocity = Vector3.zero;
         hitAudio.Play();
         trailRenderer.Clear();
+        bulletActive = false;
         gameObject.SetActive(false);
 
     }

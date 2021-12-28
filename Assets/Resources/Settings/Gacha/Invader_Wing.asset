@@ -16,4 +16,4 @@ MonoBehaviour:
   gachaDescription: Chance at getting invader wing equipments.
   imageBanner: {fileID: 0}
   teamType: 3
-  cloudscriptFunctionName: Gacha_Invader_Wing
+  cloudscriptFunctionName: Gacha_InvaderWing

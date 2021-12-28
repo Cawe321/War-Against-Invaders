@@ -1,10 +1,13 @@
 using JetBrains.Annotations;
+using PlayFab.CloudScriptModels;
+using PlayFab;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Newtonsoft.Json;
 
 public class GachaManager : SingletonObject<GachaManager>
 {
@@ -24,6 +27,7 @@ public class GachaManager : SingletonObject<GachaManager>
     [Space]
     public GameObject confirmationMenu;
     public GameObject processingMenu;
+    public GameObject errorMenu;
     [Space]
     public GameObject resultMenu;
     public Image resultBorder;
@@ -68,7 +72,7 @@ public class GachaManager : SingletonObject<GachaManager>
         {
             commonCurrencyText.text = "Spare Parts:\n" + DataManager.instance.commonCurrency;
             premiumCurrencyText.text = "Techno Cubes:\n" + DataManager.instance.premiumCurrency;
-            if (DataManager.instance.premiumCurrency >= 100)
+            if (DataManager.instance.premiumCurrency < 100)
                 gachaButton.enabled = false;
             else
                 gachaButton.enabled = true;
@@ -103,9 +107,32 @@ public class GachaManager : SingletonObject<GachaManager>
     {
         if (isYes)
         {
-            // CODE HERE to activate gacha
-            // LoadCurrency()
-            // EnableResultMenu()
+            processingMenu.SetActive(true);
+            PlayFabCloudScriptAPI.ExecuteFunction(new ExecuteFunctionRequest()
+            {
+                Entity = new PlayFab.CloudScriptModels.EntityKey()
+                {
+                    Id = PlayFabSettings.staticPlayer.EntityId, 
+                    Type = PlayFabSettings.staticPlayer.EntityType, 
+                },
+                FunctionName = allAvailableGacha[gachaSelector].cloudscriptFunctionName, 
+                GeneratePlayStreamEvent = false 
+            }, (ExecuteFunctionResult result) =>
+            {
+                if (result.FunctionResultTooLarge ?? false)
+                {
+                    Debug.Log("This can happen if you exceed the limit that can be returned from an Azure Function, See PlayFab Limits Page for details.");
+                    return;
+                }
+                resultInfoMenu.UpdateData(JsonConvert.DeserializeObject<EntityEquipment>(result.FunctionResult.ToString()));
+                LoadCurrency();
+            }, (PlayFabError error) =>
+            {
+                errorMenu.SetActive(true);
+                Debug.Log($"Opps Something went wrong: {error.GenerateErrorReport()}");
+            });
+
+            
         }
         confirmationMenu.SetActive(false);
     }
@@ -166,6 +193,7 @@ public class GachaManager : SingletonObject<GachaManager>
     void CurrencyLoaded()
     {
         processingMenu.SetActive(false);
+        EnableResultMenu(resultInfoMenu.entityEquipment);
     }
 
     void OnAnimFinish()

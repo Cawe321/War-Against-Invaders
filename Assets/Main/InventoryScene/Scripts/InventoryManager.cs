@@ -1,3 +1,5 @@
+using PlayFab.CloudScriptModels;
+using PlayFab;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,6 +59,7 @@ public class InventoryManager : MonoBehaviour
     [Space]
     public RectTransform confirmationMenu;
     public Text confirmationMenuText;
+    public GameObject errorMenu;
 
 
     enum CONFIRMATION_TYPE
@@ -332,7 +335,7 @@ public class InventoryManager : MonoBehaviour
         for (int i = 0; i < filteredEntityEquipments.Count - 1; ++i)
         {
             EntityEquipment currentEntity = filteredEntityEquipments[i];
-            for (int j = i + 1; j < filteredEntityEquipments.Count; ++i)
+            for (int j = i + 1; j < filteredEntityEquipments.Count; ++j)
             {
                 EntityEquipment comparisonEntity = filteredEntityEquipments[j];
                 if (currentEntity.equipmentRarity > comparisonEntity.equipmentRarity) // this means that comparisonEntity is rarer than currentEntity
@@ -509,15 +512,13 @@ public class InventoryManager : MonoBehaviour
             equipStatsSubStats.text = "";
             foreach (STAT statEntity in selectedUI.entityEquipment.subStats)
             {
-                equipStatsSubStats.text += EquipmentStatsToString(statEntity.statType, statEntity.value);
+                equipStatsSubStats.text += EquipmentStatsToString(statEntity.statType, statEntity.value) + "\n";
             }
 
-            // CODE HERE to check max level
-            if (true)
+            if (selectedUI.entityEquipment.level < 15)
             {
                 // If not max level yet
-                // CODE HERE to set upgrade cost
-                equipStatsUpgradeButtonText.text = $"Upgrade ({1000} SP)";
+                equipStatsUpgradeButtonText.text = $"Upgrade ({1000 + 500 * selectedUI.entityEquipment.level} SP)";
                 equipStatsUpgradeButtonText.transform.parent.gameObject.SetActive(true);
             }
             else
@@ -526,8 +527,7 @@ public class InventoryManager : MonoBehaviour
                 equipStatsUpgradeButtonText.transform.parent.gameObject.SetActive(false);
             }
 
-            // CODE HERE to set sell cost
-            equipStatsSellButtonText.text = $"Sell for {1000} SP";
+            equipStatsSellButtonText.text = $"Sell for {1000 + 100 * selectedUI.entityEquipment.level} SP";
 
             if (CheckIfEquipmentIsEquipped(selectedUI.entityEquipment))
             {
@@ -569,8 +569,7 @@ public class InventoryManager : MonoBehaviour
         {
             if (confirmationMenuType == CONFIRMATION_TYPE.SELL)
             {
-                // CODE HERE to insert selling cost
-                DataManager.instance.AddCommonCurrency(1000);
+                
 
                 List<EntityEquipment> newList = new List<EntityEquipment>(DataManager.instance.loadedPlayerEquipment);
                 foreach (EntityEquipment entityEquipment in newList)
@@ -578,6 +577,7 @@ public class InventoryManager : MonoBehaviour
                     if (entityEquipment.equipmentID == confirmationMenuEquipment.equipmentID)
                     {
                         newList.Remove(entityEquipment);
+                        DataManager.instance.AddCommonCurrency(1000 + 100 * entityEquipment.level);
                         break;
                     }
                 }    
@@ -610,6 +610,34 @@ public class InventoryManager : MonoBehaviour
             else if (confirmationMenuType == CONFIRMATION_TYPE.UPGRADE)
             {
                 // CODE HERE to handle upgrading of equipment
+                if (DataManager.instance.commonCurrency >= 1000 + 100 * confirmationMenuEquipment.equipmentID)
+                {
+                    processingMenu.SetActive(true);
+                    PlayFabCloudScriptAPI.ExecuteFunction(new ExecuteFunctionRequest()
+                    {
+                        Entity = new PlayFab.CloudScriptModels.EntityKey()
+                        {
+                            Id = PlayFabSettings.staticPlayer.EntityId,
+                            Type = PlayFabSettings.staticPlayer.EntityType,
+                        },
+                        FunctionName = "Inventory_EquipmentUpgrade",
+                        FunctionParameter = new Dictionary<string, object>() { { "targetID", confirmationMenuEquipment.equipmentID } },
+                        GeneratePlayStreamEvent = false
+                    }, (ExecuteFunctionResult result) =>
+                    {
+                        if (result.FunctionResultTooLarge ?? false)
+                        {
+                            Debug.Log("This can happen if you exceed the limit that can be returned from an Azure Function, See PlayFab Limits Page for details.");
+                            return;
+                        }
+                        ReloadInventory();
+                    }, (PlayFabError error) =>
+                    {
+                        Debug.Log($"Opps Something went wrong: {error.GenerateErrorReport()}");
+                    });
+                }
+                else
+                    errorMenu.SetActive(true);
             }
         }
 
@@ -625,14 +653,12 @@ public class InventoryManager : MonoBehaviour
         {
             case CONFIRMATION_TYPE.UPGRADE:
                 {
-                    // CODE HERE to insert upgrade costs
-                    confirmationMenuText.text = $"Are you sure you want to upgrade for {1000} SP?";
+                    confirmationMenuText.text = $"Are you sure you want to upgrade for {1000 + 500 * equipment.level} SP?";
                     break;
                 }
             case CONFIRMATION_TYPE.SELL:
                 {
-                    // CODE HERE to insert sell sell costs
-                    confirmationMenuText.text = $"Are you sure you want to sell for {1000} SP?";
+                    confirmationMenuText.text = $"Are you sure you want to sell for {1000 + 100 * equipment.level} SP?";
                     break;
                 }
         }

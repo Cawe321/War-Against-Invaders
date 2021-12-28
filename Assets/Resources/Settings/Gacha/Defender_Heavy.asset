@@ -16,4 +16,4 @@ MonoBehaviour:
   gachaDescription: Chance at getting defender heavy weapon equipments.
   imageBanner: {fileID: 0}
   teamType: 2
-  cloudscriptFunctionName: Gacha_Defender_Heavy
+  cloudscriptFunctionName: Gacha_DefenderHeavy

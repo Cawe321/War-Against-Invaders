@@ -140,7 +140,7 @@ public class PlaneEntity : MonoBehaviour
 
         if (engineActive)
         {
-            baseEntity.currFuel -= baseEntity.fuelConsumptionRate * Time.fixedDeltaTime;
+            baseEntity.currFuel -= baseEntity.fuelConsumptionRate * Time.fixedDeltaTime * (1f - baseEntity.fuelReduction);
             if (baseEntity.currFuel <= 0)
             {
                 ToggleEngine();

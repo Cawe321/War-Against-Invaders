@@ -114,6 +114,9 @@ public class GameplayManager : SingletonObject<GameplayManager>
 
     IEnumerator DisableWaitForPlayersCanvas()
     {
+        // CODE HERE to check if all players have loaded
+        while (!PlayerManager.instance.hasLoaded) // Wait for all players to load
+            yield return new WaitForEndOfFrame();
         while (waitForPlayersCanvas.alpha > Mathf.Epsilon)
         {
             yield return new WaitForEndOfFrame();

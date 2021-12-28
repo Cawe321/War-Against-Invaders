@@ -16,4 +16,4 @@ MonoBehaviour:
   gachaDescription: Chance at getting any invader equipments.
   imageBanner: {fileID: 0}
   teamType: 3
-  cloudscriptFunctionName: Gacha_Invader_All
+  cloudscriptFunctionName: Gacha_InvaderAll

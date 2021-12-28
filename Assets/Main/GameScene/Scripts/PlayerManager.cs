@@ -15,15 +15,30 @@ public class PlayerManager : SingletonObject<PlayerManager>
 
     public bool isFocused = true;
 
-    #region CURRENCY_MANAGEMENT
-    public int coins { get; private set; }
+    public bool hasLoaded = false;
 
+    #region BUFF_STATS_STORAGE
+    public float maxFlightSpeedIncrease = 0;
+    public float flightAccelerationIncrease = 0;
+    #endregion
     public override void Awake()
     {
         base.Awake();
-        playerTeam = DataManager.instance.chosenGameTeam;    
+        playerTeam = DataManager.instance.chosenGameTeam;
+        hasLoaded = false;
+        DataManager.instance.inventoryLoaded.AddListener(InventoryLoaded);
+        DataManager.instance.LoadPlayerInventory();
     }
 
+    void InventoryLoaded()
+    {
+        hasLoaded = true;
+    }
+
+    #region CURRENCY_MANAGEMENT
+    public int coins { get; private set; }
+
+  
     public void AddCoins(int amountToAdd, string reason)
     {
         coins += amountToAdd;
@@ -62,6 +77,16 @@ public class PlayerManager : SingletonObject<PlayerManager>
             {
                 planeEntity.cmCamera.SetActive(true);
                 planeUI.EnableUI(planeEntity);
+
+                foreach (PlaneEquipmentEntity planeEquipmentEntity in DataManager.instance.loadedPlayerPlaneEquipment)
+                {
+                    if (planeEquipmentEntity.entityType == controllingEntity.entityType)
+                    {
+                        LoadEquipmentStatsToEntity(controllingEntity, planeEquipmentEntity);
+                        break;
+                    }
+                }
+                
             }
 
             TurretEntity turretEntity = baseEntity.GetComponent<TurretEntity>();
@@ -89,6 +114,7 @@ public class PlayerManager : SingletonObject<PlayerManager>
             planeUI.DisableUI();
             freeRoamCamera.transform.position = planeEntity.cmCamera.transform.position;
             freeRoamCamera.transform.rotation = planeEntity.cmCamera.transform.rotation;
+            UnloadEquipmentStatsFromEntity(controllingEntity);
         }
 
         TurretEntity turretEntity = controllingEntity.GetComponent<TurretEntity>();
@@ -101,6 +127,76 @@ public class PlayerManager : SingletonObject<PlayerManager>
         freeRoamCamera.enabled = true;
 
         controllingEntity = null;
+    }
+
+    void LoadEquipmentStatsToEntity(BaseEntity baseEntity, PlaneEquipmentEntity equipmentEntity)
+    {
+        if (baseEntity == null || equipmentEntity == null)
+            return;
+
+        // Find all relevant equipments first
+        List<EntityEquipment> targetEntityEquipments = new List<EntityEquipment>(); // The equipment we are looking for
+        foreach (EntityEquipment equipment in DataManager.instance.loadedPlayerEquipment)
+        {
+            if (equipment.equipmentID == equipmentEntity.wingID || equipment.equipmentID == equipmentEntity.lightID || equipment.equipmentID == equipmentEntity.heavyID) // this equipment belongs to this entity
+                targetEntityEquipments.Add(equipment);
+        }
+
+        // Loop through all equipments and apply stats (NOTE: This loop can be combined with the first "foreach loop", but for debugging purposes, they have been split)
+        float flightSpeedIncreasePercent = 0;
+        foreach (EntityEquipment entityEquipment in targetEntityEquipments)
+        {
+            List<STAT> equipmentStats = new List<STAT>(entityEquipment.subStats);
+            equipmentStats.Add(entityEquipment.mainStat); // add the main stat to the calculation
+
+            foreach (STAT stat in equipmentStats)
+            {
+                switch (stat.statType)
+                {
+                    case STAT.STAT_TYPE.DMG_BOOST:
+                        baseEntity.dmgIncrease += stat.value * 0.01f; // * 0.01f is to convert whole number percent to float (eg 100% == 1f)
+                        break;
+                    case STAT.STAT_TYPE.DMG_REDUCTION:
+                        baseEntity.dmgReduction += stat.value * 0.01f; // * 0.01f is to convert whole number percent to float (eg 100% == 1f)
+                        break;
+                    case STAT.STAT_TYPE.FLIGHT_SPEED:
+                        flightSpeedIncreasePercent += stat.value * 0.01f; // * 0.01f is to convert whole number percent to float (eg 100% == 1f)
+                        break;
+                    case STAT.STAT_TYPE.LOWER_FUEL_CONSUMPTION:
+                        baseEntity.fuelReduction += stat.value * 0.01f; // * 0.01f is to convert whole number percent to float (eg 100% == 1f)
+                        break;
+                }
+            }
+        }
+
+        // Check & Handle Equipment Buff Data
+        if (baseEntity.dmgReduction > 0.75f) // clamp dmg reduction at 75%
+            baseEntity.dmgReduction = 0.75f;
+
+        if (baseEntity.fuelReduction > 0.75f) // clamp fuel reduction at 75%
+            baseEntity.fuelReduction = 0.75f;
+
+        // Apply flight speed increase to PlaneEntity and store the increased value
+        PlaneEntity basePlaneEntity = baseEntity.GetComponent<PlaneEntity>();
+        maxFlightSpeedIncrease = basePlaneEntity.flightMaxSpeed * (flightSpeedIncreasePercent);
+        flightAccelerationIncrease = basePlaneEntity.flightAcceleration * (flightSpeedIncreasePercent);
+        basePlaneEntity.flightMaxSpeed += maxFlightSpeedIncrease;
+        basePlaneEntity.flightAcceleration += flightAccelerationIncrease;
+    }
+
+    void UnloadEquipmentStatsFromEntity(BaseEntity baseEntity)
+    {
+        // Reset baseEntity buff values
+        baseEntity.dmgIncrease = 0;
+        baseEntity.dmgReduction = 0;
+        baseEntity.fuelReduction = 0;
+
+        // Disable PlaneEntity speed buffs
+        PlaneEntity basePlaneEntity = baseEntity.GetComponent<PlaneEntity>();
+        basePlaneEntity.flightMaxSpeed -= maxFlightSpeedIncrease;
+        basePlaneEntity.flightAcceleration -= flightAccelerationIncrease;
+        maxFlightSpeedIncrease = 0;
+        flightAccelerationIncrease = 0;
     }
     #endregion
 }

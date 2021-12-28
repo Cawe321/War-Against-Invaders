@@ -57,7 +57,7 @@ public class EntityMissile : EntityProjectile
 
         // No need to call this coroutine if missile doesnt belong to client (Multiplayer Note)
         lastCO = StartCoroutine(PropulsionDelay(propulsionDelay, parent.transform.forward));
-
+        this.gameObject.SetActive(true);
     }
 
     public void OnCollisionEnter(Collision collision)

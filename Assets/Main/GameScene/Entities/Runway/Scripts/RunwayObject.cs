@@ -107,6 +107,8 @@ public class RunwayObject : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
+        if (collision.gameObject.GetComponent<EntityHealth>() == null)
+            return;
         BaseEntity colliderEntity = collision.gameObject.GetComponent<EntityHealth>().baseEntity;
         if (colliderEntity != null && colliderEntity == occupant && _reloaded) // Entity is leaving the runway
         {

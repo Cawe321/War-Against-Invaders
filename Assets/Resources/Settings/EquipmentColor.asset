@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6bbce89cbbb7154c9944436677a74d4, type: 3}
   m_Name: EquipmentColor
   m_EditorClassIdentifier: 
-  commonColor: {r: 1, g: 1, b: 1, a: 0}
-  rareColor: {r: 0, g: 0, b: 1, a: 0}
-  legendaryColor: {r: 1, g: 1, b: 0, a: 0}
+  commonColor: {r: 1, g: 1, b: 1, a: 1}
+  rareColor: {r: 0, g: 0, b: 1, a: 1}
+  legendaryColor: {r: 1, g: 1, b: 0, a: 1}

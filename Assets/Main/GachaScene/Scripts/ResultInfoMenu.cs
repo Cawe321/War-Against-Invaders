@@ -16,6 +16,9 @@ public class ResultInfoMenu : MonoBehaviour
     public Text mainStat;
     public Text subStats;
 
+
+    [HideInInspector]
+    public EntityEquipment entityEquipment;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +35,8 @@ public class ResultInfoMenu : MonoBehaviour
 
     public void UpdateData(EntityEquipment entityEquipment)
     {
+        this.entityEquipment = entityEquipment;
+
         equipmentType.text = entityEquipment.equipmentType.ToString();
         equipmentRarity.text = entityEquipment.equipmentRarity.ToString();
         equipmentRarity.color = equipmentColor.GetColorOfRarity(entityEquipment.equipmentRarity);

@@ -87,6 +87,14 @@ public class MainMenuManager : SingletonObject<MainMenuManager>
         SceneTransitionManager.instance.SwitchScene("InventoryScene", SceneTransitionManager.ENTRANCE_TYPE.FADE_IN, SceneTransitionManager.EXIT_TYPE.FADE_OUT);
     }
 
+    public void GoToGacha()
+    {
+        if (openSettings)
+            return;
+        DataManager.instance.SetLastTeam(DataManager.instance.chosenGameTeam);
+        SceneTransitionManager.instance.SwitchScene("GachaScene", SceneTransitionManager.ENTRANCE_TYPE.FADE_IN, SceneTransitionManager.EXIT_TYPE.FADE_OUT);
+    }
+
     public void ToggleBattleMenu(bool toOpen)
     {
         if (!openSettings)
