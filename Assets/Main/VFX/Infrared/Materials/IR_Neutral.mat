@@ -10,7 +10,7 @@ Material:
   m_Name: IR_Neutral
   m_Shader: {fileID: -6465566751694194690, guid: 82dff0cb9b5d5524b878e0b0aaaa7100, type: 3}
   m_ShaderKeywords: 
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -80,9 +80,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_5ae6612bd24a4886b54748e450cb4249: 2
+    - Vector1_5ae6612bd24a4886b54748e450cb4249: 10
     - Vector1_6a85af8b20ef4b8c82d6bb60518b1ba0: 1
-    - Vector1_7b1feb1dd79c40b9b02855790254519b: 0.5
+    - Vector1_7b1feb1dd79c40b9b02855790254519b: 0.25
     - Vector1_abdd200b3ab043218c1f7936e5c92294: 1
     - _AlphaClip: 0
     - _Blend: 0

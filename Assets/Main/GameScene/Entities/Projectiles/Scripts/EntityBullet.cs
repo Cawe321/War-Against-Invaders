@@ -123,7 +123,7 @@ public class EntityBullet : EntityProjectile
         if (!bulletActive)
             return;
         // The projectile has hitted itself. Ignore collision.
-        if (collision.transform.IsChildOf(owner.transform))
+        if (collision.collider.transform.IsChildOf(owner.transform) && collision.collider.transform.parent != transform.parent)
             Physics.IgnoreCollision(collider, collision.collider);
         else
         {

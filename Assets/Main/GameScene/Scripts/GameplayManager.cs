@@ -23,6 +23,7 @@ public class GameplayManager : SingletonObject<GameplayManager>
     public GameObject defenderPlaneContainer;
     public GameObject invaderPlaneContainer;
 
+    public InfraredManager infraredManager;
     [Header("Settings")]
     [SerializeField]
     Transform defendersSpawnLocation;
@@ -277,6 +278,7 @@ public class GameplayManager : SingletonObject<GameplayManager>
                 else if (team == TEAM_TYPE.INVADERS)
                     go.transform.parent = invaderPlaneContainer.transform;
                 StartCoroutine(WaitForTwoFramesToStartPlane(go.GetComponent<PlaneEntity>()));
+                infraredManager.AddInfrared(go.GetComponent<BaseEntity>());
             }
             else if (i % 2 == 1)
             {
@@ -287,6 +289,7 @@ public class GameplayManager : SingletonObject<GameplayManager>
                 else if (team == TEAM_TYPE.INVADERS)
                     go.transform.parent = invaderPlaneContainer.transform;
                 StartCoroutine(WaitForTwoFramesToStartPlane(go.GetComponent<PlaneEntity>()));
+                infraredManager.AddInfrared(go.GetComponent<BaseEntity>());
             }
             else
             {
@@ -296,6 +299,7 @@ public class GameplayManager : SingletonObject<GameplayManager>
                 else if (team == TEAM_TYPE.INVADERS)
                     go.transform.parent = invaderPlaneContainer.transform;
                 StartCoroutine(WaitForTwoFramesToStartPlane(go.GetComponent<PlaneEntity>()));
+                infraredManager.AddInfrared(go.GetComponent<BaseEntity>());
             }
         }
 

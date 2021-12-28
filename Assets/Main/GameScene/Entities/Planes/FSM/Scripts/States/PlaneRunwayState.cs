@@ -80,9 +80,8 @@ public class PlaneRunwayState : BaseState
             case PHASE.ENTER_RUNWAY:
                 {
                     Vector3 offset;
-                    if (planeEntity.transform.position.x > assignedRunway.entrancePosition.position.x)
-                        offset = new Vector3(planeEntity.flightSpeed * 2, 0, 0);
-                    else offset = new Vector3(-planeEntity.flightSpeed * 2, 0, 0);
+                    offset = new Vector3(0, 100, -planeEntity.flightSpeed * 5);
+                    offset = assignedRunway.transform.rotation * offset;
                     Vector3 targetPos = assignedRunway.entrancePosition.position + offset;
                     if ((planeEntity.transform.position - targetPos).sqrMagnitude < 25f) // If plane entity is near the target position (<5 metres)
                     {
@@ -168,13 +167,13 @@ public class PlaneRunwayState : BaseState
                         return;
                     }
                     else
-                        cooldown -= Time.deltaTime;
+                        cooldown -= Time.deltaTime * stateMachine.updateFrameCooldown;
                     break;
                 }
             case PHASE.TAKE_OFF:
                 {
-                    
-                    if (planeEntity.flightSpeed >= planeEntity.flightMinTakeOffSpeed) // Plane has taken flight
+
+                    if ((planeEntity.transform.position - assignedRunway.exitPosition.position).sqrMagnitude < 25f) // If plane entity is near the target position (<5 metres) flight
                     {
                         // CHANGE TO NEXT STATE
                         stateMachine.ChangeStateByName("PlaneTravelState");
@@ -189,6 +188,7 @@ public class PlaneRunwayState : BaseState
 
                         // Continue Taking Off
                         planeEntity.RotateToTargetDirection((assignedRunway.exitPosition.position - assignedRunway.landingTargetPosition.position).normalized);
+                        planeEntity.RotateToTargetPosition(assignedRunway.exitPosition.position);
                     }
 
                     break;

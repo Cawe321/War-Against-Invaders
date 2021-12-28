@@ -31,6 +31,7 @@ public class AccountUIManager : MonoBehaviour
     {
         LoginErrorMessageText.text = error.ErrorMessage;
         LoginErrorMessageText.gameObject.SetActive(true);
+        ProcessingMenu.SetActive(false);
     }
 
     private void OnLoginSuccess(LoginResult result)
@@ -80,6 +81,7 @@ public class AccountUIManager : MonoBehaviour
     {
         RegisterErrorMessageText.text = error.ErrorMessage;
         RegisterErrorMessageText.gameObject.SetActive(true);
+        ProcessingMenu.SetActive(false);
     }
     #endregion
 
@@ -104,6 +106,7 @@ public class AccountUIManager : MonoBehaviour
     {
         ForgotErrorMessageText.text = obj.ErrorMessage;
         ForgotErrorMessageText.gameObject.SetActive(true);
+        ProcessingMenu.SetActive(false);
     }
 
     private void OnForgotReset(SendAccountRecoveryEmailResult obj)
