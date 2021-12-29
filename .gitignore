@@ -37,3 +37,4 @@ sysinfo.txt
 *.apk
 *.unitypackage
 Assets/Main/Art Assets/Space Hangar/source/Factory Outpost V3/Factory Outpost V3.obj
+venv
