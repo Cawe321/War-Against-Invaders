@@ -1,0 +1,23 @@
+behaviors:
+  TurretGunShootingTesting:
+    trainer_type: ppo
+    hyperparameters:
+      batch_size: 512
+      buffer_size: 2048
+      learning_rate: 2.5e-5
+      beta: 1.0e-3
+      epsilon: 0.1
+      lambd: 0.99
+      num_epoch: 3
+      learning_rate_schedule: linear
+    network_settings:
+      normalize: true
+      hidden_units: 512
+      num_layers: 2
+    reward_signals:
+      extrinsic:
+        gamma: 0.8
+        strength: 4.0
+    max_steps: 50000000
+    time_horizon: 32
+    summary_freq: 10000

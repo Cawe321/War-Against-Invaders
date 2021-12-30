@@ -21,6 +21,7 @@ public class EntityBullet : EntityProjectile
     AudioSource hitAudio;
 
     bool bulletActive = false;
+
     private void Awake()
     {
         bulletActive = false;
@@ -35,12 +36,18 @@ public class EntityBullet : EntityProjectile
         lifespan -= Time.fixedDeltaTime;
         if (lifespan < 0f)
         {
+            TurretGunShootingAgent aiAgent = owner.GetComponent<TurretGunShootingAgent>();
+            if (aiAgent != null && aiAgent.isTraining)
+            {
+                //aiAgent.SetReward(-100f);
+            }
+
             if (rb == null)
                 rb = GetComponent<Rigidbody>();
             rb.velocity = Vector3.zero;
             trailRenderer.Clear();
-            gameObject.SetActive(false);
             bulletActive = false;
+            gameObject.SetActive(false);
             Debug.Log("GONE");
 
         }
@@ -90,6 +97,18 @@ public class EntityBullet : EntityProjectile
     
         }
         prevPos = transform.position;
+
+        {
+            TurretGunShootingAgent aiAgent = owner.GetComponent<TurretGunShootingAgent>();
+            if (aiAgent != null && aiAgent.isTraining)
+            {
+                if ((transform.position - aiAgent.target.position).sqrMagnitude < 250)
+                {
+                    Debug.Log("Minor Award");
+                    aiAgent.AddReward(1f);
+                }
+            }
+        }
     }
 
     public override void ActivateProjectile(EntityWeapon parent)
@@ -123,11 +142,10 @@ public class EntityBullet : EntityProjectile
         if (!bulletActive)
             return;
         // The projectile has hitted itself. Ignore collision.
-        if (collision.collider.transform.IsChildOf(owner.transform) && collision.collider.transform.parent != transform.parent)
+        if (collision.collider.transform.IsChildOf(owner.transform) && collision.collider.transform.parent == transform.parent)
             Physics.IgnoreCollision(collider, collision.collider);
         else
         {
-
             // Didnt hit its owner
             // This projectile has hitted something.
             EntityHealth oppositionHealth = collision.transform.GetComponent<EntityHealth>();
@@ -167,6 +185,20 @@ public class EntityBullet : EntityProjectile
         if (targetHealth != null)
             targetHealth.TakeDamage(owner, finalDamage, impulse * 0.1f);
 
+        TurretGunShootingAgent aiAgent = owner.GetComponent<TurretGunShootingAgent>();
+        if (aiAgent != null && aiAgent.isTraining)
+        {
+            if (targetHealth != null && targetHealth.baseEntity.transform == aiAgent.target)
+            {
+                Debug.Log("Award");
+                aiAgent.AddReward(1000f);
+            }
+            else if (targetHealth == null)
+            {
+                Debug.Log("Penalty");
+                aiAgent.AddReward(-10f);
+            }
+        }
         rb.velocity = Vector3.zero;
         hitAudio.Play();
         trailRenderer.Clear();

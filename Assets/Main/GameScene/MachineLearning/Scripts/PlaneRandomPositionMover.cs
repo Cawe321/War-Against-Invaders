@@ -45,7 +45,7 @@ public class PlaneRandomPositionMover : MonoBehaviour
     {
         if (!loaded)
             return;
-        if (Vector3.Distance(transform.position, targetPos) < 1)
+        if (Vector3.Distance(transform.position, targetPos) < 10)
         {
             ChangeNewTarget();
         }

@@ -1,0 +1,47 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1640777117",
+        "python_version": "3.8.3 (default, Jul  2 2020, 17:30:36) [MSC v.1916 64 bit (AMD64)]",
+        "command_line_arguments": "D:\\GameProjects\\WarAgainstInvaders\\War-Against-Invaders\\venv\\Scripts\\mlagents-learn --run-id=TestPrint",
+        "mlagents_version": "0.27.0",
+        "mlagents_envs_version": "0.27.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "1.7.1+cu110",
+        "numpy_version": "1.21.5",
+        "end_time_seconds": "1640777144"
+    },
+    "total": 27.0273935,
+    "count": 1,
+    "self": 0.061784399999996964,
+    "children": {
+        "run_training.setup": {
+            "total": 0.5952368000000021,
+            "count": 1,
+            "self": 0.5952368000000021
+        },
+        "TrainerController.start_learning": {
+            "total": 26.3703723,
+            "count": 1,
+            "self": 0.0003789999999881388,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 26.369982300000004,
+                    "count": 1,
+                    "self": 26.369982300000004
+                },
+                "trainer_threads": {
+                    "total": 1.00000000458067e-06,
+                    "count": 1,
+                    "self": 1.00000000458067e-06
+                },
+                "TrainerController._save_models": {
+                    "total": 1.0000000003174137e-05,
+                    "count": 1,
+                    "self": 1.0000000003174137e-05
+                }
+            }
+        }
+    }
+}

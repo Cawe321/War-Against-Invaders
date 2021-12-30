@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 
 /// <summary>
@@ -25,6 +26,8 @@ public class TurretEntity : MonoBehaviour
     [HideInInspector]
     public BaseEntity baseEntity;
 
+
+    TurretGunShootingAgent turretAgent;
     public bool isLocalPlayerControl { get { return baseEntity.isLocalPlayerControlling; } }
 
     // Start is called before the first frame update
@@ -35,6 +38,7 @@ public class TurretEntity : MonoBehaviour
             Debug.LogError("TurretEntity: xTransform is null!");
         if (yTransform == null)
             Debug.LogError("TurretEntity: yTransform is null!");
+        turretAgent = GetComponent<TurretGunShootingAgent>();
     }
 
     // Update is called once per frame
@@ -92,7 +96,32 @@ public class TurretEntity : MonoBehaviour
         float newX = xTransform.localEulerAngles.x + (xEuler * turnSpeed);
         if (newX > 270f)
             newX = newX - 360f;
-        newX = Mathf.Clamp(newX, -maxHeightAngle, maxHeightAngle);
+
+        if (newX > maxHeightAngle || newX < -maxHeightAngle)
+        {
+            newX = Mathf.Clamp(newX, -maxHeightAngle, maxHeightAngle);
+        }
+        else
+            if (turretAgent.isTraining)
+                turretAgent.AddReward(0.1f);
+
+        /*if (turretAgent.isTraining && (Mathf.Abs(xEuler) > 0.5f || Mathf.Abs(yEuler) > 0.5f))
+            turretAgent.AddReward(5f);
+
+        if (turretAgent.isTraining) // Suggestions for the AI
+{
+            Vector3 displacementDirection = turretAgent.aim.InverseTransformDirection((turretAgent.target.position - transform.position).normalized);
+            if ((displacementDirection.x < 0 && yEuler < 0) || (displacementDirection.x > 0 && yEuler > 0))
+                turretAgent.AddReward(50f);
+            else
+                turretAgent.AddReward(-50f);
+
+            if ((displacementDirection.y < 0 && xEuler > 0) || (displacementDirection.y > 0 && xEuler < 0))
+                turretAgent.AddReward(50f);
+            else
+                turretAgent.AddReward(-50f);
+        }*/
+
         xTransform.localEulerAngles = new Vector3(newX, xTransform.localEulerAngles.y, xTransform.localEulerAngles.z);
 
         yTransform.localEulerAngles = new Vector3(yTransform.localEulerAngles.x, yTransform.localEulerAngles.y + (yEuler * turnSpeed), yTransform.localEulerAngles.z);

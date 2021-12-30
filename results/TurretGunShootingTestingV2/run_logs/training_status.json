@@ -1,0 +1,29 @@
+{
+    "TurretGunShootingTesting": {
+        "checkpoints": [
+            {
+                "steps": 174141,
+                "file_path": "results\\TurretGunShootingTestingV2\\TurretGunShootingTesting\\TurretGunShootingTesting-174141.onnx",
+                "reward": -3.6333326233757868,
+                "creation_time": 1640863895.0200033,
+                "auxillary_file_paths": [
+                    "results\\TurretGunShootingTestingV2\\TurretGunShootingTesting\\TurretGunShootingTesting-174141.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 174141,
+            "file_path": "results\\TurretGunShootingTestingV2\\TurretGunShootingTesting.onnx",
+            "reward": -3.6333326233757868,
+            "creation_time": 1640863895.0200033,
+            "auxillary_file_paths": [
+                "results\\TurretGunShootingTestingV2\\TurretGunShootingTesting\\TurretGunShootingTesting-174141.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.27.0",
+        "torch_version": "1.7.0+cu110"
+    }
+}
