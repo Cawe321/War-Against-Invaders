@@ -102,7 +102,7 @@ public class TurretEntity : MonoBehaviour
             newX = Mathf.Clamp(newX, -maxHeightAngle, maxHeightAngle);
         }
         else
-            if (turretAgent.isTraining)
+            if (turretAgent != null && turretAgent.isTraining)
                 turretAgent.AddReward(0.1f);
 
         /*if (turretAgent.isTraining && (Mathf.Abs(xEuler) > 0.5f || Mathf.Abs(yEuler) > 0.5f))

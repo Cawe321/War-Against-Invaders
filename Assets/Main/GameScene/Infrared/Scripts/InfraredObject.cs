@@ -57,4 +57,9 @@ public class InfraredObject : MonoBehaviour
             
         }
     }
+
+    private void OnMouseDown()
+    {
+        baseEntity.OnMouseDown();
+    }
 }

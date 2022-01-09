@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Manager class that will handle the IntroScene.
@@ -43,6 +44,8 @@ public class IntroSceneManager : MonoBehaviour
     }
     public PHASE introPhase;
 
+    bool isSettingOpen = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,6 +63,16 @@ public class IntroSceneManager : MonoBehaviour
         }
 
         corridorManager.StartCorridorAnim();
+        isSettingOpen = false;
+    }
+
+    private void Update()
+    {
+        if (introPhase == PHASE.WAIT_TO_START)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+                EndIntroScene();
+        }
     }
 
     public void LoginSuccessful()
@@ -129,5 +142,18 @@ public class IntroSceneManager : MonoBehaviour
             SceneTransitionManager.instance.SwitchScene("MainMenu_Invaders", SceneTransitionManager.ENTRANCE_TYPE.FADE_IN, SceneTransitionManager.EXIT_TYPE.FADE_OUT);
 
     }
+
+    public void ToggleSettingsMenu()
+    {
+        isSettingOpen = !isSettingOpen;
+        if (isSettingOpen)
+        {
+            SceneManager.LoadSceneAsync("SettingScene", LoadSceneMode.Additive);
+        }
+        else
+        {
+            SceneManager.UnloadSceneAsync("SettingScene");
+        }
+    }    
     #endregion
 }

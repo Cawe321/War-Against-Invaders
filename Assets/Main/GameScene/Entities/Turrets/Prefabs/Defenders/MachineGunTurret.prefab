@@ -80,6 +80,9 @@ GameObject:
   - component: {fileID: 4039113663840476066}
   - component: {fileID: 4039113663840476065}
   - component: {fileID: 5530302541784390141}
+  - component: {fileID: 809122671700687176}
+  - component: {fileID: 6315214766539835208}
+  - component: {fileID: 4083590210800388237}
   m_Layer: 0
   m_Name: MachineGunTurret
   m_TagString: Untagged
@@ -138,8 +141,6 @@ MonoBehaviour:
   dmgIncrease: 0
   dmgReduction: 0
   flightSpeedIncrease: 0
-  pointsIncrease: 0
-  ammunitionIncrease: 0
   fuelReduction: 0
   currFuel: 0
   playerControlling: 
@@ -225,6 +226,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d8e9b7e9b21fe64ba0985e8fd3b8522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &809122671700687176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4039113663840476068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1c4e0b1822b495aa52bc52839ecb30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BrainParameters:
+    VectorObservationSize: 7
+    NumStackedVectorObservations: 1
+    m_ActionSpec:
+      m_NumContinuousActions: 2
+      BranchSizes: 
+    VectorActionSize: 02000000
+    VectorActionDescriptions: []
+    VectorActionSpaceType: 1
+    hasUpgradedBrainParametersWithActionSpec: 1
+  m_Model: {fileID: 5022602860645237092, guid: 3d909035077a1c94fac1ef7ab6f5975f, type: 3}
+  m_InferenceDevice: 3
+  m_BehaviorType: 2
+  m_BehaviorName: TurretGunShootingTesting
+  TeamId: 0
+  m_UseChildSensors: 1
+  m_UseChildActuators: 1
+  m_ObservableAttributeHandling: 0
+--- !u!114 &6315214766539835208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4039113663840476068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6776afbadbeaebe4c938db7481c2eb1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 50
+  isTraining: 0
+  target: {fileID: 0}
+  targetRB: {fileID: 0}
+  aim: {fileID: 3804619932812492956}
+  turretEntity: {fileID: 0}
+  hitCounter: 0
+--- !u!114 &4083590210800388237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4039113663840476068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25922dfd9814da0419afe7d62235e649, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyCheckerCooldown: 0.2
 --- !u!1 &4889296770356368966
 GameObject:
   m_ObjectHideFlags: 0

@@ -52,6 +52,7 @@ public class FreeRoamCamera : MonoBehaviour
             else
             {
                 MouseManager.instance.mouseLockState = CursorLockMode.None;
+                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y);
             }
 
             // Transform Movement

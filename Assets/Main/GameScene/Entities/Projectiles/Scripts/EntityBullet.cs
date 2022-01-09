@@ -48,6 +48,7 @@ public class EntityBullet : EntityProjectile
             trailRenderer.Clear();
             bulletActive = false;
             gameObject.SetActive(false);
+            prevPos = Vector3.zero;
             Debug.Log("GONE");
 
         }
@@ -199,6 +200,8 @@ public class EntityBullet : EntityProjectile
                 aiAgent.AddReward(-10f);
             }
         }
+
+        prevPos = Vector3.zero;
         rb.velocity = Vector3.zero;
         hitAudio.Play();
         trailRenderer.Clear();

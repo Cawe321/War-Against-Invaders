@@ -16,8 +16,7 @@ public class TurretGunShootingAgent : Agent
 
     private void Awake()
     {
-        turretEntity = GetComponent<TurretEntity>();
-     
+        turretEntity = GetComponent<TurretEntity>();     
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -27,8 +26,6 @@ public class TurretGunShootingAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-
-
         //sensor.AddObservation(transform.position); // Add its own position
         //sensor.AddObservation(target.position); // Add target's position
         sensor.AddObservation(aim.InverseTransformDirection((target.position - transform.position).normalized)); // Add direction vector
@@ -45,8 +42,11 @@ public class TurretGunShootingAgent : Agent
 
     public void UpdateRotation(float valueX, float valueY)
     {
-        Debug.Log("RotateX: " + valueX);
-        Debug.Log("RotateY: " + valueY);
+        if (isTraining)
+        {
+            Debug.Log("RotateX: " + valueX);
+            Debug.Log("RotateY: " + valueY);
+        }
         turretEntity.UpdateRotation(valueX, valueY);
     }
 

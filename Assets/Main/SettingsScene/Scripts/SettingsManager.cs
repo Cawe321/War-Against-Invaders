@@ -4,51 +4,40 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SettingsManager : SingletonObject<SettingsManager>
 {
     [Header("References - Graphics")]
-    [SerializeField] TMP_Dropdown resolutionDropdown;
     [SerializeField] Toggle fullscreenToggle;
 
     [Header("References - Volume")]
     [SerializeField] Slider masterVolumeSlider;
 
-    Resolution[] resolutions;
+    [Header("References - Quit Items")]
+    [SerializeField] GameObject confirmQuitMenu;
+    [SerializeField] Text confirmQuitText;
+    [SerializeField] Button quitToMainMenuButton;
+    
+    enum QUIT_TYPE
+    {
+        MAIN_MENU,
+        DESKTOP,
+    }
+    QUIT_TYPE chosenQuitType;
+
 
     public static void LoadSettingsAndApply()
     {
-        Resolution[] allResolutions = Screen.resolutions;
-        List<Resolution> filteredResolutions = new List<Resolution>();
-        for (int i = 0; i < allResolutions.Length; i++)
-        {
-            // I only want this refresh rate
-            if (Screen.currentResolution.refreshRate == allResolutions[i].refreshRate)
-            {
-                filteredResolutions.Add(allResolutions[i]);
-            }
-
-        }
-
-        int resolutionIndex = 0;
-        if (PlayerPrefs.HasKey("Resolution"))
-            resolutionIndex = PlayerPrefs.GetInt("Resolution");
-        else
-        {
-            for (int i = 0; i < allResolutions.Length; ++i)
-                if (Screen.currentResolution.width == allResolutions[i].width && Screen.currentResolution.height == allResolutions[i].height && Screen.currentResolution.refreshRate == allResolutions[i].refreshRate)
-                    resolutionIndex = i;
-
-        }
-
+      
         bool fullScreen = true;
         if (PlayerPrefs.HasKey("Fullscreen"))
             fullScreen = PlayerPrefs.GetInt("Fullscreen") != 0;
         else
             fullScreen = Screen.fullScreen;
 
-        Screen.SetResolution(filteredResolutions[resolutionIndex].width, filteredResolutions[resolutionIndex].height, fullScreen);
+        Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, fullScreen);
 
         if (PlayerPrefs.HasKey("MasterVolume"))
             AudioListener.volume = PlayerPrefs.GetFloat("MasterVolume");
@@ -58,40 +47,16 @@ public class SettingsManager : SingletonObject<SettingsManager>
 
     void Start()
     {
-        resolutions = Screen.resolutions;
-        List<string> options = new List<string>();
-        int currentResolutionIndex = 0;
-        for (int i = 0; i < resolutions.Length; i++)
-        {
-            // I only want this refresh rate
-            if (Screen.currentResolution.refreshRate == resolutions[i].refreshRate)
-            {
-                string option = resolutions[i].width + " x " + resolutions[i].height;
-                options.Add(option);
-                if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
-                    currentResolutionIndex = i;
-            }
-            
-        }
-        resolutionDropdown.AddOptions(options);
-        resolutionDropdown.RefreshShownValue();
-        LoadSettings(currentResolutionIndex);
+       
+        if (SceneManager.GetActiveScene().name == "GameScene")
+            quitToMainMenuButton.gameObject.SetActive(true);
+        else 
+            quitToMainMenuButton.gameObject.SetActive(false);
+
+
+        LoadSettings();
     }
 
-    public void SetResolution(int resolutionIndex)
-    {
-        List<Resolution> filteredResolution = new List<Resolution>();
-        for (int i = 0; i < resolutions.Length; i++)
-        {
-            // I only want this refresh rate
-            if (Screen.currentResolution.refreshRate == resolutions[i].refreshRate)
-            {
-                filteredResolution.Add(resolutions[i]);
-            }
-        }
-        Resolution resolution = filteredResolution[resolutionIndex];
-        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
-    }
 
     public void SetVolume(float volume)
     {
@@ -105,19 +70,13 @@ public class SettingsManager : SingletonObject<SettingsManager>
 
     public void SaveSettings()
     {
-        PlayerPrefs.SetInt("Resolution", resolutionDropdown.value);
         PlayerPrefs.SetInt("Fullscreen", fullscreenToggle.isOn ? 1 : 0);
         PlayerPrefs.SetFloat("MasterVolume", masterVolumeSlider.value * 0.01f);
         PlayerPrefs.Save();
     }
 
-    public void LoadSettings(int currResolutionIndex)
+    public void LoadSettings()
     {
-        if (PlayerPrefs.HasKey("Resolution"))
-            resolutionDropdown.value = PlayerPrefs.GetInt("Resolution");
-        else
-            resolutionDropdown.value = currResolutionIndex;
-
         if (PlayerPrefs.HasKey("Fullscreen"))
             fullscreenToggle.isOn = PlayerPrefs.GetInt("Fullscreen") != 0;
         else
@@ -127,6 +86,45 @@ public class SettingsManager : SingletonObject<SettingsManager>
             masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume") * 100f;
         else
             masterVolumeSlider.value = 50f;
+    }
+
+    public void OnQuitToMainMenuClicked()
+    {
+        chosenQuitType = QUIT_TYPE.MAIN_MENU;
+        confirmQuitText.text = "Are you sure you want to quit to main menu?";
+        confirmQuitMenu.SetActive(true);
+    }
+
+    public void OnQuitToDesktopClicked()
+    {
+        chosenQuitType = QUIT_TYPE.DESKTOP;
+        confirmQuitText.text = "ARE you sure you want to quit to desktop?";
+        confirmQuitMenu.SetActive(true);
+    }
+
+    public void DisableQuitConfirmMenu(bool isYes)
+    {
+        if (isYes)
+        {
+            switch (chosenQuitType)
+            {
+                case QUIT_TYPE.MAIN_MENU:
+                    {
+                        if (DataManager.instance.chosenGameTeam == TEAM_TYPE.DEFENDERS)
+                            SceneTransitionManager.instance.SwitchScene("MainMenu_Defenders", SceneTransitionManager.ENTRANCE_TYPE.FADE_IN, SceneTransitionManager.EXIT_TYPE.FADE_OUT);
+                        else
+                            SceneTransitionManager.instance.SwitchScene("MainMenu_Invaders", SceneTransitionManager.ENTRANCE_TYPE.FADE_IN, SceneTransitionManager.EXIT_TYPE.FADE_OUT);
+                        SceneManager.UnloadSceneAsync("SettingScene");
+                        break;
+                    }
+                case QUIT_TYPE.DESKTOP:
+                    {
+                        Application.Quit(0);
+                        break;
+                    }
+            }
+        }
+        confirmQuitMenu.gameObject.SetActive(false);
     }
 
     public void OnDisable()

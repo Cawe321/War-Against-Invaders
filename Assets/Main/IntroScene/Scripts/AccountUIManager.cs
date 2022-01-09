@@ -9,6 +9,8 @@ using UnityEngine.UI;
 
 public class AccountUIManager : MonoBehaviour
 {
+    bool isBusy = false;
+
     #region LOGIN
     [Header("References - Login")]
     public RectTransform LoginMenu;
@@ -18,7 +20,10 @@ public class AccountUIManager : MonoBehaviour
 
     public void LoginSubmit()
     {
+        if (isBusy)
+            return;
         ProcessingMenu.SetActive(true);
+        isBusy = true;
         var request = new LoginWithEmailAddressRequest
         {
             Email = LoginEmailInput.text,
@@ -32,6 +37,7 @@ public class AccountUIManager : MonoBehaviour
         LoginErrorMessageText.text = error.ErrorMessage;
         LoginErrorMessageText.gameObject.SetActive(true);
         ProcessingMenu.SetActive(false);
+        isBusy = false;
     }
 
     private void OnLoginSuccess(LoginResult result)
@@ -54,12 +60,15 @@ public class AccountUIManager : MonoBehaviour
 
     public void RegisterSubmit()
     {
+        if (isBusy)
+            return;
         if (RegisterPasswordInput.text.Length < 6)
         {
             RegisterErrorMessageText.text = "Password is too short! It requires at least 6 characters.";
             return;
         }
         ProcessingMenu.SetActive(true);
+        isBusy = true;
         var request = new RegisterPlayFabUserRequest
         {
             Email = RegisterEmailInput.text,
@@ -82,6 +91,7 @@ public class AccountUIManager : MonoBehaviour
         RegisterErrorMessageText.text = error.ErrorMessage;
         RegisterErrorMessageText.gameObject.SetActive(true);
         ProcessingMenu.SetActive(false);
+        isBusy = false;
     }
     #endregion
 
@@ -131,6 +141,7 @@ public class AccountUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isBusy = false;
         ProcessingMenu.SetActive(false);
 
         if (PlayerPrefs.HasKey("LastEmail"))
@@ -145,7 +156,12 @@ public class AccountUIManager : MonoBehaviour
     {
         // Login
         {
-            if (EventSystem.current.currentSelectedGameObject == LoginEmailInput.gameObject)
+            if (NoticeMenu.gameObject.activeInHierarchy)
+            {
+                if (Input.GetKeyDown(KeyCode.Return))
+                    CloseNoticeMenu();
+            }
+            else if (EventSystem.current.currentSelectedGameObject == LoginEmailInput.gameObject)
             {
                 if (Input.GetKeyDown(KeyCode.Tab))
                 {
@@ -163,7 +179,12 @@ public class AccountUIManager : MonoBehaviour
 
         // Register
         {
-            if (EventSystem.current.currentSelectedGameObject == RegisterEmailInput.gameObject)
+            if (NoticeMenu.gameObject.activeInHierarchy)
+            {
+                if (Input.GetKeyDown(KeyCode.Return))
+                    CloseNoticeMenu();
+            }
+            else if (EventSystem.current.currentSelectedGameObject == RegisterEmailInput.gameObject)
             {
                 if (Input.GetKeyDown(KeyCode.Tab))
                 {
@@ -188,7 +209,12 @@ public class AccountUIManager : MonoBehaviour
 
         // Forgot Password
         {
-            if (EventSystem.current.currentSelectedGameObject == ForgotEmailInput.gameObject)
+            if (NoticeMenu.gameObject.activeInHierarchy)
+            {
+                if (Input.GetKeyDown(KeyCode.Return))
+                    CloseNoticeMenu();
+            }
+            else if (EventSystem.current.currentSelectedGameObject == ForgotEmailInput.gameObject)
             {
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
@@ -235,11 +261,13 @@ public class AccountUIManager : MonoBehaviour
         {
             case NOTICE_MENU_TYPE.LOGIN_SUCCESS:
                 {
+                    //NoticeMenu.gameObject.SetActive(false);
                     FindObjectOfType<IntroSceneManager>().LoginSuccessful();
                     break;
                 }
             case NOTICE_MENU_TYPE.REGISTER_SUCCESS:
                 {
+                    //NoticeMenu.gameObject.SetActive(false);
                     FindObjectOfType<IntroSceneManager>().LoginSuccessful();
                     break;
                 }

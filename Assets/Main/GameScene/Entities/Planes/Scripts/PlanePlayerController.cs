@@ -52,8 +52,8 @@ public class PlanePlayerController : MonoBehaviour
                 planeEntity.baseEntity.DisconnectLocalPlayer();
             }
 
-            // Only rotate when LMB is pressed down
-            if (Input.GetMouseButton(0))
+            // Only rotate when RMB is pressed down
+            if (Input.GetMouseButton(1))
             {
                 planeEntity.UpdateRotation(MouseManager.instance.mousePosAwayFromCenter.x / Screen.width, MouseManager.instance.mousePosAwayFromCenter.y / Screen.height);
                 //planeEntity.UpdateLeftRightRotation(MouseManager.instance.mousePosAwayFromCenter.x / Screen.width);

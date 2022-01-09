@@ -232,7 +232,7 @@ public class BaseEntity : MonoBehaviour
 
     }
 
-    private void OnMouseDown()
+    public void OnMouseDown()
     {
         TakeControl();
         Debug.Log("Pressed");

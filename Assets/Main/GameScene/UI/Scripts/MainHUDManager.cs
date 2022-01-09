@@ -76,7 +76,8 @@ public class MainHUDManager : SingletonObject<MainHUDManager>
 
     public void ToggleShopMenu()
     {
-        // CODE HERE to toggle shop menu\
+        if (openSettings) // if settings is open, don't toggle
+            return;
         openShop = !openShop;
         if (openShop)
         {
@@ -95,6 +96,8 @@ public class MainHUDManager : SingletonObject<MainHUDManager>
 
     public void ToggleSettingsMenu()
     {
+        if (openShop) // if shop is open, don't toggle
+            return;
         openSettings = !openSettings;
         if (openSettings)
         {

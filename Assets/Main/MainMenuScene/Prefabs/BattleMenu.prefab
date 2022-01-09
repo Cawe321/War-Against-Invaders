@@ -633,6 +633,55 @@ MonoBehaviour:
   - {fileID: 7400000, guid: 0dda14c1e1beb4847a3ba836e60cc59d, type: 2}
   currentState: 3
   isNested_IAM: 0
+--- !u!1 &1210900085106578350
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1435642813203176538}
+  - component: {fileID: 5817236862502606699}
+  m_Layer: 0
+  m_Name: Blocker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1435642813203176538
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1210900085106578350}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7032540107117817110}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!65 &5817236862502606699
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1210900085106578350}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1920, y: 1080, z: 1000}
+  m_Center: {x: 0, y: 0, z: 500}
 --- !u!1 &1247254840155286651
 GameObject:
   m_ObjectHideFlags: 0
@@ -15089,7 +15138,7 @@ GameObject:
   - component: {fileID: 7032540106566362101}
   - component: {fileID: 7032540106566362106}
   - component: {fileID: 7032540106566362100}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: branch (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15219,7 +15268,7 @@ GameObject:
   - component: {fileID: 7032540106587455617}
   - component: {fileID: 7032540106587455616}
   - component: {fileID: 7032540106587455618}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: customText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15512,7 +15561,7 @@ GameObject:
   - component: {fileID: 7032540106812886046}
   - component: {fileID: 7032540106812886047}
   - component: {fileID: 7032540106812886041}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: txt (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15765,7 +15814,7 @@ GameObject:
   - component: {fileID: 7032540106863002069}
   - component: {fileID: 7032540106863002074}
   - component: {fileID: 7032540106863002068}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: branch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15894,7 +15943,7 @@ GameObject:
   - component: {fileID: 7032540106963396663}
   - component: {fileID: 7032540106963396661}
   - component: {fileID: 7032540106963396660}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 3Dtube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15975,7 +16024,7 @@ GameObject:
   - component: {fileID: 7032540107029349118}
   - component: {fileID: 7032540107029349116}
   - component: {fileID: 7032540107029349119}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 3Dring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16059,7 +16108,7 @@ GameObject:
   - component: {fileID: 7032540107044554431}
   - component: {fileID: 7032540107044554428}
   - component: {fileID: 7032540107044554430}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: branch (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16204,6 +16253,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1435642813203176538}
   - {fileID: 7032540107494694512}
   - {fileID: 7032540108034131199}
   m_Father: {fileID: 0}
@@ -16418,7 +16468,7 @@ GameObject:
   - component: {fileID: 7032540107201425591}
   - component: {fileID: 7032540107201425588}
   - component: {fileID: 7032540107201425590}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: circle (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16551,7 +16601,7 @@ GameObject:
   - component: {fileID: 7032540107226789801}
   - component: {fileID: 7032540107226789806}
   - component: {fileID: 7032540107226789800}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16684,7 +16734,7 @@ GameObject:
   - component: {fileID: 7032540107265801075}
   - component: {fileID: 7032540107265801072}
   - component: {fileID: 7032540107265801074}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: circle02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16814,7 +16864,7 @@ GameObject:
   - component: {fileID: 7032540107336026049}
   - component: {fileID: 7032540107336026048}
   - component: {fileID: 7032540107336026051}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: sphere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16894,7 +16944,7 @@ GameObject:
   - component: {fileID: 7032540107346985487}
   - component: {fileID: 7032540107346985484}
   - component: {fileID: 7032540107346985486}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17023,7 +17073,7 @@ GameObject:
   - component: {fileID: 7032540107365167171}
   - component: {fileID: 7032540107365167169}
   - component: {fileID: 7032540107365167168}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 3Dsphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17107,7 +17157,7 @@ GameObject:
   - component: {fileID: 7032540107458470273}
   - component: {fileID: 7032540107458470278}
   - component: {fileID: 7032540107458470272}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: circle (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17388,7 +17438,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7032540107117817110}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -17444,7 +17494,7 @@ GameObject:
   - component: {fileID: 7032540107507852344}
   - component: {fileID: 7032540107507852347}
   - component: {fileID: 7032540107507852346}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: sphere (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17653,7 +17703,7 @@ GameObject:
   - component: {fileID: 7032540107758995267}
   - component: {fileID: 7032540107758995265}
   - component: {fileID: 7032540107758995264}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 3Dtube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17737,7 +17787,7 @@ GameObject:
   - component: {fileID: 7032540107776552737}
   - component: {fileID: 7032540107776552742}
   - component: {fileID: 7032540107776552736}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: circle (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18003,7 +18053,7 @@ GameObject:
   - component: {fileID: 7032540107835023330}
   - component: {fileID: 7032540107835023331}
   - component: {fileID: 7032540107835022365}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: circle (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18136,7 +18186,7 @@ GameObject:
   - component: {fileID: 7032540107904691089}
   - component: {fileID: 7032540107904691094}
   - component: {fileID: 7032540107904691088}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18266,7 +18316,7 @@ GameObject:
   - component: {fileID: 7032540107911737412}
   - component: {fileID: 7032540107911737415}
   - component: {fileID: 7032540107911737414}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: tube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18345,7 +18395,7 @@ GameObject:
   - component: {fileID: 7032540107940957054}
   - component: {fileID: 7032540107940957055}
   - component: {fileID: 7032540107940957049}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: branch (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18506,7 +18556,7 @@ RectTransform:
   - {fileID: 5136764969212894334}
   - {fileID: 7145801897175369459}
   m_Father: {fileID: 7032540107117817110}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -18627,7 +18677,7 @@ GameObject:
   - component: {fileID: 7032540108057676939}
   - component: {fileID: 7032540108057676937}
   - component: {fileID: 7032540108057676936}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 3Dring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19093,7 +19143,7 @@ GameObject:
   - component: {fileID: 7032540108230344980}
   - component: {fileID: 7032540108230344983}
   - component: {fileID: 7032540108230344982}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19307,7 +19357,7 @@ GameObject:
   - component: {fileID: 7032540108305602346}
   - component: {fileID: 7032540108305602347}
   - component: {fileID: 7032540108305602341}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19439,7 +19489,7 @@ GameObject:
   - component: {fileID: 7032540108321183329}
   - component: {fileID: 7032540108321183334}
   - component: {fileID: 7032540108321183328}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: txt (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19569,7 +19619,7 @@ GameObject:
   - component: {fileID: 7032540108351148807}
   - component: {fileID: 7032540108351148806}
   - component: {fileID: 7032540108351148801}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: sphere (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19644,7 +19694,7 @@ GameObject:
   - component: {fileID: 7032540108366920454}
   - component: {fileID: 7032540108366920452}
   - component: {fileID: 7032540108366920455}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 3Dsphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19861,7 +19911,7 @@ GameObject:
   - component: {fileID: 7032540108411775121}
   - component: {fileID: 7032540108411775126}
   - component: {fileID: 7032540108411775120}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: circle (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19993,7 +20043,7 @@ GameObject:
   - component: {fileID: 7032540108436520676}
   - component: {fileID: 7032540108436520679}
   - component: {fileID: 7032540108436520678}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24843,7 +24893,7 @@ GameObject:
   - component: {fileID: 7032540108487594247}
   - component: {fileID: 7032540108487594246}
   - component: {fileID: 7032540108487594241}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: tube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24920,7 +24970,7 @@ GameObject:
   - component: {fileID: 7032540108514198648}
   - component: {fileID: 7032540108514198649}
   - component: {fileID: 7032540108514198654}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Singleplayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}

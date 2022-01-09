@@ -80,10 +80,10 @@ public class PlaneRunwayState : BaseState
             case PHASE.ENTER_RUNWAY:
                 {
                     Vector3 offset;
-                    offset = new Vector3(0, 100, -planeEntity.flightSpeed * 5);
+                    offset = new Vector3(0, 200, -planeEntity.flightSpeed * 8);
                     offset = assignedRunway.transform.rotation * offset;
                     Vector3 targetPos = assignedRunway.entrancePosition.position + offset;
-                    if ((planeEntity.transform.position - targetPos).sqrMagnitude < 25f) // If plane entity is near the target position (<5 metres)
+                    if ((planeEntity.transform.position - targetPos).sqrMagnitude < 400f) // If plane entity is near the target position (<10 metres)
                     {
                         currentPhase = PHASE.LANDING_1;
                     }

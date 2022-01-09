@@ -16,7 +16,7 @@ MonoBehaviour:
   _victoryPremiumCurrencyReward: 10
   _defeatCommonCurrencyReward: 500
   _defeatPremiumCurrencyReward: 5
-  _planeDestroyedReward: 500
+  _planeDestroyedReward: 100
   _turretDestroyedReward: 5000
   _scoutPurchaseCost: 500
   _balancedPurchaseCost: 750
@@ -26,5 +26,5 @@ MonoBehaviour:
   _warehouseRepairCost: 10000
   _thrusterRepairCost: 10000
   _fuelTankRepairCost: 10000
-  _carePackageAmount: 1000
-  _carePackageCooldown: 30
+  _carePackageAmount: 500
+  _carePackageCooldown: 60
