@@ -11,7 +11,7 @@ public class DataManager : SingletonObject<DataManager>
 {
     #region SERVER
     // Start of Server Values
-    public string playerName { get; private set; }
+    public string playerName { get; private set; } = "Nameless";
     public int commonCurrency { get; private set; }
     public int premiumCurrency { get; private set; }
     public TEAM_TYPE lastTeam { get; private set; } // used to keep track of which team the last player selected

@@ -26,11 +26,11 @@ public class MatchmakingRoomEntry : MonoBehaviour
         });
     }
 
-    public void Initialize(string name, byte currentPlayers, byte maxPlayers)
+    public void Initialize(string name, byte currentPlayers, byte defenderPlayers, byte invaderPlayers)
     {
         roomName = name;
 
         RoomNameText.text = name;
-        RoomPlayersText.text = currentPlayers + " / " + maxPlayers;
+        RoomPlayersText.text = "Defenders: " + defenderPlayers + " | Invaders: " + invaderPlayers + " | Max Players: 6";
     }
 }

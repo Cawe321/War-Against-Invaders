@@ -172,6 +172,7 @@ public class AccountUIManager : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
+                    EventSystem.current.SetSelectedGameObject(null);
                     LoginSubmit();
                 }
             }

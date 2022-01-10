@@ -10,8 +10,7 @@ public class BattleModeSelection_Class : MonoBehaviour
     {
         NONE,
         SINGLEPLAYER,
-        QUICK,
-        CUSTOM,
+        MULTIPLAYER,
     }
     public BATTLEMODE_SELECTION selection;
 }

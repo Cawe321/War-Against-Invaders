@@ -11,9 +11,7 @@ GameObject:
   - component: {fileID: 1579541656722380528}
   - component: {fileID: 5537136783068123497}
   - component: {fileID: 8891075799082468063}
-  - component: {fileID: 7035580803156242226}
   - component: {fileID: 17548929336460938}
-  - component: {fileID: 8731240815133114282}
   - component: {fileID: 400864814488474866}
   m_Layer: 5
   m_Name: RoomListEntry
@@ -82,32 +80,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7035580803156242226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 169536423990979272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 10
-    m_Right: 10
-    m_Top: 10
-    m_Bottom: 10
-  m_ChildAlignment: 3
-  m_Spacing: 10
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!114 &17548929336460938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,21 +100,6 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
---- !u!114 &8731240815133114282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 169536423990979272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40b744eae97c5fa47879a477d0f0b667, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RoomNameText: {fileID: 4830393416733392017}
-  RoomPlayersText: {fileID: 1017274959886983049}
-  JoinRoomButton: {fileID: 5345921764161785882}
 --- !u!114 &400864814488474866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,7 +127,6 @@ GameObject:
   - component: {fileID: 808216647351874956}
   - component: {fileID: 9102380999874970993}
   - component: {fileID: 5345921764161785882}
-  - component: {fileID: 3090462870461477947}
   m_Layer: 5
   m_Name: JoinRoomButton
   m_TagString: Untagged
@@ -193,11 +149,11 @@ RectTransform:
   m_Father: {fileID: 1579541656722380528}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_SizeDelta: {x: 155, y: 45}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &808216647351874956
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -249,7 +205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -257,10 +213,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.31764707, g: 0.3372549, b: 0.38431373, a: 1}
-    m_HighlightedColor: {r: 0.8784314, g: 0.48235294, b: 0, a: 1}
-    m_PressedColor: {r: 0.8784314, g: 0, b: 0, a: 1}
-    m_SelectedColor: {r: 0.8784314, g: 0.48235294, b: 0, a: 1}
+    m_NormalColor: {r: 0.20784314, g: 0.7176471, b: 0.32156864, a: 0.52156866}
+    m_HighlightedColor: {r: 0, g: 0.90239954, b: 1, a: 1}
+    m_PressedColor: {r: 0.075834274, g: 0, b: 1, a: 1}
+    m_SelectedColor: {r: 0, g: 0.90588236, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -270,36 +226,16 @@ MonoBehaviour:
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Highlighted
-    m_DisabledTrigger: Disabled
+    m_NormalTrigger: 
+    m_HighlightedTrigger: 
+    m_PressedTrigger: 
+    m_SelectedTrigger: 
+    m_DisabledTrigger: 
   m_Interactable: 1
   m_TargetGraphic: {fileID: 9102380999874970993}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &3090462870461477947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 289550834286751021}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: 100
-  m_MinHeight: -1
-  m_PreferredWidth: 100
-  m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!1 &1220264763718613335
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,10 +269,10 @@ RectTransform:
   m_Father: {fileID: 1579541656722380528}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 239.50002, y: -25}
+  m_SizeDelta: {x: 459.00003, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5030706867087947217
 CanvasRenderer:
@@ -467,7 +403,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 495c9e2a934bcc640a8d7427b13cb680, type: 3}
+    m_Font: {fileID: 12800000, guid: b6d8b436362c3064f9be24d60cf5af54, type: 3}
     m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
@@ -479,7 +415,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Join
+  m_Text: JOIN
 --- !u!114 &1710858858986270654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -528,10 +464,10 @@ RectTransform:
   m_Father: {fileID: 1579541656722380528}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 786, y: -25}
+  m_SizeDelta: {x: 500, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &998644170162549181
 CanvasRenderer:

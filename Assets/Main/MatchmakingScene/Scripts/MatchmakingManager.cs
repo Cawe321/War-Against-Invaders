@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using ExitGames.Client.Photon;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using UnityEngine.SceneManagement;
 
 public class MatchmakingManager : MonoBehaviourPunCallbacks
 {
@@ -19,7 +20,6 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
     public GameObject CreateRoomPanel;
 
     public InputField RoomNameInputField;
-    public InputField MaxPlayersInputField;
 
     [Header("Join Random Room Panel")]
     public GameObject JoinRandomRoomPanel;
@@ -40,6 +40,8 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
     private Dictionary<string, GameObject> roomListEntries;
     private Dictionary<int, GameObject> playerListEntries;
 
+
+    bool openSettings;
     #region UNITY
 
     public void Awake()
@@ -48,6 +50,8 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
 
         cachedRoomList = new Dictionary<string, RoomInfo>();
         roomListEntries = new Dictionary<string, GameObject>();
+
+        openSettings = false;
     }
 
     public void Start()
@@ -62,6 +66,9 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
+        Hashtable teamProperty = new Hashtable { { MatchmakingKeyIDs.PLAYER_TEAM, DataManager.instance.chosenGameTeam } };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(teamProperty);
+
         this.SetActivePanel(SelectionPanel.name);
         ProcessingMenu.SetActive(false);
     }
@@ -90,19 +97,22 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
+        Debug.Log("Create Room Failed: " + returnCode + " " + message);
         SetActivePanel(SelectionPanel.name);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
+        Debug.Log("Join Room Failed: " + returnCode + " " + message);
         SetActivePanel(SelectionPanel.name);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         string roomName = "Room " + Random.Range(1000, 10000);
+        Hashtable customRoomProperties = new Hashtable { { TEAM_TYPE.DEFENDERS.ToString(), 0 }, { TEAM_TYPE.INVADERS.ToString(), 0 } };
 
-        RoomOptions options = new RoomOptions { MaxPlayers = 8 };
+        RoomOptions options = new RoomOptions { MaxPlayers = 6, CustomRoomProperties = customRoomProperties, CustomRoomPropertiesForLobby = new string[] { TEAM_TYPE.DEFENDERS.ToString(), TEAM_TYPE.INVADERS.ToString() } };
 
         PhotonNetwork.CreateRoom(roomName, options, null);
     }
@@ -112,6 +122,15 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
         // joining (or entering) a room invalidates any cached lobby room list (even if LeaveLobby was not called due to just joining a room)
         cachedRoomList.Clear();
 
+        object count = null;
+        PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(DataManager.instance.chosenGameTeam.ToString(), out count);
+        if (count != null)
+        {
+            Hashtable newProperty = new Hashtable { { DataManager.instance.chosenGameTeam.ToString(), (int)count + 1 } };
+            PhotonNetwork.CurrentRoom.SetCustomProperties(newProperty);
+        }
+        else
+            Debug.LogError("The room has no count for the chosen team");
 
         SetActivePanel(InsideRoomPanel.name);
 
@@ -122,10 +141,22 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
 
         foreach (Player p in PhotonNetwork.PlayerList)
         {
-            GameObject entry = Instantiate(PlayerListEntryPrefab);
-            entry.transform.SetParent(InsideRoomPanel.transform);
+            object playerTeam = null;
+            TEAM_TYPE playerTeamType = TEAM_TYPE.NONE;
+            if (p.CustomProperties.TryGetValue(MatchmakingKeyIDs.PLAYER_TEAM, out playerTeam))
+            {
+                playerTeamType = (TEAM_TYPE)((int)playerTeam);
+
+            }
+            else
+            {
+                Debug.LogError("Player Team not found");
+            }
+
+            GameObject entry = Instantiate(PlayerListEntryPrefab, InsideRoomPanel.transform);
+            //entry.transform.SetParent(InsideRoomPanel.transform);
             entry.transform.localScale = Vector3.one;
-            entry.GetComponent<MatchmakingPlayerListEntry>().Initialize(p.ActorNumber, p.NickName);
+            entry.GetComponent<MatchmakingPlayerListEntry>().Initialize(p.ActorNumber, p.NickName, playerTeamType.ToString());
 
             object isPlayerReady;
             if (p.CustomProperties.TryGetValue(MatchmakingKeyIDs.IS_PLAYER_READY, out isPlayerReady))
@@ -147,7 +178,10 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
+    
+
         SetActivePanel(SelectionPanel.name);
+
 
         foreach (GameObject entry in playerListEntries.Values)
         {
@@ -160,10 +194,20 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        GameObject entry = Instantiate(PlayerListEntryPrefab);
-        entry.transform.SetParent(InsideRoomPanel.transform);
+        GameObject entry = Instantiate(PlayerListEntryPrefab, InsideRoomPanel.transform);
+        //entry.transform.SetParent(InsideRoomPanel.transform);
         entry.transform.localScale = Vector3.one;
-        entry.GetComponent<MatchmakingPlayerListEntry>().Initialize(newPlayer.ActorNumber, newPlayer.NickName);
+        object playerTeam = null;
+        TEAM_TYPE playerTeamType = TEAM_TYPE.NONE;
+        if (newPlayer.CustomProperties.TryGetValue(MatchmakingKeyIDs.PLAYER_TEAM, out playerTeam))
+        {
+            playerTeamType = (TEAM_TYPE)((int)playerTeam);
+        }
+        else
+        {
+            Debug.LogError("Player Team not found");
+        }
+        entry.GetComponent<MatchmakingPlayerListEntry>().Initialize(newPlayer.ActorNumber, newPlayer.NickName, (string)playerTeamType.ToString());
 
         playerListEntries.Add(newPlayer.ActorNumber, entry);
 
@@ -225,11 +269,10 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
         string roomName = RoomNameInputField.text;
         roomName = (roomName.Equals(string.Empty)) ? "Room " + Random.Range(1000, 10000) : roomName;
 
-        byte maxPlayers;
-        byte.TryParse(MaxPlayersInputField.text, out maxPlayers);
-        maxPlayers = (byte)Mathf.Clamp(maxPlayers, 2, 8);
+        //RoomOptions options = new RoomOptions { MaxPlayers = (byte)6,  };
+        Hashtable customRoomProperties = new Hashtable { { TEAM_TYPE.DEFENDERS.ToString(), 0 }, { TEAM_TYPE.INVADERS.ToString(), 0 } };
 
-        RoomOptions options = new RoomOptions { MaxPlayers = maxPlayers, PlayerTtl = 10000 };
+        RoomOptions options = new RoomOptions { MaxPlayers = 6, CustomRoomProperties = customRoomProperties, CustomRoomPropertiesForLobby = new string[] { TEAM_TYPE.DEFENDERS.ToString(), TEAM_TYPE.INVADERS.ToString() }, PlayerTtl = 10000 };
 
         PhotonNetwork.CreateRoom(roomName, options, null);
     }
@@ -243,6 +286,16 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
 
     public void OnLeaveGameButtonClicked()
     {
+        object count;
+        PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(DataManager.instance.chosenGameTeam.ToString(), out count);
+        if (count != null)
+        {
+            Hashtable newProperty = new Hashtable { { DataManager.instance.chosenGameTeam.ToString(), (int)count - 1 } };
+            PhotonNetwork.CurrentRoom.SetCustomProperties(newProperty);
+            Debug.Log(DataManager.instance.chosenGameTeam.ToString() + ":"+ ((int)count));
+        }
+        else
+            Debug.LogError("The room has no count for the chosen team");
         ProcessingMenu.SetActive(true);
         PhotonNetwork.LeaveRoom();
     }
@@ -367,12 +420,42 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
     {
         foreach (RoomInfo info in cachedRoomList.Values)
         {
-            GameObject entry = Instantiate(RoomListEntryPrefab);
-            entry.transform.SetParent(RoomListContent.transform);
+            GameObject entry = Instantiate(RoomListEntryPrefab, RoomListContent.transform);
+            //entry.transform.SetParent(RoomListContent.transform);
             entry.transform.localScale = Vector3.one;
-            entry.GetComponent<MatchmakingRoomEntry>().Initialize(info.Name, (byte)info.PlayerCount, info.MaxPlayers);
+
+            object defenderCount, invaderCount;
+            info.CustomProperties.TryGetValue(TEAM_TYPE.DEFENDERS.ToString(), out defenderCount);
+            info.CustomProperties.TryGetValue(TEAM_TYPE.INVADERS.ToString(), out invaderCount);
+            entry.GetComponent<MatchmakingRoomEntry>().Initialize(info.Name, (byte)info.PlayerCount, (byte)(int)defenderCount, (byte)(int)invaderCount);
 
             roomListEntries.Add(info.Name, entry);
         }
+    }
+
+    public void ReturnToMainMenu()
+    {
+        PhotonNetwork.Disconnect();
+        PlayerPrefs.SetInt("MainMenuSkipVFX", 1);
+        if (DataManager.instance.lastTeam == TEAM_TYPE.DEFENDERS)
+            SceneTransitionManager.instance.SwitchScene("MainMenu_Defenders", SceneTransitionManager.ENTRANCE_TYPE.FADE_IN, SceneTransitionManager.EXIT_TYPE.FADE_OUT);
+        else
+            SceneTransitionManager.instance.SwitchScene("MainMenu_Invaders", SceneTransitionManager.ENTRANCE_TYPE.FADE_IN, SceneTransitionManager.EXIT_TYPE.FADE_OUT);
+    }
+
+    public void ToggleSettings()
+    {
+        openSettings = !openSettings;
+        if (openSettings)
+        {
+            SceneManager.LoadSceneAsync("SettingScene", LoadSceneMode.Additive);
+            AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._uiOpenSound);
+        }
+        else
+        {
+            SceneManager.UnloadSceneAsync("SettingScene");
+            AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._uiCloseSound);
+        }
+
     }
 }

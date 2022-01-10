@@ -6,4 +6,5 @@ public class MatchmakingKeyIDs : MonoBehaviour
 {
     public const string IS_PLAYER_READY = "IsPlayerReady";
     public const string PLAYER_LOADED_LEVEL = "PlayerLoadedLevel";
+    public const string PLAYER_TEAM = "Team";
 }

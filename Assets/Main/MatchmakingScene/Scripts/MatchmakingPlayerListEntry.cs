@@ -11,7 +11,7 @@ public class MatchmakingPlayerListEntry : MonoBehaviour
 {
     [Header("UI References")]
     public Text PlayerNameText;
-
+    public Text PlayerTeamText;
     public Button PlayerReadyButton;
     public Image PlayerReadyImage;
 
@@ -37,6 +37,9 @@ public class MatchmakingPlayerListEntry : MonoBehaviour
             PhotonNetwork.LocalPlayer.SetCustomProperties(initialProps);
             PhotonNetwork.LocalPlayer.SetScore(0);
 
+            Hashtable addProps = new Hashtable() { { MatchmakingKeyIDs.PLAYER_TEAM, DataManager.instance.chosenGameTeam } };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(addProps);
+
             PlayerReadyButton.onClick.AddListener(() =>
             {
                 isPlayerReady = !isPlayerReady;
@@ -60,10 +63,11 @@ public class MatchmakingPlayerListEntry : MonoBehaviour
 
     #endregion
 
-    public void Initialize(int playerId, string playerName)
+    public void Initialize(int playerId, string playerName, string playerTeam)
     {
         ownerId = playerId;
         PlayerNameText.text = playerName;
+        PlayerTeamText.text = "TEAM: " + playerTeam;
     }
 
     private void OnPlayerNumberingChanged()

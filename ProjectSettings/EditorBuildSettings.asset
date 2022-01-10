@@ -26,7 +26,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Main/_Scenes/GachaScene.unity
     guid: e49dcd91cf5817640b666b53ad5ade8b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Main/CloudScript/CloudScriptScenes/TestCloudScript.unity
     guid: 5e2026f5c49ecce4992c08b412a8d3ce
+  - enabled: 1
+    path: Assets/Main/_Scenes/MatchmakingScene.unity
+    guid: d57c0e383b2c4e6449f3a4a458b528c5
   m_configObjects: {}

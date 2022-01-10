@@ -47,9 +47,9 @@ public class MainMenuManager : SingletonObject<MainMenuManager>
         }
 
         // CODE HERE to remove once testing of cloudscript works
-        if (Input.GetKeyDown(KeyCode.Home))
+        //if (Input.GetKeyDown(KeyCode.Home))
         {
-            SceneManager.LoadScene("TestCloudScript");
+            //SceneManager.LoadScene("TestCloudScript");
         }
     }
 
@@ -116,6 +116,11 @@ public class MainMenuManager : SingletonObject<MainMenuManager>
             case BattleModeSelection_Class.BATTLEMODE_SELECTION.SINGLEPLAYER:
                 {
                     SceneTransitionManager.instance.SwitchScene("GameScene", SceneTransitionManager.ENTRANCE_TYPE.FADE_IN, SceneTransitionManager.EXIT_TYPE.FADE_OUT);
+                    return;
+                }
+            case BattleModeSelection_Class.BATTLEMODE_SELECTION.MULTIPLAYER:
+                {
+                    SceneTransitionManager.instance.SwitchScene("MatchmakingScene", SceneTransitionManager.ENTRANCE_TYPE.FADE_IN, SceneTransitionManager.EXIT_TYPE.FADE_OUT);
                     return;
                 }
         }
