@@ -112,7 +112,7 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
         string roomName = "Room " + Random.Range(1000, 10000);
         Hashtable customRoomProperties = new Hashtable { { TEAM_TYPE.DEFENDERS.ToString(), 0 }, { TEAM_TYPE.INVADERS.ToString(), 0 } };
 
-        RoomOptions options = new RoomOptions { MaxPlayers = 6, CustomRoomProperties = customRoomProperties, CustomRoomPropertiesForLobby = new string[] { TEAM_TYPE.DEFENDERS.ToString(), TEAM_TYPE.INVADERS.ToString() } };
+        RoomOptions options = new RoomOptions { MaxPlayers = 6, CleanupCacheOnLeave = false,CustomRoomProperties = customRoomProperties, CustomRoomPropertiesForLobby = new string[] { TEAM_TYPE.DEFENDERS.ToString(), TEAM_TYPE.INVADERS.ToString() } };
 
         PhotonNetwork.CreateRoom(roomName, options, null);
     }
@@ -272,7 +272,7 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
         //RoomOptions options = new RoomOptions { MaxPlayers = (byte)6,  };
         Hashtable customRoomProperties = new Hashtable { { TEAM_TYPE.DEFENDERS.ToString(), 0 }, { TEAM_TYPE.INVADERS.ToString(), 0 } };
 
-        RoomOptions options = new RoomOptions { MaxPlayers = 6, CustomRoomProperties = customRoomProperties, CustomRoomPropertiesForLobby = new string[] { TEAM_TYPE.DEFENDERS.ToString(), TEAM_TYPE.INVADERS.ToString() }, PlayerTtl = 10000 };
+        RoomOptions options = new RoomOptions { MaxPlayers = 6, CustomRoomProperties = customRoomProperties, CleanupCacheOnLeave = false, CustomRoomPropertiesForLobby = new string[] { TEAM_TYPE.DEFENDERS.ToString(), TEAM_TYPE.INVADERS.ToString() }, PlayerTtl = 10000 };
 
         PhotonNetwork.CreateRoom(roomName, options, null);
     }
@@ -333,7 +333,7 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.CurrentRoom.IsVisible = false;
 
-        PhotonNetwork.LoadLevel("DemoAsteroids-GameScene");
+        PhotonNetwork.LoadLevel("GameScene");
     }
 
     #endregion

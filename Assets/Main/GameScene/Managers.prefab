@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 9190648692237773797}
   - component: {fileID: 2415944643287313089}
   - component: {fileID: 5559979134700928195}
+  - component: {fileID: 813474797867331949}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -65,6 +66,10 @@ MonoBehaviour:
   planeUI: {fileID: 0}
   playerName: Cawe
   playerTeam: 0
+  isFocused: 1
+  hasLoaded: 0
+  maxFlightSpeedIncrease: 0
+  flightAccelerationIncrease: 0
 --- !u!114 &9190648692237773797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,13 +94,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 649d9f21c0cfa4c46886ecfacaa10f09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  matchSummaryManager: {fileID: 0}
   dockEntity: {fileID: 0}
   spaceshipEntity: {fileID: 0}
   waitForPlayersCanvas: {fileID: 0}
+  defenderPlaneContainer: {fileID: 0}
+  invaderPlaneContainer: {fileID: 0}
+  infraredManager: {fileID: 0}
   defendersSpawnLocation: {fileID: 0}
   invadersSpawnLocation: {fileID: 0}
   originalSpawnCooldown: 60
   spawnDistanceOffset: 205
+  defenderSpawnCooldown: 0
+  invaderSpawnCooldown: 0
+  defenderSpawnCooldownMultiplier: 1
+  invaderSpawnCooldownMultiplier: 1
+  gameTimer: 0
 --- !u!114 &5559979134700928195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,5 +120,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54e3fd5ff6acd6e4aaec32ea2a79e2fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &813474797867331949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9190648692237773796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f377c461d85cbf40927eafed62ab4ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -1,3 +1,6 @@
+using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,7 +8,7 @@ using System.Runtime.Remoting.Messaging;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class GameplayManager : SingletonObject<GameplayManager>
+public class GameplayManager : SingletonObject<GameplayManager>, IOnEventCallback
 {
     [Header("UI References")]
     [SerializeField]
@@ -82,6 +85,11 @@ public class GameplayManager : SingletonObject<GameplayManager>
 
         entityList = ResourceReference.instance.entityList;
 
+        
+    }
+
+    void InitGame()
+    {
         carePackageAmount = ResourceReference.instance.currencySettings.carePackageAmount;
 
         carePackageCooldownCounter = ResourceReference.instance.currencySettings.carePackageCooldown;
@@ -147,8 +155,11 @@ public class GameplayManager : SingletonObject<GameplayManager>
                         NotificationManager.instance.AddToNotification("Welcome To War!", "Good luck out there!");
 
                         gameplayPhase = GAMEPLAY_PHASE.GAME;
-                        SpawnTheEntityWave(TEAM_TYPE.DEFENDERS);
-                        SpawnTheEntityWave(TEAM_TYPE.INVADERS);
+                        if (PhotonNetwork.IsMasterClient)
+                        {
+                            SpawnTheEntityWave(TEAM_TYPE.DEFENDERS);
+                            SpawnTheEntityWave(TEAM_TYPE.INVADERS);
+                        }
                         defenderSpawnCooldown = originalSpawnCooldown;
                         invaderSpawnCooldown = originalSpawnCooldown;
 
@@ -158,35 +169,52 @@ public class GameplayManager : SingletonObject<GameplayManager>
                 }
             case GAMEPLAY_PHASE.GAME:
                 {
-                    // Timer
-                    gameTimer += Time.deltaTime;
-
-                    // Spawn Wave Logic
-                    // Each warehouse destroyed will result in a 20% increase of the original cooldown time
-                    // Base 40% cooldown for defender cooldown multiplier
-                    defenderSpawnCooldownMultiplier = 0.4f + dockEntity.GetPercentageOfExistingWarehouses() * 0.6f;
-
-                    defenderSpawnCooldown -= Time.fixedDeltaTime * defenderSpawnCooldownMultiplier;
-                    invaderSpawnCooldown -= Time.fixedDeltaTime * invaderSpawnCooldownMultiplier;
-                    if (defenderSpawnCooldown < 0f)
+                    if (PhotonNetwork.IsMasterClient)
                     {
-                        SpawnTheEntityWave(TEAM_TYPE.DEFENDERS);
-                        defenderSpawnCooldown = originalSpawnCooldown;
-                    }
-                    if (invaderSpawnCooldown < 0f)
-                    {
-                        SpawnTheEntityWave(TEAM_TYPE.INVADERS);
-                        invaderSpawnCooldown = originalSpawnCooldown;
-                    }
+                        // Timer
+                        gameTimer += Time.deltaTime;
 
-                    // Care Package Logic
-                    carePackageCooldownCounter -= Time.fixedDeltaTime;
-                    if (carePackageCooldownCounter < 0f)
-                    {
-                        carePackageCooldownCounter = ResourceReference.instance.currencySettings.carePackageCooldown;
-                        PlayerManager.instance.AddCoins(carePackageAmount, "Care Package has just arrived!");
-                        EnemyAIBehaviour.instance.AddCoins(carePackageAmount);
+                        // Spawn Wave Logic
+                        // Each warehouse destroyed will result in a 20% increase of the original cooldown time
+                        // Base 40% cooldown for defender cooldown multiplier
+                        defenderSpawnCooldownMultiplier = 0.4f + dockEntity.GetPercentageOfExistingWarehouses() * 0.6f;
+
+                        defenderSpawnCooldown -= Time.fixedDeltaTime * defenderSpawnCooldownMultiplier;
+                        invaderSpawnCooldown -= Time.fixedDeltaTime * invaderSpawnCooldownMultiplier;
+                        if (defenderSpawnCooldown < 0f)
+                        {
+                            SpawnTheEntityWave(TEAM_TYPE.DEFENDERS);
+                            defenderSpawnCooldown = originalSpawnCooldown;
+                        }
+                        if (invaderSpawnCooldown < 0f)
+                        {
+                            SpawnTheEntityWave(TEAM_TYPE.INVADERS);
+                            invaderSpawnCooldown = originalSpawnCooldown;
+                        }
+
+                        // Care Package Logic
+                        carePackageCooldownCounter -= Time.fixedDeltaTime;
+                        if (carePackageCooldownCounter < 0f)
+                        {
+                            carePackageCooldownCounter = ResourceReference.instance.currencySettings.carePackageCooldown;
+                            // Update All players
+                            {
+                                RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; 
+                                PhotonNetwork.RaiseEvent(NetworkManager.GiveCarePackage, null, raiseEventOptions, SendOptions.SendReliable);
+                            }
+
+
+                        }
+
+                        // Update Other players
+                        {
+                            object[] content = new object[] { gameTimer, defenderSpawnCooldown, invaderSpawnCooldown, defenderSpawnCooldownMultiplier, carePackageCooldownCounter }; 
+                            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others }; 
+                            PhotonNetwork.RaiseEvent(NetworkManager.UpdateGameStats, content, raiseEventOptions, SendOptions.SendReliable);
+                        }
+                        
                     }
+                   
 
                     break;
                 }
@@ -233,6 +261,13 @@ public class GameplayManager : SingletonObject<GameplayManager>
             }
             else Debug.LogWarning("GameplayManager.AddToSpawnWave(): Entity added to team does not belong to that team!");
         }
+
+        // Update other players
+        {
+            object[] content = new object[] { team, entity, count };
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+            PhotonNetwork.RaiseEvent(NetworkManager.UpdateSpawnWave, content, raiseEventOptions, SendOptions.SendReliable);
+        }
     }
 
     /// <summary>
@@ -272,7 +307,7 @@ public class GameplayManager : SingletonObject<GameplayManager>
         {
             if (i == 0)
             {
-                GameObject go = Instantiate(entityList.GetCombatEntityObject(objectsToSpawn[i]), originalSpawnPos, quaternion);
+                GameObject go = PhotonNetwork.Instantiate(entityList.GetCombatEntityObject(objectsToSpawn[i]).name, originalSpawnPos, quaternion);
                 if (team == TEAM_TYPE.DEFENDERS)
                     go.transform.parent = defenderPlaneContainer.transform;
                 else if (team == TEAM_TYPE.INVADERS)
@@ -283,7 +318,7 @@ public class GameplayManager : SingletonObject<GameplayManager>
             else if (i % 2 == 1)
             {
                 distance += spawnDistanceOffset;
-                GameObject go = Instantiate(entityList.GetCombatEntityObject(objectsToSpawn[i]), originalSpawnPos + new Vector3(distance, 0f, 0f), quaternion);
+                GameObject go = PhotonNetwork.Instantiate(entityList.GetCombatEntityObject(objectsToSpawn[i]).name, originalSpawnPos + new Vector3(distance, 0f, 0f), quaternion);
                 if (team == TEAM_TYPE.DEFENDERS)
                     go.transform.parent = defenderPlaneContainer.transform;
                 else if (team == TEAM_TYPE.INVADERS)
@@ -293,7 +328,7 @@ public class GameplayManager : SingletonObject<GameplayManager>
             }
             else
             {
-                GameObject go = Instantiate(entityList.GetCombatEntityObject(objectsToSpawn[i]), originalSpawnPos + new Vector3(-distance, 0f, 0f), quaternion);
+                GameObject go = PhotonNetwork.Instantiate(entityList.GetCombatEntityObject(objectsToSpawn[i]).name, originalSpawnPos + new Vector3(-distance, 0f, 0f), quaternion);
                 if (team == TEAM_TYPE.DEFENDERS)
                     go.transform.parent = defenderPlaneContainer.transform;
                 else if (team == TEAM_TYPE.INVADERS)
@@ -303,8 +338,10 @@ public class GameplayManager : SingletonObject<GameplayManager>
             }
         }
 
-        
-        AnnounceToPlayerSpawnWave(team , entitiesString);
+        object[] content = new object[] { team, entitiesString.ToArray() };
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+        PhotonNetwork.RaiseEvent(NetworkManager.MakeAnnouncementSpawnWave, content, raiseEventOptions, SendOptions.SendReliable);
+        //AnnounceToPlayerSpawnWave(team , entitiesString);
     }
 
     void AnnounceToPlayerSpawnWave(TEAM_TYPE team, List<string>entitiesString)
@@ -438,6 +475,84 @@ public class GameplayManager : SingletonObject<GameplayManager>
         EntityCore[] arrayOfDestructibles = dockEntity.GetComponentsInChildren<EntityCore>();
         int random = UnityEngine.Random.Range(0, arrayOfDestructibles.Length - 1);
         return arrayOfDestructibles[random].GetComponent<EntityHealth>();
+    }
+
+    public void OnEvent(EventData photonEvent)
+    {
+        byte eventCode = photonEvent.Code;
+
+        if (eventCode == NetworkManager.StartGameEventCode)
+        {
+            InitGame();
+            //playersLoaded = true;
+        }
+        else if (eventCode == NetworkManager.UpdateGameStats)
+        {
+            // CODE HERE to update game stats
+            //object[] content = new object[] { gameTimer, defenderSpawnCooldown, invaderSpawnCooldown, defenderSpawnCooldownMultiplier, carePackageCooldownCounter };
+            object[] data = (object[])photonEvent.CustomData;
+            gameTimer = (float)data[0];
+            defenderSpawnCooldown = (float)data[1];
+            invaderSpawnCooldown = (float)data[2];
+            defenderSpawnCooldownMultiplier = (float)data[3];
+            carePackageCooldownCounter = (float)data[4];
+        }
+        else if (eventCode == NetworkManager.UpdateSpawnWave)
+        {
+            //object[] data = new object[] { team, entity, count };
+            object[] data = (object[])photonEvent.CustomData;
+            TEAM_TYPE team = (TEAM_TYPE)data[0];
+            EntityTypes entity = (EntityTypes)data[1];
+            int count = (int)data[2];
+
+            // CODE HERE to append to spawn wave
+            if (team == TEAM_TYPE.DEFENDERS)
+            {
+                if (entityList.GetEntityTeam(entity) == team)
+                {
+                    if (defenderSpawnWave.ContainsKey(entity))
+                        defenderSpawnWave[entity] = defenderSpawnWave[entity] + count;
+                    else
+                        defenderSpawnWave.Add(entity, count);
+                }
+                else Debug.LogWarning("GameplayManager.AddToSpawnWave(): Entity added to team does not belong to that team!");
+            }
+            else if (team == TEAM_TYPE.INVADERS)
+            {
+                if (entityList.GetEntityTeam(entity) == team)
+                {
+                    if (invaderSpawnWave.ContainsKey(entity))
+                        invaderSpawnWave[entity] = invaderSpawnWave[entity] + count;
+                    else
+                        invaderSpawnWave.Add(entity, count);
+                }
+                else Debug.LogWarning("GameplayManager.AddToSpawnWave(): Entity added to team does not belong to that team!");
+            }
+        }
+        else if (eventCode == NetworkManager.MakeAnnouncementSpawnWave)
+        {
+            object[] data = (object[])photonEvent.CustomData;
+            TEAM_TYPE team = (TEAM_TYPE)data[0];
+            List<string> entitiesString = new List<string>((string[])data[1]);
+
+            AnnounceToPlayerSpawnWave(team, entitiesString);
+        }
+        else if (eventCode == NetworkManager.GiveCarePackage)
+        {
+            EnemyAIBehaviour.instance.AddCoins(carePackageAmount);
+            PlayerManager.instance.AddCoins(carePackageAmount, "Care Package has just arrived!");
+        }
+        
+    }
+
+    private void OnEnable()
+    {
+        PhotonNetwork.AddCallbackTarget(this);   
+    }
+
+    private void OnDisable()
+    {
+        PhotonNetwork.RemoveCallbackTarget(this);
     }
     #endregion
 }
