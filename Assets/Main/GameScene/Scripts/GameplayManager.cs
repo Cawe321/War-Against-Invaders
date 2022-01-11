@@ -80,21 +80,20 @@ public class GameplayManager : SingletonObject<GameplayManager>, IOnEventCallbac
     bool playersLoaded = false;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-
-        entityList = ResourceReference.instance.entityList;
-
-        
+        base.Awake();
+        waitForPlayersCanvas.gameObject.SetActive(true);
     }
 
     void InitGame()
     {
+        entityList = ResourceReference.instance.entityList;
         carePackageAmount = ResourceReference.instance.currencySettings.carePackageAmount;
 
         carePackageCooldownCounter = ResourceReference.instance.currencySettings.carePackageCooldown;
 
-        waitForPlayersCanvas.gameObject.SetActive(true);
+        
 
         gameplayPhase = GAMEPLAY_PHASE.WAIT;
 

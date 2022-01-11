@@ -115,7 +115,7 @@ public class FreeRoamCamera : MonoBehaviour
                 {
                     if (GameplayManager.instance.invaderPlaneContainer.transform.childCount > 0)
                     {
-                        spectateEntity = GameplayManager.instance.defenderPlaneContainer.transform.GetChild(0).GetComponent<PlaneEntity>();
+                        spectateEntity = GameplayManager.instance.invaderPlaneContainer.transform.GetChild(0).GetComponent<PlaneEntity>();
                         TellPlayerSpectate(true);
                     }
                     else

@@ -73,6 +73,8 @@ public class NetworkManager : SingletonObjectPunCallback<NetworkManager>
 
     private bool CheckAllPlayerLoadedLevel()
     {
+        if (PhotonNetwork.OfflineMode)
+            return true;
         foreach (Player p in PhotonNetwork.PlayerList)
         {
             object playerLoadedLevel;
