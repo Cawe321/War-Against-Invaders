@@ -1,3 +1,7 @@
+using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
+using PlayFab.EconomyModels;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Remoting.Messaging;
@@ -84,6 +88,8 @@ public class SpaceshipEntity : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         switch (phase)
         {
             case PHASE.MOVING_FORWARD:
@@ -161,6 +167,9 @@ public class SpaceshipEntity : MonoBehaviour
     void StartFallDown()
     {
         phase = PHASE.FALL;
+        DisableAllColliders();
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+        PhotonNetwork.RaiseEvent(NetworkManager.DisableSpaceshipColliders, null, raiseEventOptions, SendOptions.SendReliable);
         StartCoroutine(FallDown());
     }
 
@@ -184,6 +193,14 @@ public class SpaceshipEntity : MonoBehaviour
         }
 
         GameplayManager.instance.EndMatch(TEAM_TYPE.DEFENDERS);
+    }
+
+    public void DisableAllColliders()
+    {
+        foreach (Collider collider in colliders)
+        {
+            collider.enabled = false;
+        }
     }
 
     void ReachedDestination()

@@ -39,6 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3804619932812492956}
+  - component: {fileID: 1173526278324474677}
   m_Layer: 0
   m_Name: x
   m_TagString: Untagged
@@ -64,6 +65,22 @@ Transform:
   m_Father: {fileID: 47328039076749468}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1173526278324474677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3804619932812492947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &4039113663840476068
 GameObject:
   m_ObjectHideFlags: 0
@@ -83,6 +100,7 @@ GameObject:
   - component: {fileID: 809122671700687176}
   - component: {fileID: 6315214766539835208}
   - component: {fileID: 4083590210800388237}
+  - component: {fileID: 3599549162615614174}
   m_Layer: 0
   m_Name: MachineGunTurret
   m_TagString: Untagged
@@ -291,6 +309,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCheckerCooldown: 0.2
+--- !u!114 &3599549162615614174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4039113663840476068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 8539620700667440650}
+  - {fileID: 1173526278324474677}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &4889296770356368966
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,6 +344,7 @@ GameObject:
   - component: {fileID: 47328039076749468}
   - component: {fileID: 5967298229662321440}
   - component: {fileID: 8559975790544353824}
+  - component: {fileID: 8539620700667440650}
   m_Layer: 0
   m_Name: y
   m_TagString: Untagged
@@ -373,6 +416,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8539620700667440650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4889296770356368966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &5357062410745104779
 GameObject:
   m_ObjectHideFlags: 0

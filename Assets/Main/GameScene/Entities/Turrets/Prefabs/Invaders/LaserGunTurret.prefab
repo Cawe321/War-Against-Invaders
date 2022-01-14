@@ -187,6 +187,7 @@ GameObject:
   - component: {fileID: 8419654017790199639}
   - component: {fileID: 3922427220482455621}
   - component: {fileID: 6823101208283925272}
+  - component: {fileID: 3002197966319180014}
   m_Layer: 0
   m_Name: LaserGunTurret
   m_TagString: Untagged
@@ -395,6 +396,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCheckerCooldown: 0.2
+--- !u!114 &3002197966319180014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919452922094627172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &7022468322124113030
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,6 +429,7 @@ GameObject:
   - component: {fileID: 2451841251499020892}
   - component: {fileID: 8106072676864195040}
   - component: {fileID: 6081461045383956704}
+  - component: {fileID: 4131829621583429773}
   m_Layer: 0
   m_Name: y
   m_TagString: Untagged
@@ -478,6 +502,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4131829621583429773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7022468322124113030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &7563390783234325323
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,6 +529,7 @@ GameObject:
   - component: {fileID: 1522625069012730754}
   - component: {fileID: 2893767233018637992}
   - component: {fileID: 7246673074579162040}
+  - component: {fileID: 5041836183862810160}
   m_Layer: 0
   m_Name: x
   m_TagString: Untagged
@@ -563,6 +604,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5041836183862810160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7563390783234325323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &7991543564800221066
 GameObject:
   m_ObjectHideFlags: 0

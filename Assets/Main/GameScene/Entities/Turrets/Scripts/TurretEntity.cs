@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.Intrinsics;
@@ -44,6 +45,19 @@ public class TurretEntity : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (!baseEntity.isAnyPlayerControlling)
+        {
+            if (!PhotonNetwork.IsMasterClient)  // Since no player is controlling, and this client is not the master client, don't let this client update
+                return;
+        }
+        else // A player is controlling
+        {
+            if (!baseEntity.isLocalPlayerControlling) // Since this is not the client that is controlling the turret, dont let this client update
+            {
+                return;
+            }
+        }
+
         if (!baseEntity.CheckHealth())
         {
             baseEntity.DisconnectLocalPlayer();

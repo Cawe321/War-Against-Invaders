@@ -1,3 +1,5 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +9,7 @@ using UnityEngine;
 /// </summary>
 public class EnemyAIBehaviour : SingletonObject<EnemyAIBehaviour>
 {
-    public bool isActive = true;
+    public bool isActive = false;
 
     /* In Script Values*/
     [HideInInspector]
@@ -18,6 +20,8 @@ public class EnemyAIBehaviour : SingletonObject<EnemyAIBehaviour>
 
     int decisionID;
 
+    TEAM_TYPE team;
+    
     public void AddCoins(int coins)
     {
         if (isActive) // only need to add to coin back if AI is active
@@ -29,6 +33,7 @@ public class EnemyAIBehaviour : SingletonObject<EnemyAIBehaviour>
     // Start is called before the first frame update
     void Start()
     {
+        isActive = false;
         coinBank = 0;   
     }
 
@@ -36,6 +41,49 @@ public class EnemyAIBehaviour : SingletonObject<EnemyAIBehaviour>
     void Update()
     {
         // CODE HERE - Update only if Master Client only
+        // missing code...
+
+        if (!isActive) // no need to check whether to activate once it's activated
+        {
+            Player[] playerList = PhotonNetwork.PlayerList;
+            bool isInvaderEmpty = true;
+            bool isDefenderEmpty = true;
+            foreach (Player p in playerList)
+            {
+                object playerTeamObject;
+                if (p.CustomProperties.TryGetValue(MatchmakingKeyIDs.PLAYER_TEAM, out playerTeamObject))
+                {
+                    TEAM_TYPE playerTeam = (TEAM_TYPE)playerTeamObject;
+                    if (playerTeam == TEAM_TYPE.DEFENDERS)
+                    {
+                        isDefenderEmpty = false;
+                    }
+                    else if (playerTeam == TEAM_TYPE.INVADERS)
+                    {
+                        isInvaderEmpty = false;
+                    }
+                    if (!isDefenderEmpty && !isInvaderEmpty) // no need to continue checking, both teams are not empty
+                    {
+                        isActive = false;
+                        break;
+                    }
+                }
+            }
+            if (isDefenderEmpty)
+            {
+                isActive = true;
+                team = TEAM_TYPE.DEFENDERS;
+            }
+            else if (isInvaderEmpty)
+            {
+                isActive = true;
+                team = TEAM_TYPE.INVADERS;
+            }
+            if (isActive)
+                Debug.Log("Enemy AI Behaviour activated for" + team.ToString()); // This is for debugging purposes only ^_^
+        }
+
+       
 
         if (!isActive)
             return;
@@ -43,7 +91,7 @@ public class EnemyAIBehaviour : SingletonObject<EnemyAIBehaviour>
         {
             case 0:
                 {
-                    if (PlayerManager.instance.playerTeam == TEAM_TYPE.DEFENDERS)
+                    if (team == TEAM_TYPE.INVADERS)
                     {
                         // AI is INVADERS
                         int cost = UpgradeManager.instance.GetPlanePurchaseCost(EntityTypes.Mako);
@@ -69,7 +117,7 @@ public class EnemyAIBehaviour : SingletonObject<EnemyAIBehaviour>
                 }
             case 1:
                 {
-                    if (PlayerManager.instance.playerTeam == TEAM_TYPE.DEFENDERS)
+                    if (team == TEAM_TYPE.INVADERS)
                     {
                         // AI is INVADERS
                         int cost = UpgradeManager.instance.GetPlanePurchaseCost(EntityTypes.X_Wing);
@@ -96,7 +144,7 @@ public class EnemyAIBehaviour : SingletonObject<EnemyAIBehaviour>
             case 2:
                 {
 
-                    if (PlayerManager.instance.playerTeam == TEAM_TYPE.DEFENDERS)
+                    if (team == TEAM_TYPE.INVADERS)
                     {
                         // AI is INVADERS
                         int cost = UpgradeManager.instance.GetPlanePurchaseCost(EntityTypes.Deathrow);

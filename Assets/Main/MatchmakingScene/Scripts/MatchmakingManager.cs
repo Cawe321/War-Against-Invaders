@@ -333,7 +333,8 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.CurrentRoom.IsVisible = false;
 
-        PhotonNetwork.LoadLevel("GameScene");
+        SceneTransitionManager.instance.SwitchScene("GameScene", SceneTransitionManager.ENTRANCE_TYPE.FADE_IN, SceneTransitionManager.EXIT_TYPE.FADE_OUT, true); // using photon
+        //PhotonNetwork.LoadLevel("GameScene");
     }
 
     #endregion

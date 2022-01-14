@@ -11,7 +11,7 @@ public class PlaneDefenderBombingState : BaseState
 {
     public PlaneDefenderBombingState(StateMachine stateMachine) : base("PlaneBombingState", stateMachine) { }
     /* Setting Values */
-    const float maxShootAngle = 0.00001f;
+    const float maxShootAngle = 1f;
     Vector3 targetOffset = new Vector3(0, 50f, 0f);
     float maxDistance = 1000f; // amount of distance before firing
 

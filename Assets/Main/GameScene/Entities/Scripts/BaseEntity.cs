@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,6 +66,12 @@ public class BaseEntity : MonoBehaviour
     /// Returns percentage of fuel. 10f = 10%
     /// </summary>
     public float getFuelPercentage { get { return (currFuel / maxFuel) * 100f; } }
+
+    [PunRPC]
+    public void UpdatePlayerControlling(string newPlayerName)
+    {
+        playerControlling = newPlayerName;
+    }
 
     [HideInInspector]
     public bool initialised = false;

@@ -145,7 +145,18 @@ public class InventoryManager : MonoBehaviour
         if (lastEquipmentTypeSelector != null)
             ShowInventoryOfType(lastEquipmentTypeSelector);
         if (equipStatsEntity != null)
+        {
+            int id = equipStatsEntity.entityEquipment.equipmentID;
+            foreach (EntityEquipment entityEquipment in DataManager.instance.loadedPlayerEquipment)
+            {
+                if (entityEquipment.equipmentID == id)
+                {
+                    equipStatsEntity.entityEquipment = entityEquipment;
+                    break;
+                }
+            }
             ItemSelected(equipStatsEntity);
+        }
     }
 
     void LoadCurrency()
@@ -609,7 +620,6 @@ public class InventoryManager : MonoBehaviour
             }
             else if (confirmationMenuType == CONFIRMATION_TYPE.UPGRADE)
             {
-                // CODE HERE to handle upgrading of equipment
                 if (DataManager.instance.commonCurrency >= 1000 + 100 * confirmationMenuEquipment.equipmentID)
                 {
                     processingMenu.SetActive(true);

@@ -11,12 +11,17 @@ using ExitGames.Client.Photon;
 
 public class NetworkManager : SingletonObjectPunCallback<NetworkManager>
 {
-    // Event Codes
+    // Event Codes for GameplayManager
     public const byte StartGameEventCode = 1;
     public const byte UpdateGameStats = 2;
     public const byte UpdateSpawnWave = 3;
     public const byte MakeAnnouncementSpawnWave = 4;
     public const byte GiveCarePackage = 5;
+    public const byte EndMatch = 6;
+    public const byte DisableSpaceshipColliders = 7;
+
+    // Event Codes for PlayerManager
+    public const byte UpdateEntityOwnership = 101;
 
     // Start is called before the first frame update
     void Start()

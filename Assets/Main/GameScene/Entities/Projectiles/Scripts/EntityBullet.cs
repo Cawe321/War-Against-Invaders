@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,7 @@ public class EntityBullet : EntityProjectile
 
     bool bulletActive = false;
 
+
     private void Awake()
     {
         bulletActive = false;
@@ -33,6 +35,7 @@ public class EntityBullet : EntityProjectile
     {
         if (!bulletActive)
             return;
+
         lifespan -= Time.fixedDeltaTime;
         if (lifespan < 0f)
         {
@@ -114,6 +117,8 @@ public class EntityBullet : EntityProjectile
 
     public override void ActivateProjectile(EntityWeapon parent)
     {
+        // if isClientOwner == true, means that the client is responsible for updating the projectile
+
         lifespan = currLifespan;
         if (rb == null)
             rb = GetComponent<Rigidbody>();

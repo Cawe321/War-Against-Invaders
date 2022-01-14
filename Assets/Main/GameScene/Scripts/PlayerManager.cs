@@ -1,3 +1,6 @@
+using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
@@ -67,10 +70,12 @@ public class PlayerManager : SingletonObject<PlayerManager>
                 freeRoamCamera.StopSpectate();
             }
 
-
             controllingEntity = baseEntity;
-            baseEntity.playerControlling = playerName;
-            Debug.Log("Player has taken over");
+            PhotonView photonView = baseEntity.GetComponent<PhotonView>();
+            photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
+            photonView.RPC("UpdatePlayerControlling", RpcTarget.All, playerName);
+            //baseEntity.playerControlling = playerName;
+            Debug.Log("Local Player has taken over");
 
             PlaneEntity planeEntity = baseEntity.GetComponent<PlaneEntity>();
             if (planeEntity != null)
@@ -95,6 +100,8 @@ public class PlayerManager : SingletonObject<PlayerManager>
                 turretEntity.cmCamera.SetActive(true);
             }
             freeRoamCamera.enabled = false;
+
+            
 
             return true;
         }
@@ -125,6 +132,9 @@ public class PlayerManager : SingletonObject<PlayerManager>
             freeRoamCamera.transform.rotation = turretEntity.cmCamera.transform.rotation;
         }
         freeRoamCamera.enabled = true;
+
+        PhotonView photonView = controllingEntity.GetComponent<PhotonView>();
+        photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
 
         controllingEntity = null;
     }

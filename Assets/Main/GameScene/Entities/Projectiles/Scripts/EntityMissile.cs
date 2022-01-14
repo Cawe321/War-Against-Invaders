@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -55,8 +56,8 @@ public class EntityMissile : EntityProjectile
         if (jetEngineVFXController != null)
             jetEngineVFXController.percentage = 0f;
 
-        // No need to call this coroutine if missile doesnt belong to client (Multiplayer Note)
-        lastCO = StartCoroutine(PropulsionDelay(propulsionDelay, parent.transform.forward));
+        // CODE HERE no need to call this coroutine if missile doesnt belong to client (Multiplayer Note)
+            lastCO = StartCoroutine(PropulsionDelay(propulsionDelay, parent.transform.forward));
         this.gameObject.SetActive(true);
     }
 

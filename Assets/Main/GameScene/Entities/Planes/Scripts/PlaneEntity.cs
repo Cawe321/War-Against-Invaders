@@ -1,4 +1,5 @@
 
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -113,6 +114,18 @@ public class PlaneEntity : MonoBehaviour
     {
         if (!baseEntity.initialised)
             return;
+        if (!baseEntity.isAnyPlayerControlling)
+        {
+            if (!PhotonNetwork.IsMasterClient)  // Since no player is controlling, and this client is not the master client, don't let this client update
+                return;
+        }
+        else // A player is controlling
+        {
+            if (!baseEntity.isLocalPlayerControlling) // Since this is not the client that is controlling the plane, dont let this client update
+            {
+                return;
+            }
+        }
 
         // if plane pepsi
         if (!baseEntity.CheckHealth())

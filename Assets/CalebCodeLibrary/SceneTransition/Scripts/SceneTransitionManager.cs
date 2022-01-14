@@ -3,6 +3,7 @@
  * Singleton
  * DontDestroyOnLoad  
 */
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -115,18 +116,18 @@ public class SceneTransitionManager : MonoBehaviour
     #endregion
 
     #region PUBLIC_FUNCTIONS
-    public void SwitchScene(string sceneName, ENTRANCE_TYPE entranceType, EXIT_TYPE exitType)
+    public void SwitchScene(string sceneName, ENTRANCE_TYPE entranceType, EXIT_TYPE exitType, bool usingPhoton = false)
     {
         // if not active, means it's ok to switch scenes
         if (currCoroutine == null)
         {
-            currCoroutine = StartCoroutine(StartSwitchingScenes(sceneName, entranceType, exitType));
+            currCoroutine = StartCoroutine(StartSwitchingScenes(sceneName, entranceType, exitType, usingPhoton));
         }
     }
     #endregion
 
     #region PRIVATE_HELPER_FUNCTIONS
-    IEnumerator StartSwitchingScenes(string sceneName, ENTRANCE_TYPE entranceType, EXIT_TYPE exitType)
+    IEnumerator StartSwitchingScenes(string sceneName, ENTRANCE_TYPE entranceType, EXIT_TYPE exitType, bool usingPhoton)
     {
         if (textMesh)
             textMesh.text = "0%";
@@ -146,22 +147,40 @@ public class SceneTransitionManager : MonoBehaviour
             anim.startAppear();
 
         // Load scene async
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-
-        // Wait until the asynchronous scene fully loads
-        while (!asyncLoad.isDone)
+        if (usingPhoton)
         {
-            if (textMesh)
-                textMesh.text = $"{(int)(asyncLoad.progress * 100f)}%";
-            if (progressBar)
-                progressBar.localScale = new Vector3(asyncLoad.progress, progressBar.localScale.y, progressBar.localScale.z);
-            yield return new WaitForFixedUpdate();
-        }
+            PhotonNetwork.LoadLevel(sceneName);
+            while (PhotonNetwork.LevelLoadingProgress < 1)
+            {
+                float progress = PhotonNetwork.LevelLoadingProgress;
 
-        if (textMesh)
-            textMesh.text = "100%";
-        if (progressBar)
-            progressBar.localScale = new Vector3(1f, progressBar.localScale.y, progressBar.localScale.z);
+                if (textMesh)
+                    textMesh.text = $"{(int)(progress * 100f)}%";
+                if (progressBar)
+                    progressBar.localScale = new Vector3(progress, progressBar.localScale.y, progressBar.localScale.z);
+                yield return new WaitForFixedUpdate();
+            }
+        }
+        else
+        {
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+
+            // Wait until the asynchronous scene fully loads
+            while (!asyncLoad.isDone)
+            {
+                if (textMesh)
+                    textMesh.text = $"{(int)(asyncLoad.progress * 100f)}%";
+                if (progressBar)
+                    progressBar.localScale = new Vector3(asyncLoad.progress, progressBar.localScale.y, progressBar.localScale.z);
+                yield return new WaitForFixedUpdate();
+            }
+
+            if (textMesh)
+                textMesh.text = "100%";
+            if (progressBar)
+                progressBar.localScale = new Vector3(1f, progressBar.localScale.y, progressBar.localScale.z);
+        }
+        
 
         foreach (InterfaceAnimManager anim in allAnims)
             anim.startDisappear();

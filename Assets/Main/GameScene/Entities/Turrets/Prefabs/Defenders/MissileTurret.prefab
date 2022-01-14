@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 895474661237621883}
   - component: {fileID: 895474661237621882}
   - component: {fileID: 508768720065879269}
+  - component: {fileID: 1578845421284154317}
   m_Layer: 0
   m_Name: MissileTurret
   m_TagString: Untagged
@@ -72,8 +73,6 @@ MonoBehaviour:
   dmgIncrease: 0
   dmgReduction: 0
   flightSpeedIncrease: 0
-  pointsIncrease: 0
-  ammunitionIncrease: 0
   fuelReduction: 0
   currFuel: 0
   playerControlling: 
@@ -143,6 +142,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d8e9b7e9b21fe64ba0985e8fd3b8522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1578845421284154317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895474661237622149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2034167154538994886
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,6 +338,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2888581683063806058}
+  - component: {fileID: 6215946957683504630}
   m_Layer: 0
   m_Name: x
   m_TagString: Untagged
@@ -341,6 +363,22 @@ Transform:
   m_Father: {fileID: 9002098734002309837}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6215946957683504630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2888581683063806069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &2888581683756397402
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,6 +557,7 @@ GameObject:
   - component: {fileID: 4048534811168369528}
   - component: {fileID: 6926103889892508579}
   - component: {fileID: 2185277461176744572}
+  - component: {fileID: 5140420306153547573}
   m_Layer: 0
   m_Name: y
   m_TagString: Untagged
@@ -591,6 +630,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5140420306153547573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4384356122640380946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &4951958235717751186
 GameObject:
   m_ObjectHideFlags: 0

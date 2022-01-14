@@ -45,12 +45,6 @@ public class MainMenuManager : SingletonObject<MainMenuManager>
         {
             mainMenuVFXManager.ForceEndVFX();
         }
-
-        // CODE HERE to remove once testing of cloudscript works
-        //if (Input.GetKeyDown(KeyCode.Home))
-        {
-            //SceneManager.LoadScene("TestCloudScript");
-        }
     }
 
     public void UpdatePlayerDataDisplay()
@@ -97,10 +91,18 @@ public class MainMenuManager : SingletonObject<MainMenuManager>
 
     public void ToggleBattleMenu(bool toOpen)
     {
+        SceneTransitionManager.instance.SwitchScene("MatchmakingScene", SceneTransitionManager.ENTRANCE_TYPE.FADE_IN, SceneTransitionManager.EXIT_TYPE.FADE_OUT);
+        // Outdated Code
+        /*
         if (!openSettings)
             battleMenu.gameObject.SetActive(toOpen);
+        */
     }
 
+    /// <summary>
+    /// Deprecated.
+    /// </summary>
+    /// <param name="selectionClass"></param>
     public void BattleSelection(BattleModeSelection_Class selectionClass)
     {
         selectedBattlemode = selectionClass.selection;

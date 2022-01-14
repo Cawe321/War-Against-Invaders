@@ -1,12 +1,14 @@
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using PlayFab.EconomyModels;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using Unity.Mathematics;
 using UnityEngine;
+using static Photon.Pun.UtilityScripts.PunTeams;
 
 public class GameplayManager : SingletonObject<GameplayManager>, IOnEventCallback
 {
@@ -83,6 +85,7 @@ public class GameplayManager : SingletonObject<GameplayManager>, IOnEventCallbac
     void Awake()
     {
         base.Awake();
+        AudioManager.instance.StopBGM();
         waitForPlayersCanvas.gameObject.SetActive(true);
     }
 
@@ -122,8 +125,7 @@ public class GameplayManager : SingletonObject<GameplayManager>, IOnEventCallbac
 
     IEnumerator DisableWaitForPlayersCanvas()
     {
-        // CODE HERE to check if all players have loaded
-        while (!PlayerManager.instance.hasLoaded) // Wait for all players to load
+        while (!PlayerManager.instance.hasLoaded)
             yield return new WaitForEndOfFrame();
         while (waitForPlayersCanvas.alpha > Mathf.Epsilon)
         {
@@ -361,6 +363,13 @@ public class GameplayManager : SingletonObject<GameplayManager>, IOnEventCallbac
     /// </summary>
     /// <param name="team">(TEAM_TYPE) The Winning Team</param>
     public void EndMatch(TEAM_TYPE winningTeam)
+{
+        object[] content = new object[] { winningTeam };
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        PhotonNetwork.RaiseEvent(NetworkManager.EndMatch, content, raiseEventOptions, SendOptions.SendReliable);
+    }
+
+    public void OnEndMatch(TEAM_TYPE winningTeam)
     {
         if (gameplayPhase != GAMEPLAY_PHASE.GAME)
             return;
@@ -400,8 +409,6 @@ public class GameplayManager : SingletonObject<GameplayManager>, IOnEventCallbac
         matchSummaryManager.gameObject.SetActive(true);
         matchSummaryManager.ActivateUI(PlayerManager.instance.playerTeam == winningTeam);
     }
-
-
 
     #region INTRO_FUNCTIONS
     /// <summary>
@@ -487,7 +494,6 @@ public class GameplayManager : SingletonObject<GameplayManager>, IOnEventCallbac
         }
         else if (eventCode == NetworkManager.UpdateGameStats)
         {
-            // CODE HERE to update game stats
             //object[] content = new object[] { gameTimer, defenderSpawnCooldown, invaderSpawnCooldown, defenderSpawnCooldownMultiplier, carePackageCooldownCounter };
             object[] data = (object[])photonEvent.CustomData;
             gameTimer = (float)data[0];
@@ -504,7 +510,6 @@ public class GameplayManager : SingletonObject<GameplayManager>, IOnEventCallbac
             EntityTypes entity = (EntityTypes)data[1];
             int count = (int)data[2];
 
-            // CODE HERE to append to spawn wave
             if (team == TEAM_TYPE.DEFENDERS)
             {
                 if (entityList.GetEntityTeam(entity) == team)
@@ -541,7 +546,16 @@ public class GameplayManager : SingletonObject<GameplayManager>, IOnEventCallbac
             EnemyAIBehaviour.instance.AddCoins(carePackageAmount);
             PlayerManager.instance.AddCoins(carePackageAmount, "Care Package has just arrived!");
         }
-        
+        else if (eventCode == NetworkManager.EndMatch)
+        {
+            object[] data = (object[])photonEvent.CustomData;
+            TEAM_TYPE winningTeam = (TEAM_TYPE)data[0];
+            OnEndMatch(winningTeam);
+        }
+        else if (eventCode == NetworkManager.DisableSpaceshipColliders)
+        {
+            spaceshipEntity.DisableAllColliders();
+        }
     }
 
     private void OnEnable()

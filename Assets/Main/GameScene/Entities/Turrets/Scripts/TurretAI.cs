@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.MLAgents;
@@ -34,6 +35,8 @@ public class TurretAI : MonoBehaviour
             return; // dont update since player is controlling the turret
         }
 
+        if (!PhotonNetwork.IsMasterClient) // Dont update if not the master client
+            return;
 
         if (agent.enabled && agent.target != null && (targetEntity != null && targetEntity.CheckHealth()))
         {

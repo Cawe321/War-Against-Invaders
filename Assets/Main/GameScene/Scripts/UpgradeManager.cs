@@ -76,7 +76,6 @@ public class UpgradeManager : SingletonObject<UpgradeManager>
             PlayerManager.instance.RemoveCoins(GetPlanePurchaseCost(entityType));
             GameplayManager.instance.AddToSpawnWave(ResourceReference.instance.entityList.GetEntityTeam(entityType), entityType);
 
-            // CODE HERE to announce to players a purchase has been made.
             NotificationManager.instance.AddToNotification("Your purchase has been made!", "You now have " + PlayerManager.instance.coins + " coins");
         }
     }

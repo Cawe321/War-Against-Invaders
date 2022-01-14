@@ -121,7 +121,6 @@ public class DataManager : SingletonObject<DataManager>
 
     public void SavePlayerInventory(EntityEquipment[] entityEquipments, PlaneEquipmentEntity[] planeEquipmentEntities)
     {
-        // CODE HERE to save player inventory
         PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
         {
             Data = new Dictionary<string, string>()

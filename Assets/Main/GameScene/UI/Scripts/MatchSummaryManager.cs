@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -43,7 +44,7 @@ public class MatchSummaryManager : MonoBehaviour
 
     public void ReturnToScene()
     {
-        // CODE HERE to switch between different main menus
+        PhotonNetwork.LeaveRoom();
         if (SceneTransitionManager.instance != null)
         {
             if (DataManager.instance.lastTeam == TEAM_TYPE.DEFENDERS)

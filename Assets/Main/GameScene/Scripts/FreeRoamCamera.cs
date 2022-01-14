@@ -133,7 +133,6 @@ public class FreeRoamCamera : MonoBehaviour
 
     void TellPlayerSpectate(bool hasPlanesToSpectate)
     {
-        // CODE HERE to show no available planes to spectate for UI
         if (!hasPlanesToSpectate)
             MainHUDManager.instance.spectateInfoText.text = "No available planes to spectate.";
         else

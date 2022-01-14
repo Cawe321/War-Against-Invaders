@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,12 +37,18 @@ public class MakoFSM : StateMachine
 
         for (int i = 0; i < numberOfFrames; ++i)
             yield return new WaitForEndOfFrame();
-        planeEntity.StartFlyingInstantly(); // For demo purposes only
-        ChangeStateByName(GetInitialState().stateName);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            planeEntity.StartFlyingInstantly(); // For demo purposes only
+            ChangeStateByName(GetInitialState().stateName);
+        }
     }
 
     protected override void Update()
     {
+        if (!PhotonNetwork.IsMasterClient) // Dont update AI if not master client
+            return;
+
         // Return back to AI
         if (isLastFramePlayerControlled == true && planeEntity.baseEntity.isAnyPlayerControlling == false)
         {
