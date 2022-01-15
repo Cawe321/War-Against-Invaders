@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2978232590675715698}
   - component: {fileID: 1109724582867904388}
   - component: {fileID: 1109724582867904389}
+  - component: {fileID: 5312178259993589170}
   m_Layer: 0
   m_Name: LeftWing
   m_TagString: Untagged
@@ -118,6 +119,28 @@ MonoBehaviour:
   meshDestroy: {fileID: 0}
   currHealth: 0
   baseEntity: {fileID: 0}
+--- !u!114 &5312178259993589170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1109724582867904390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1184525530019792680
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,6 +154,7 @@ GameObject:
   - component: {fileID: 5029639184604497130}
   - component: {fileID: 1184525530019792686}
   - component: {fileID: 1184525530019792687}
+  - component: {fileID: 7189712247466312449}
   m_Layer: 0
   m_Name: LeftBackWing
   m_TagString: Untagged
@@ -235,6 +259,28 @@ MonoBehaviour:
   meshDestroy: {fileID: 0}
   currHealth: 0
   baseEntity: {fileID: 0}
+--- !u!114 &7189712247466312449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184525530019792680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2029443487408435528
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,6 +324,7 @@ GameObject:
   - component: {fileID: 2083021915721081481}
   - component: {fileID: 2460049518921365706}
   - component: {fileID: 2460049518921365707}
+  - component: {fileID: 7766467815168812154}
   m_Layer: 0
   m_Name: RightWing
   m_TagString: Untagged
@@ -383,6 +430,28 @@ MonoBehaviour:
   meshDestroy: {fileID: 0}
   currHealth: 0
   baseEntity: {fileID: 0}
+--- !u!114 &7766467815168812154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2460049518921365716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &3030943758546263995
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,6 +495,7 @@ GameObject:
   - component: {fileID: 4002481002589594059}
   - component: {fileID: 3270502264921456362}
   - component: {fileID: 3270502264921456363}
+  - component: {fileID: 3315556020852617000}
   m_Layer: 0
   m_Name: RightBackWing
   m_TagString: Untagged
@@ -530,6 +600,28 @@ MonoBehaviour:
   meshDestroy: {fileID: 0}
   currHealth: 0
   baseEntity: {fileID: 0}
+--- !u!114 &3315556020852617000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3270502264921456372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &4790241199186515811
 GameObject:
   m_ObjectHideFlags: 0
@@ -609,8 +701,8 @@ GameObject:
   - component: {fileID: 6342946166023059020}
   - component: {fileID: 3101147436931136958}
   - component: {fileID: 6528792941143591678}
-  - component: {fileID: 7568006382445654671}
   - component: {fileID: 6620159141154487440}
+  - component: {fileID: 4305587448691102109}
   m_Layer: 0
   m_Name: F16
   m_TagString: Untagged
@@ -682,6 +774,7 @@ MonoBehaviour:
   dmgIncrease: 0
   dmgReduction: 0
   flightSpeedIncrease: 0
+  flightAccelerationIncrease: 0
   fuelReduction: 0
   currFuel: 0
   playerControlling: 
@@ -689,6 +782,7 @@ MonoBehaviour:
   entityWeaponList: []
   initialised: 0
   autoGetWeapons: 1
+  photonView: {fileID: 0}
 --- !u!54 &8648475845583234026
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -786,6 +880,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   explosionRadius: 10
   damage: 300
+  isClientMine: 0
 --- !u!114 &6342946166023059020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -914,27 +1009,11 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 7568006382445654671}
   - {fileID: 6620159141154487440}
+  - {fileID: 4305587448691102109}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &7568006382445654671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8648475845583234039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!114 &6620159141154487440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -949,8 +1028,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SynchronizeVelocity: 1
   m_SynchronizeAngularVelocity: 1
-  m_TeleportEnabled: 1
+  m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 10
+--- !u!114 &4305587448691102109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8648475845583234039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PositionModel:
+    SynchronizeEnabled: 1
+    TeleportEnabled: 1
+    TeleportIfDistanceGreaterThan: 20
+    InterpolateOption: 4
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 1000
+    ExtrapolateOption: 0
+    ExtrapolateSpeed: 1
+    ExtrapolateIncludingRoundTripTime: 1
+    ExtrapolateNumberOfStoredPositions: 1
+  m_RotationModel:
+    SynchronizeEnabled: 1
+    InterpolateOption: 2
+    InterpolateRotateTowardsSpeed: 180
+    InterpolateLerpSpeed: 5
+  m_ScaleModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 0
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 0
 --- !u!1 &8941065960376154830
 GameObject:
   m_ObjectHideFlags: 0
@@ -1362,14 +1474,14 @@ PrefabInstance:
       objectReference: {fileID: 8308682100403910989}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60929acb86f4bd8458b6b9e597828e64, type: 3}
---- !u!4 &5072369275647160940 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2983780925960167842, guid: 60929acb86f4bd8458b6b9e597828e64, type: 3}
-  m_PrefabInstance: {fileID: 8001814664834765774}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5567966776870484605 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2470589718274140595, guid: 60929acb86f4bd8458b6b9e597828e64, type: 3}
+  m_PrefabInstance: {fileID: 8001814664834765774}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5072369275647160940 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2983780925960167842, guid: 60929acb86f4bd8458b6b9e597828e64, type: 3}
   m_PrefabInstance: {fileID: 8001814664834765774}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8103407573204074351

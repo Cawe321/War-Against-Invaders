@@ -53,7 +53,6 @@ public class NetworkManager : SingletonObjectPunCallback<NetworkManager>
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("DemoAsteroids-LobbyScene");
     }
 
     public override void OnLeftRoom()

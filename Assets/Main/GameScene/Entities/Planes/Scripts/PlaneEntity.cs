@@ -215,6 +215,7 @@ public class PlaneEntity : MonoBehaviour
             jetEngineAudio.volume = 0f;
         }
 
+        baseEntity.photonView.RpcSecure("UpdateFlightStats", RpcTarget.Others, false, storedFlightSpeed, flightSpeed, baseEntity.currFuel); ;
         
     }
 
@@ -436,5 +437,14 @@ public class PlaneEntity : MonoBehaviour
         //rigidbody.angularVelocity = Vector3.zero;
 
         rb.AddTorque((torque - rb.angularVelocity) * flightBankingBalanceSpeed, ForceMode.VelocityChange);
+    }
+
+
+    [PunRPC]
+    public void UpdateFlightStats(float storedFlightSpeed, float flightSpeed, float currFuel)
+    {
+        this.storedFlightSpeed = storedFlightSpeed;
+        this.flightSpeed = flightSpeed;
+        baseEntity.currFuel = currFuel;
     }
 }

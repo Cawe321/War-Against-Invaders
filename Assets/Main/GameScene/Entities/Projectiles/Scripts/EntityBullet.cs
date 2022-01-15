@@ -23,17 +23,19 @@ public class EntityBullet : EntityProjectile
 
     bool bulletActive = false;
 
-
+    PhotonView photonView;
     private void Awake()
     {
         bulletActive = false;
         hitAudio = GetComponent<AudioSource>();
+        photonView = GetComponent<PhotonView>();
         currLifespan = lifespan;
     }
 
     private void FixedUpdate()
     {
-        if (!bulletActive)
+        
+        if (!bulletActive || photonView == null || !photonView.IsMine) // dont update if not owner
             return;
 
         lifespan -= Time.fixedDeltaTime;
@@ -52,7 +54,7 @@ public class EntityBullet : EntityProjectile
             bulletActive = false;
             gameObject.SetActive(false);
             prevPos = Vector3.zero;
-            Debug.Log("GONE");
+            //Debug.Log("GONE");
 
         }
         if (prevPos != Vector3.zero)
@@ -62,18 +64,18 @@ public class EntityBullet : EntityProjectile
             {
                 Physics.Raycast(prevPos, transform.position - prevPos, out hit, (transform.position - prevPos).magnitude);
                 
-                if (!hit.collider.transform.IsChildOf(owner.transform) && hit.collider.transform.parent != transform.parent)
+                if (hit.collider.transform != owner.transform && !hit.collider.transform.IsChildOf(owner.transform) && hit.collider.transform.parent != transform.parent)
                 {
                     // Didnt hit its owner
                     // This projectile has hitted something.
                     EntityHealth oppositionHealth = hit.collider.transform.GetComponent<EntityHealth>();
                     if (oppositionHealth != null)
                     {
-                        
+                        //Debug.Log("Raycast Hit");
                         if (!oppositionHealth.immortalObject && oppositionHealth.baseEntity.team != owner.team)
                         {
                             OnHit(oppositionHealth, rb.velocity);
-                            Debug.Log("hitted something: " + hit.collider.name);
+                            //Debug.Log("hitted something: " + hit.collider.name);
                             return;
                         }
                         else
@@ -83,8 +85,8 @@ public class EntityBullet : EntityProjectile
                     }
                     else
                     {
-                        
 
+                        //Debug.Log("Raycast Hit something not alive");
                         // Projectile must have hitted an object without health. Do accordingly
                         EntityProjectile entityProjectile = hit.collider.transform.GetComponent<EntityProjectile>();
                         // Since other projectile cannot detect this raycast detected collision, initiate it for them
@@ -127,28 +129,31 @@ public class EntityBullet : EntityProjectile
         if (trailRenderer == null)
             trailRenderer = GetComponent<TrailRenderer>();
 
+        owner = parent.owner;
         trailRenderer.Clear();
+        collider.isTrigger = false;
 
         rb.angularVelocity = Vector3.zero;
 
-        owner = parent.owner;
         //transform.forward = parent.transform.forward;
-        collider.isTrigger = false;
-        Rigidbody ownerRB = parent.owner.GetComponent<Rigidbody>();
-        if (ownerRB != null)
-            rb.velocity = transform.forward * ownerRB.velocity.magnitude;
-        rb.AddForce(transform.forward * outputForce, ForceMode.Acceleration);
-        //rb.AddForce(Vector3.zero, ForceMode.Impulse);
-        rb.MovePosition(parent.transform.position);
+        if (photonView.IsMine)
+        {
+            Rigidbody ownerRB = parent.owner.GetComponent<Rigidbody>();
+            if (ownerRB != null)
+                rb.velocity = transform.forward * ownerRB.velocity.magnitude;
+            rb.AddForce(transform.forward * outputForce, ForceMode.Acceleration);
+            //rb.AddForce(Vector3.zero, ForceMode.Impulse);
+            rb.MovePosition(parent.transform.position);
+        }
         bulletActive = true;
     }
 
     public void OnCollisionEnter(Collision collision)
     {
-        if (!bulletActive)
+        if (!bulletActive | !photonView.IsMine)
             return;
         // The projectile has hitted itself. Ignore collision.
-        if (collision.collider.transform.IsChildOf(owner.transform) && collision.collider.transform.parent == transform.parent)
+        if (collision.collider.transform == owner.transform || (collision.collider.transform.IsChildOf(owner.transform) || collision.collider.transform.parent == transform.parent))
             Physics.IgnoreCollision(collider, collision.collider);
         else
         {
@@ -157,7 +162,7 @@ public class EntityBullet : EntityProjectile
             EntityHealth oppositionHealth = collision.transform.GetComponent<EntityHealth>();
             if (oppositionHealth != null)
             {
-
+                Debug.Log("Collision Hitted " + oppositionHealth.name);
                 if (!oppositionHealth.immortalObject && oppositionHealth.baseEntity.team != owner.team)
                 {
                     OnHit(oppositionHealth, rb.velocity);
@@ -211,7 +216,14 @@ public class EntityBullet : EntityProjectile
         hitAudio.Play();
         trailRenderer.Clear();
         bulletActive = false;
-        gameObject.SetActive(false);
+        GetComponent<PhotonView>().RPC("DestroyThis", RpcTarget.All);
+        //gameObject.SetActive(false);
 
+    }
+
+    [PunRPC]
+    public void DestroyThis()
+    {
+        Destroy(this.gameObject);
     }
 }

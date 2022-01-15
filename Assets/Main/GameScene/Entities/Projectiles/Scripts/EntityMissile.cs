@@ -29,6 +29,16 @@ public class EntityMissile : EntityProjectile
 
     Collider collider;
     Rigidbody rb = null;
+
+    [HideInInspector]
+    public PhotonView photonView;
+    private void Awake()
+    {
+        photonView = GetComponent<PhotonView>();
+        if (jetEngineVFXController != null)
+            jetEngineVFXController.percentage = 0f;
+    }
+
     public override void ActivateProjectile(EntityWeapon parent)
     {
         owner = parent.owner;
@@ -53,9 +63,6 @@ public class EntityMissile : EntityProjectile
         if (propulsionDelay > 0.000f)
             rb.useGravity = true;
 
-        if (jetEngineVFXController != null)
-            jetEngineVFXController.percentage = 0f;
-
         // CODE HERE no need to call this coroutine if missile doesnt belong to client (Multiplayer Note)
             lastCO = StartCoroutine(PropulsionDelay(propulsionDelay, parent.transform.forward));
         this.gameObject.SetActive(true);
@@ -63,38 +70,54 @@ public class EntityMissile : EntityProjectile
 
     public void OnCollisionEnter(Collision collision)
     {
-        // The projectile has hitted itself. Ignore collision.
-        if (collision.transform.IsChildOf(owner.transform))
-            Physics.IgnoreCollision(collider, collision.collider);
-        else
+        if (photonView.IsMine)
         {
-            OnHit(null, Vector3.zero);
+            // The projectile has hitted itself. Ignore collision.
+            if (collision.transform.IsChildOf(owner.transform) || collision.transform == owner.transform)
+                Physics.IgnoreCollision(collider, collision.collider);
+            else
+            {
+                if (photonView.IsMine)
+                    OnHit(null, Vector3.zero);
+            }
+
         }
 
     }
 
     private void FixedUpdate()
     {
-        if (propulsionActive && rb != null)
+        if (photonView.IsMine)
         {
-            rb.AddRelativeForce(Vector3.forward * propulsionAccelerationForce * Time.fixedDeltaTime, ForceMode.Acceleration);
-            propulsionRemainingDuration -= Time.fixedDeltaTime;
-            rb.angularVelocity = Vector3.zero;
-            if (propulsionRemainingDuration <= 0)
+            if (propulsionActive && rb != null)
             {
-                propulsionActive = false;
-                rb.useGravity = true;
-                if (jetEngineVFXController != null)
-                    jetEngineVFXController.percentage = 0f;
+                rb.AddRelativeForce(Vector3.forward * propulsionAccelerationForce * Time.fixedDeltaTime, ForceMode.Acceleration);
+                propulsionRemainingDuration -= Time.fixedDeltaTime;
+                rb.angularVelocity = Vector3.zero;
+                if (propulsionRemainingDuration <= 0)
+                {
+                    propulsionActive = false;
+                    rb.useGravity = true;
+                    if (jetEngineVFXController.percentage > 1f)
+                        photonView.RpcSecure("DeactivateEffects", RpcTarget.All, false);
+                }
             }
         }
+        
     }
 
     public override void OnHit(EntityHealth entityHealth, Vector3 impulse)
     {
-        // Explosion!!!
         entityExplosion.damage = finalDamage;
         entityExplosion.owner = owner;
+        Explode(true);
+        photonView.RpcSecure("Explode", RpcTarget.Others, false, false);
+    }
+
+    [PunRPC]
+    void Explode(bool isClientMine)
+    {
+        entityExplosion.isClientMine = isClientMine;
         entityExplosion.Ignite(transform.position);
         gameObject.SetActive(false);
     }
@@ -121,7 +144,21 @@ public class EntityMissile : EntityProjectile
         rb.angularVelocity = Vector3.zero;
         propulsionActive = true;
         propulsionRemainingDuration = durationOfPropulsion;
+        photonView.RpcSecure("ActivateEffects", RpcTarget.All, false);
+       
+    }
+
+    [PunRPC]
+    void ActivateEffects()
+    {
         if (jetEngineVFXController != null)
             jetEngineVFXController.percentage = 100f;
+    }
+
+    [PunRPC]
+    void DeactivateEffects()
+    {
+        if (jetEngineVFXController != null)
+            jetEngineVFXController.percentage = 0f;
     }
 }

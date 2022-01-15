@@ -139,6 +139,7 @@ public class GameplayManager : SingletonObject<GameplayManager>, IOnEventCallbac
 
     void FixedUpdate()
     {
+        //Debug.Log(PhotonNetwork.GetPing());
         switch (gameplayPhase)
         {
             case GAMEPLAY_PHASE.WAIT:
@@ -211,7 +212,7 @@ public class GameplayManager : SingletonObject<GameplayManager>, IOnEventCallbac
                         {
                             object[] content = new object[] { gameTimer, defenderSpawnCooldown, invaderSpawnCooldown, defenderSpawnCooldownMultiplier, carePackageCooldownCounter }; 
                             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others }; 
-                            PhotonNetwork.RaiseEvent(NetworkManager.UpdateGameStats, content, raiseEventOptions, SendOptions.SendReliable);
+                            PhotonNetwork.RaiseEvent(NetworkManager.UpdateGameStats, content, raiseEventOptions, SendOptions.SendUnreliable);
                         }
                         
                     }
@@ -309,10 +310,7 @@ public class GameplayManager : SingletonObject<GameplayManager>, IOnEventCallbac
             if (i == 0)
             {
                 GameObject go = PhotonNetwork.Instantiate(entityList.GetCombatEntityObject(objectsToSpawn[i]).name, originalSpawnPos, quaternion);
-                if (team == TEAM_TYPE.DEFENDERS)
-                    go.transform.parent = defenderPlaneContainer.transform;
-                else if (team == TEAM_TYPE.INVADERS)
-                    go.transform.parent = invaderPlaneContainer.transform;
+                go.GetComponent<PhotonView>().RpcSecure("UpdateEntityParent", RpcTarget.All, false, team);
                 StartCoroutine(WaitForTwoFramesToStartPlane(go.GetComponent<PlaneEntity>()));
                 infraredManager.AddInfrared(go.GetComponent<BaseEntity>());
             }
@@ -320,20 +318,14 @@ public class GameplayManager : SingletonObject<GameplayManager>, IOnEventCallbac
             {
                 distance += spawnDistanceOffset;
                 GameObject go = PhotonNetwork.Instantiate(entityList.GetCombatEntityObject(objectsToSpawn[i]).name, originalSpawnPos + new Vector3(distance, 0f, 0f), quaternion);
-                if (team == TEAM_TYPE.DEFENDERS)
-                    go.transform.parent = defenderPlaneContainer.transform;
-                else if (team == TEAM_TYPE.INVADERS)
-                    go.transform.parent = invaderPlaneContainer.transform;
+                go.GetComponent<PhotonView>().RpcSecure("UpdateEntityParent", RpcTarget.All, false, team);
                 StartCoroutine(WaitForTwoFramesToStartPlane(go.GetComponent<PlaneEntity>()));
                 infraredManager.AddInfrared(go.GetComponent<BaseEntity>());
             }
             else
             {
                 GameObject go = PhotonNetwork.Instantiate(entityList.GetCombatEntityObject(objectsToSpawn[i]).name, originalSpawnPos + new Vector3(-distance, 0f, 0f), quaternion);
-                if (team == TEAM_TYPE.DEFENDERS)
-                    go.transform.parent = defenderPlaneContainer.transform;
-                else if (team == TEAM_TYPE.INVADERS)
-                    go.transform.parent = invaderPlaneContainer.transform;
+                go.GetComponent<PhotonView>().RpcSecure("UpdateEntityParent", RpcTarget.All, false, team);
                 StartCoroutine(WaitForTwoFramesToStartPlane(go.GetComponent<PlaneEntity>()));
                 infraredManager.AddInfrared(go.GetComponent<BaseEntity>());
             }

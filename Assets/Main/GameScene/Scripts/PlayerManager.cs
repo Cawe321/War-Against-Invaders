@@ -20,6 +20,8 @@ public class PlayerManager : SingletonObject<PlayerManager>
 
     public bool hasLoaded = false;
 
+    public bool takingControl = false;
+
     #region BUFF_STATS_STORAGE
     public float maxFlightSpeedIncrease = 0;
     public float flightAccelerationIncrease = 0;
@@ -27,10 +29,12 @@ public class PlayerManager : SingletonObject<PlayerManager>
     public override void Awake()
     {
         base.Awake();
+        playerName = DataManager.instance.playerName;
         playerTeam = DataManager.instance.chosenGameTeam;
         hasLoaded = false;
         DataManager.instance.inventoryLoaded.AddListener(InventoryLoaded);
         DataManager.instance.LoadPlayerInventory();
+        takingControl = false;
     }
 
     void InventoryLoaded()
@@ -63,8 +67,11 @@ public class PlayerManager : SingletonObject<PlayerManager>
 
     public bool TakeOverEntity(BaseEntity baseEntity)
     {
+        if (takingControl)
+            return false;
         if (baseEntity.CheckControlAccess())
         {
+            takingControl = true;
             if (freeRoamCamera.isSpectate)
             {
                 freeRoamCamera.StopSpectate();
@@ -73,6 +80,9 @@ public class PlayerManager : SingletonObject<PlayerManager>
             controllingEntity = baseEntity;
             PhotonView photonView = baseEntity.GetComponent<PhotonView>();
             photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
+            PhotonView[] childViews = baseEntity.GetComponentsInChildren<PhotonView>();
+            foreach (PhotonView child in childViews)
+                child.TransferOwnership(PhotonNetwork.LocalPlayer);
             photonView.RPC("UpdatePlayerControlling", RpcTarget.All, playerName);
             //baseEntity.playerControlling = playerName;
             Debug.Log("Local Player has taken over");
@@ -83,15 +93,30 @@ public class PlayerManager : SingletonObject<PlayerManager>
                 planeEntity.cmCamera.SetActive(true);
                 planeUI.EnableUI(planeEntity);
 
-                foreach (PlaneEquipmentEntity planeEquipmentEntity in DataManager.instance.loadedPlayerPlaneEquipment)
+
+                List<EntityEquipment> targetEntityEquipments = new List<EntityEquipment>(); // The equipment we are looking for
+                foreach (PlaneEquipmentEntity planeEquipmentEntity in DataManager.instance.loadedPlayerPlaneEquipment) 
                 {
                     if (planeEquipmentEntity.entityType == controllingEntity.entityType)
                     {
-                        LoadEquipmentStatsToEntity(controllingEntity, planeEquipmentEntity);
-                        break;
+                        foreach (EntityEquipment equipment in DataManager.instance.loadedPlayerEquipment)
+                        {
+                            if (equipment.equipmentID == planeEquipmentEntity.wingID || equipment.equipmentID == planeEquipmentEntity.lightID || equipment.equipmentID == planeEquipmentEntity.heavyID) // this equipment belongs to this entity
+                                targetEntityEquipments.Add(equipment);
+                        }
+                        break; 
                     }
                 }
-                
+
+                List<STAT> equipmentStats = new List<STAT>();
+                foreach (EntityEquipment entityEquipment in targetEntityEquipments)
+                {
+                    equipmentStats.Add(entityEquipment.mainStat);
+                    equipmentStats.AddRange(entityEquipment.subStats);
+                }
+
+                if (equipmentStats.Count > 0)
+                    baseEntity.photonView.RpcSecure("LoadEquipmentStatsToEntity", RpcTarget.All, false, JsonUtility.ToJson(equipmentStats));
             }
 
             TurretEntity turretEntity = baseEntity.GetComponent<TurretEntity>();
@@ -111,8 +136,10 @@ public class PlayerManager : SingletonObject<PlayerManager>
 
     public void DisconnectFromEntity()
     {
-        
-        controllingEntity.playerControlling = "";
+        if (controllingEntity == null)
+            return;
+
+        takingControl = false;
 
         PlaneEntity planeEntity = controllingEntity.GetComponent<PlaneEntity>();
         if (planeEntity != null)
@@ -121,7 +148,7 @@ public class PlayerManager : SingletonObject<PlayerManager>
             planeUI.DisableUI();
             freeRoamCamera.transform.position = planeEntity.cmCamera.transform.position;
             freeRoamCamera.transform.rotation = planeEntity.cmCamera.transform.rotation;
-            UnloadEquipmentStatsFromEntity(controllingEntity);
+            controllingEntity.photonView.RpcSecure("UnloadEquipmentStatsFromEntity", RpcTarget.All, false);
         }
 
         TurretEntity turretEntity = controllingEntity.GetComponent<TurretEntity>();
@@ -134,79 +161,13 @@ public class PlayerManager : SingletonObject<PlayerManager>
         freeRoamCamera.enabled = true;
 
         PhotonView photonView = controllingEntity.GetComponent<PhotonView>();
-        photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
+        photonView.RPC("UpdatePlayerControlling", RpcTarget.All, "");
+        photonView.TransferOwnership(PhotonNetwork.MasterClient);
+        PhotonView[] childViews = controllingEntity.GetComponentsInChildren<PhotonView>();
+        foreach (PhotonView child in childViews)
+            child.TransferOwnership(PhotonNetwork.MasterClient);
 
         controllingEntity = null;
-    }
-
-    void LoadEquipmentStatsToEntity(BaseEntity baseEntity, PlaneEquipmentEntity equipmentEntity)
-    {
-        if (baseEntity == null || equipmentEntity == null)
-            return;
-
-        // Find all relevant equipments first
-        List<EntityEquipment> targetEntityEquipments = new List<EntityEquipment>(); // The equipment we are looking for
-        foreach (EntityEquipment equipment in DataManager.instance.loadedPlayerEquipment)
-        {
-            if (equipment.equipmentID == equipmentEntity.wingID || equipment.equipmentID == equipmentEntity.lightID || equipment.equipmentID == equipmentEntity.heavyID) // this equipment belongs to this entity
-                targetEntityEquipments.Add(equipment);
-        }
-
-        // Loop through all equipments and apply stats (NOTE: This loop can be combined with the first "foreach loop", but for debugging purposes, they have been split)
-        float flightSpeedIncreasePercent = 0;
-        foreach (EntityEquipment entityEquipment in targetEntityEquipments)
-        {
-            List<STAT> equipmentStats = new List<STAT>(entityEquipment.subStats);
-            equipmentStats.Add(entityEquipment.mainStat); // add the main stat to the calculation
-
-            foreach (STAT stat in equipmentStats)
-            {
-                switch (stat.statType)
-                {
-                    case STAT.STAT_TYPE.DMG_BOOST:
-                        baseEntity.dmgIncrease += stat.value * 0.01f; // * 0.01f is to convert whole number percent to float (eg 100% == 1f)
-                        break;
-                    case STAT.STAT_TYPE.DMG_REDUCTION:
-                        baseEntity.dmgReduction += stat.value * 0.01f; // * 0.01f is to convert whole number percent to float (eg 100% == 1f)
-                        break;
-                    case STAT.STAT_TYPE.FLIGHT_SPEED:
-                        flightSpeedIncreasePercent += stat.value * 0.01f; // * 0.01f is to convert whole number percent to float (eg 100% == 1f)
-                        break;
-                    case STAT.STAT_TYPE.LOWER_FUEL_CONSUMPTION:
-                        baseEntity.fuelReduction += stat.value * 0.01f; // * 0.01f is to convert whole number percent to float (eg 100% == 1f)
-                        break;
-                }
-            }
-        }
-
-        // Check & Handle Equipment Buff Data
-        if (baseEntity.dmgReduction > 0.75f) // clamp dmg reduction at 75%
-            baseEntity.dmgReduction = 0.75f;
-
-        if (baseEntity.fuelReduction > 0.75f) // clamp fuel reduction at 75%
-            baseEntity.fuelReduction = 0.75f;
-
-        // Apply flight speed increase to PlaneEntity and store the increased value
-        PlaneEntity basePlaneEntity = baseEntity.GetComponent<PlaneEntity>();
-        maxFlightSpeedIncrease = basePlaneEntity.flightMaxSpeed * (flightSpeedIncreasePercent);
-        flightAccelerationIncrease = basePlaneEntity.flightAcceleration * (flightSpeedIncreasePercent);
-        basePlaneEntity.flightMaxSpeed += maxFlightSpeedIncrease;
-        basePlaneEntity.flightAcceleration += flightAccelerationIncrease;
-    }
-
-    void UnloadEquipmentStatsFromEntity(BaseEntity baseEntity)
-    {
-        // Reset baseEntity buff values
-        baseEntity.dmgIncrease = 0;
-        baseEntity.dmgReduction = 0;
-        baseEntity.fuelReduction = 0;
-
-        // Disable PlaneEntity speed buffs
-        PlaneEntity basePlaneEntity = baseEntity.GetComponent<PlaneEntity>();
-        basePlaneEntity.flightMaxSpeed -= maxFlightSpeedIncrease;
-        basePlaneEntity.flightAcceleration -= flightAccelerationIncrease;
-        maxFlightSpeedIncrease = 0;
-        flightAccelerationIncrease = 0;
     }
     #endregion
 }

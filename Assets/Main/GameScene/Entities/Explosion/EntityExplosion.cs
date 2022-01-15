@@ -21,7 +21,8 @@ public class EntityExplosion : MonoBehaviour
 
     GameObject explosionVFX;
 
-    
+    [HideInInspector]
+    public bool isClientMine = false;
 
     public void Ignite(Vector3 position)
     {
@@ -37,20 +38,24 @@ public class EntityExplosion : MonoBehaviour
 
     public void AreaDamage()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius);
-        foreach (Collider collider in hitColliders)
+        if (isClientMine) // only handle stuff when the client owns this explosion
         {
-            // Make an attempt to find EntityHealth component
-            EntityHealth entityHealth = collider.transform.GetComponent<EntityHealth>();
-            if (entityHealth != null)
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius);
+            foreach (Collider collider in hitColliders)
             {
-                
-                Vector3 dist = collider.ClosestPoint(transform.position) - transform.position;
+                // Make an attempt to find EntityHealth component
+                EntityHealth entityHealth = collider.transform.GetComponent<EntityHealth>();
+                if (entityHealth != null)
+                {
 
-                // Calculate explosion force
-                Vector3 explosionForce = (explosionRadius - dist.magnitude) * dist * explosionRadius;
-                entityHealth.TakeDamage(owner, damage, explosionForce);
+                    Vector3 dist = collider.ClosestPoint(transform.position) - transform.position;
+
+                    // Calculate explosion force
+                    Vector3 explosionForce = (explosionRadius - dist.magnitude) * dist * explosionRadius;
+                    entityHealth.TakeDamage(owner, damage, explosionForce);
+                }
             }
         }
+        
     }
 }

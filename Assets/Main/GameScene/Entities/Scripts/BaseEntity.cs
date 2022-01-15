@@ -34,6 +34,8 @@ public class BaseEntity : MonoBehaviour
     public float dmgReduction;
     [HideInInspector]
     public float flightSpeedIncrease;
+    [HideInInspector]
+    public float flightAccelerationIncrease;
     /// <summary>
     /// Buff to reduce fuel consumption.
     /// </summary>
@@ -81,12 +83,15 @@ public class BaseEntity : MonoBehaviour
     /* In-script Values */
     float maxStability;
 
+    [HideInInspector]
+    public PhotonView photonView;
+
     virtual protected void Start()
     {
         initialised = false;
         entityHealthList = new List<EntityHealth>(GetComponentsInChildren<EntityHealth>());
         entityWeaponList = new List<EntityWeapon>(GetComponentsInChildren<EntityWeapon>());
-        
+        photonView = GetComponent<PhotonView>();
         Init();
     }
 
@@ -101,6 +106,8 @@ public class BaseEntity : MonoBehaviour
                 entityWeapon.FireWeapon(this);
         }
     }
+
+
 
     /// <summary>
     /// Set all ammunition to max
@@ -263,4 +270,80 @@ public class BaseEntity : MonoBehaviour
         }
     }
 
+    [PunRPC]
+    public void UpdateEntityParent(TEAM_TYPE team)
+    {
+        switch (team)
+        {
+            case TEAM_TYPE.DEFENDERS:
+                transform.parent = GameplayManager.instance.defenderPlaneContainer.transform;
+                break;
+            case TEAM_TYPE.INVADERS:
+                transform.parent = GameplayManager.instance.invaderPlaneContainer.transform;
+                break;
+
+        }
+    }
+
+
+    [PunRPC]
+    void LoadEquipmentStatsToEntity(string jsonStringOfStats)
+    {
+        Debug.Log(jsonStringOfStats);
+        STAT[] allStats = JsonUtility.FromJson<STAT[]>(jsonStringOfStats);
+
+        float flightSpeedIncreasePercent = 0;
+        foreach (STAT stat in allStats)
+        {
+            switch (stat.statType)
+            {
+                case STAT.STAT_TYPE.DMG_BOOST:
+                    dmgIncrease += stat.value * 0.01f; // * 0.01f is to convert whole number percent to float (eg 100% == 1f)
+                    break;
+                case STAT.STAT_TYPE.DMG_REDUCTION:
+                    dmgReduction += stat.value * 0.01f; // * 0.01f is to convert whole number percent to float (eg 100% == 1f)
+                    break;
+                case STAT.STAT_TYPE.FLIGHT_SPEED:
+                    flightSpeedIncreasePercent += stat.value * 0.01f; // * 0.01f is to convert whole number percent to float (eg 100% == 1f)
+                    break;
+                case STAT.STAT_TYPE.LOWER_FUEL_CONSUMPTION:
+                   fuelReduction += stat.value * 0.01f; // * 0.01f is to convert whole number percent to float (eg 100% == 1f)
+                    break;
+            }
+        }
+
+
+
+
+
+        // Check & Handle Equipment Buff Data
+        if (dmgReduction > 0.75f) // clamp dmg reduction at 75%
+            dmgReduction = 0.75f;
+
+        if (fuelReduction > 0.75f) // clamp fuel reduction at 75%
+            fuelReduction = 0.75f;
+
+        // Apply flight speed increase to PlaneEntity and store the increased value
+        PlaneEntity basePlaneEntity = GetComponent<PlaneEntity>();
+        flightSpeedIncrease = basePlaneEntity.flightMaxSpeed * (flightSpeedIncreasePercent);
+        flightAccelerationIncrease = basePlaneEntity.flightAcceleration * (flightSpeedIncreasePercent);
+        basePlaneEntity.flightMaxSpeed += flightSpeedIncrease;
+        basePlaneEntity.flightAcceleration += flightAccelerationIncrease;
+    }
+
+    [PunRPC]
+    void UnloadEquipmentStatsFromEntity()
+    {
+        // Reset baseEntity buff values
+        dmgIncrease = 0;
+        dmgReduction = 0;
+        fuelReduction = 0;
+
+        // Disable PlaneEntity speed buffs
+        PlaneEntity basePlaneEntity = GetComponent<PlaneEntity>();
+        basePlaneEntity.flightMaxSpeed -= flightSpeedIncrease;
+        basePlaneEntity.flightAcceleration -= flightAccelerationIncrease;
+        flightSpeedIncrease = 0;
+        flightAccelerationIncrease = 0;
+    }
 }

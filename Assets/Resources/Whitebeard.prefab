@@ -49,8 +49,8 @@ GameObject:
   - component: {fileID: 8169577306598415874}
   - component: {fileID: 2618470071135025969}
   - component: {fileID: 1629662458641977155}
-  - component: {fileID: 2785744917981877500}
   - component: {fileID: 4916942217672323216}
+  - component: {fileID: 5096410978908348166}
   m_Layer: 0
   m_Name: Whitebeard
   m_TagString: Untagged
@@ -121,6 +121,7 @@ MonoBehaviour:
   dmgIncrease: 0
   dmgReduction: 0
   flightSpeedIncrease: 0
+  flightAccelerationIncrease: 0
   fuelReduction: 0
   currFuel: 0
   playerControlling: 
@@ -128,6 +129,7 @@ MonoBehaviour:
   entityWeaponList: []
   initialised: 0
   autoGetWeapons: 1
+  photonView: {fileID: 0}
 --- !u!54 &2162456091370205425
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -225,6 +227,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   explosionRadius: 10
   damage: 225
+  isClientMine: 0
 --- !u!114 &8169577306598415874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,27 +356,11 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 2785744917981877500}
   - {fileID: 4916942217672323216}
+  - {fileID: 5096410978908348166}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &2785744917981877500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2162456091370205430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!114 &4916942217672323216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,8 +375,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SynchronizeVelocity: 1
   m_SynchronizeAngularVelocity: 1
-  m_TeleportEnabled: 1
+  m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 10
+--- !u!114 &5096410978908348166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2162456091370205430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PositionModel:
+    SynchronizeEnabled: 1
+    TeleportEnabled: 1
+    TeleportIfDistanceGreaterThan: 3
+    InterpolateOption: 4
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 100
+    ExtrapolateOption: 0
+    ExtrapolateSpeed: 1
+    ExtrapolateIncludingRoundTripTime: 1
+    ExtrapolateNumberOfStoredPositions: 1
+  m_RotationModel:
+    SynchronizeEnabled: 1
+    InterpolateOption: 2
+    InterpolateRotateTowardsSpeed: 180
+    InterpolateLerpSpeed: 5
+  m_ScaleModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 0
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 0
 --- !u!1 &3449003529826477669
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,6 +504,7 @@ GameObject:
   - component: {fileID: 8858432904877863304}
   - component: {fileID: 4910263548621712339}
   - component: {fileID: 4910263548621712340}
+  - component: {fileID: 7795172514246319168}
   m_Layer: 0
   m_Name: RightWing
   m_TagString: Untagged
@@ -588,6 +609,28 @@ MonoBehaviour:
   meshDestroy: {fileID: 0}
   currHealth: 0
   baseEntity: {fileID: 0}
+--- !u!114 &7795172514246319168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4910263548621712341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &5172819861340540853
 GameObject:
   m_ObjectHideFlags: 0
@@ -691,6 +734,7 @@ GameObject:
   - component: {fileID: 5716148117477225843}
   - component: {fileID: 7593508838814577797}
   - component: {fileID: 7593508838814577798}
+  - component: {fileID: 6942173821823550837}
   m_Layer: 0
   m_Name: LeftWing
   m_TagString: Untagged
@@ -795,6 +839,28 @@ MonoBehaviour:
   meshDestroy: {fileID: 0}
   currHealth: 0
   baseEntity: {fileID: 0}
+--- !u!114 &6942173821823550837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7593508838814577799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1001 &5716308721921276649
 PrefabInstance:
   m_ObjectHideFlags: 0

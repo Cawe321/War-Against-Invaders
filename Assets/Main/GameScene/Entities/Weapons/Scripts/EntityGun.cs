@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Security;
 using UnityEngine;
+using Photon.Pun;
 
 /// <summary>
 /// The default weapon class that shoots projectiles.
@@ -35,7 +36,7 @@ public class EntityGun : EntityWeapon
             --currAmmunition;
             //owner = parent;
             currWeaponCooldown = weaponCooldown;
-            GameObject newProjectile = GetAvailableObject();
+            GameObject newProjectile = PhotonNetwork.Instantiate(originalObject.name, transform.position, Quaternion.identity);
             newProjectile.transform.position = transform.position;
             EntityProjectile entityProjectile = newProjectile.GetComponent<EntityProjectile>();
             entityProjectile.owner = parent;
@@ -52,18 +53,7 @@ public class EntityGun : EntityWeapon
 
     protected override GameObject GetAvailableObject()
     {
-        foreach(Transform projectile in objectContainer)
-        {
-            if (!projectile.gameObject.activeInHierarchy)
-            {
-                projectile.gameObject.SetActive(true);
-                return projectile.gameObject;
-            }
-        }
-
-        // If code runs here, means all projectiles are inavailable. Time to instantiate a new one.
-        GameObject go = Instantiate(originalObject, objectContainer);
-        go.SetActive(true);
-        return go;
+        // We are not using this function
+        return null;
     }
 }

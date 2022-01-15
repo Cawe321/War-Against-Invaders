@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
+using Photon.Pun;
 
 /// <summary>
 /// The gameobject that the object is attached to has health.
@@ -47,9 +48,12 @@ public class EntityHealth : MonoBehaviour
 
     bool zeroHealthHandled = false;
 
+    PhotonView photonView;
+  
     private void Start()
     {
         Init();
+        photonView = GetComponent<PhotonView>();
         collider = GetComponent<Collider>();
         if (destructionType == DESTRUCTION_TYPE.EXPLODE && GetComponent<EntityExplosion>() == null)
             Debug.Log("[EntityHealth] ERROR: For" + transform.name +", DESTRUCTION_TYPE.EXPLODE has been selected but cannot find any EntityExplosion components.");
@@ -139,9 +143,10 @@ public class EntityHealth : MonoBehaviour
 
     public void AddHealth(float addHealth)
     {
-        currHealth += addHealth;
-        if (currHealth > maxHealth)
-            currHealth = maxHealth;
+        float tempHealth = currHealth + addHealth;
+        if (tempHealth > maxHealth)
+            tempHealth = maxHealth;
+        baseEntity.photonView.RpcSecure("UpdateHealth", RpcTarget.All, false, tempHealth, Vector3.zero);
     }
 
     #region UTILITY_FUNCTIONS
@@ -158,19 +163,20 @@ public class EntityHealth : MonoBehaviour
             return;
 
         if (ignoreDmgReduction)
-            UpdateHealth(currHealth - damage); // currently a function to handle multiplayer in the future
+            photonView.RpcSecure("UpdateHealth", RpcTarget.All, false, currHealth - damage, hitStrength);
         else
-            UpdateHealth(currHealth - (damage * (1f - baseEntity.dmgReduction))); // currently a function to handle multiplayer in the future
+            photonView.RpcSecure("UpdateHealth", RpcTarget.All, false, currHealth - (damage * (1f - baseEntity.dmgReduction)), hitStrength); 
+    }
+
+    [PunRPC]
+    public void UpdateHealth(float newHealth, Vector3 hitStrength)
+    {
+        currHealth = newHealth;
         if (currHealth <= 0f)
         {
             currHealth = 0f;
             HandleZeroHealth(hitStrength);
         }
-    }
-
-    public void UpdateHealth(float newHealth)
-    {
-        currHealth = newHealth;
     }
     #endregion
 

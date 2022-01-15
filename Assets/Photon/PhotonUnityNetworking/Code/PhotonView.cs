@@ -70,8 +70,6 @@ namespace Photon.Pun
         }
         #endif
 
-
-
         [FormerlySerializedAs("group")]
         public byte Group = 0;
 
