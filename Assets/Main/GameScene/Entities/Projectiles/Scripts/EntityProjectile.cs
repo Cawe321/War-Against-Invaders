@@ -18,6 +18,8 @@ public abstract class EntityProjectile : MonoBehaviour
     [HideInInspector]
     public BaseEntity owner;
 
+    [HideInInspector]
+    public bool isMine;
     public abstract void ActivateProjectile(EntityWeapon parent);
 
     public abstract void OnHit(EntityHealth entityHealth, Vector3 impulse);

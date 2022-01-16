@@ -23,19 +23,17 @@ public class EntityBullet : EntityProjectile
 
     bool bulletActive = false;
 
-    PhotonView photonView;
     private void Awake()
     {
         bulletActive = false;
         hitAudio = GetComponent<AudioSource>();
-        photonView = GetComponent<PhotonView>();
         currLifespan = lifespan;
     }
 
     private void FixedUpdate()
     {
         
-        if (!bulletActive || photonView == null || !photonView.IsMine) // dont update if not owner
+        if (!bulletActive || !isMine) // dont update if not owner
             return;
 
         lifespan -= Time.fixedDeltaTime;
@@ -53,6 +51,7 @@ public class EntityBullet : EntityProjectile
             trailRenderer.Clear();
             bulletActive = false;
             gameObject.SetActive(false);
+            Destroy(gameObject);
             prevPos = Vector3.zero;
             //Debug.Log("GONE");
 
@@ -119,6 +118,8 @@ public class EntityBullet : EntityProjectile
 
     public override void ActivateProjectile(EntityWeapon parent)
     {
+        isMine = parent.isMine;
+        parent.weaponAudio.Play();
         // if isClientOwner == true, means that the client is responsible for updating the projectile
 
         lifespan = currLifespan;
@@ -136,21 +137,19 @@ public class EntityBullet : EntityProjectile
         rb.angularVelocity = Vector3.zero;
 
         //transform.forward = parent.transform.forward;
-        if (photonView.IsMine)
-        {
             Rigidbody ownerRB = parent.owner.GetComponent<Rigidbody>();
             if (ownerRB != null)
                 rb.velocity = transform.forward * ownerRB.velocity.magnitude;
             rb.AddForce(transform.forward * outputForce, ForceMode.Acceleration);
             //rb.AddForce(Vector3.zero, ForceMode.Impulse);
             rb.MovePosition(parent.transform.position);
-        }
+
         bulletActive = true;
     }
 
     public void OnCollisionEnter(Collision collision)
     {
-        if (!bulletActive | !photonView.IsMine)
+        if (!bulletActive | !isMine)
             return;
         // The projectile has hitted itself. Ignore collision.
         if (collision.collider.transform == owner.transform || (collision.collider.transform.IsChildOf(owner.transform) || collision.collider.transform.parent == transform.parent))
@@ -216,14 +215,8 @@ public class EntityBullet : EntityProjectile
         hitAudio.Play();
         trailRenderer.Clear();
         bulletActive = false;
-        GetComponent<PhotonView>().RPC("DestroyThis", RpcTarget.All);
+        Destroy(this.gameObject);
         //gameObject.SetActive(false);
 
-    }
-
-    [PunRPC]
-    public void DestroyThis()
-    {
-        Destroy(this.gameObject);
     }
 }

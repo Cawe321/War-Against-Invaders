@@ -74,7 +74,8 @@ public class EntityHealth : MonoBehaviour
         {
             Physics.IgnoreCollision(collider, collision.collider);
         }
-
+        if (!photonView.IsMine)
+            return;
         // This is to check collision of other entities
         EntityHealth opposition = collision.collider.GetComponent<EntityHealth>();
         if (opposition != null && !immortalObject) // Check if the other entity has health
@@ -90,7 +91,7 @@ public class EntityHealth : MonoBehaviour
     {
         if (zeroHealthHandled)
             return;
-
+        Debug.Log("Handling Zero Health: " + hitStrength);
         zeroHealthHandled = true;
         // Disable collision
         GetComponent<Collider>().isTrigger = true;
@@ -126,8 +127,8 @@ public class EntityHealth : MonoBehaviour
                     EntityExplosion entityExplosion = GetComponent<EntityExplosion>();
                     if (entityExplosion != null)
                     {
-                        entityExplosion.owner = baseEntity;
-                        entityExplosion.Ignite(transform.position);
+                        Explode(true);
+                        photonView.RpcSecure("Explode", RpcTarget.Others, false, false);
                     }
 
                     MeshDestroy meshDestroy = GetComponent<MeshDestroy>();
@@ -140,6 +141,16 @@ public class EntityHealth : MonoBehaviour
                 }
         }
     }
+
+    [PunRPC]
+    void Explode(bool isClientMine)
+    {
+        EntityExplosion entityExplosion = GetComponent<EntityExplosion>();
+        entityExplosion.owner = baseEntity;
+        entityExplosion.isClientMine = isClientMine;
+        entityExplosion.Ignite(transform.position);
+    }
+
 
     public void AddHealth(float addHealth)
     {

@@ -13,7 +13,7 @@ public class EntityGun : EntityWeapon
     [SerializeField]
     float projectileSpread = 0.1f;
 
-    AudioSource weaponAudio;
+ 
 
     protected void Start()
     {
@@ -36,17 +36,25 @@ public class EntityGun : EntityWeapon
             --currAmmunition;
             //owner = parent;
             currWeaponCooldown = weaponCooldown;
-            GameObject newProjectile = PhotonNetwork.Instantiate(originalObject.name, transform.position, Quaternion.identity);
+            GameObject newProjectile = null;
+            if (originalObject.GetComponent<PhotonView>() == null)
+                newProjectile = Instantiate(originalObject, transform.position, Quaternion.identity);
+            else if (isMine)
+                newProjectile = PhotonNetwork.Instantiate(originalObject.name, transform.position, Quaternion.identity);
+
+            if (newProjectile == null)
+                return;
+
             newProjectile.transform.position = transform.position;
             EntityProjectile entityProjectile = newProjectile.GetComponent<EntityProjectile>();
             entityProjectile.owner = parent;
             entityProjectile.finalDamage = defaultDamage * (1 + parent.dmgIncrease);
             entityProjectile.transform.forward = transform.forward;
-            Vector3 rotationEuler = new Vector3(Random.Range(-projectileSpread, projectileSpread), Random.Range(-projectileSpread, projectileSpread), 0f);
-            entityProjectile.transform.Rotate(rotationEuler);
+            //Vector3 rotationEuler = new Vector3(Random.Range(-projectileSpread, projectileSpread), Random.Range(-projectileSpread, projectileSpread), 0f);
+            //entityProjectile.transform.Rotate(rotationEuler);
             entityProjectile.ActivateProjectile(this);
 
-            weaponAudio.Play();
+            //weaponAudio.Play();
         }
     }
 

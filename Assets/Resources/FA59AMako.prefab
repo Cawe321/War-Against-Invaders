@@ -441,7 +441,7 @@ GameObject:
   - component: {fileID: 4523867550392819057}
   - component: {fileID: 2487527779804043195}
   - component: {fileID: 2191210872402451377}
-  - component: {fileID: 7922822686230385970}
+  - component: {fileID: 7967364904430483653}
   m_Layer: 0
   m_Name: FA59AMako
   m_TagString: Untagged
@@ -746,7 +746,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 2191210872402451377}
-  - {fileID: 7922822686230385970}
+  - {fileID: 7967364904430483653}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -766,7 +766,7 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 10
---- !u!114 &7922822686230385970
+--- !u!114 &7967364904430483653
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -775,30 +775,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8421498864198137707}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
+  m_Script: {fileID: 11500000, guid: 35144820bcc25444bb8f0fd767d9423e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PositionModel:
-    SynchronizeEnabled: 1
-    TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 4
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 100
-    ExtrapolateOption: 0
-    ExtrapolateSpeed: 1
-    ExtrapolateIncludingRoundTripTime: 1
-    ExtrapolateNumberOfStoredPositions: 1
-  m_RotationModel:
-    SynchronizeEnabled: 1
-    InterpolateOption: 2
-    InterpolateRotateTowardsSpeed: 180
-    InterpolateLerpSpeed: 5
-  m_ScaleModel:
-    SynchronizeEnabled: 0
-    InterpolateOption: 0
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 0
+  SmoothingDelay: 5
 --- !u!1 &8840158905331954750
 GameObject:
   m_ObjectHideFlags: 0

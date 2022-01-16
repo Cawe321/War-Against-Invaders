@@ -4914,6 +4914,7 @@ MonoBehaviour:
   projectileType: 1
   finalDamage: 0
   owner: {fileID: 0}
+  isMine: 0
   jetEngineVFXController: {fileID: 2164907020951897482}
   entityExplosion: {fileID: 4819346180003231709}
   propulsionAccelerationForce: 500

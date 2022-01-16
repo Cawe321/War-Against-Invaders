@@ -19,6 +19,9 @@ public abstract class EntityWeapon : ObjectPool<EntityWeapon>
     [SerializeField]
     private float _weaponCooldown;
 
+    [HideInInspector]
+    public AudioSource weaponAudio;
+
     public enum WEAPON_TYPE
     {
         PRIMARY,
@@ -33,6 +36,9 @@ public abstract class EntityWeapon : ObjectPool<EntityWeapon>
     /// Used to keep track of current cooldown
     /// </summary>
     protected float currWeaponCooldown;
+
+    [HideInInspector]
+    public bool isMine;
 
     protected void Start()
     {

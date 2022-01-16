@@ -92,7 +92,7 @@ public class SettingsManager : SingletonObject<SettingsManager>
     public void OnQuitToMainMenuClicked()
     {
         if (PhotonNetwork.InRoom)
-            PhotonNetwork.LeaveRoom();
+            PhotonNetwork.Disconnect();
         chosenQuitType = QUIT_TYPE.MAIN_MENU;
         confirmQuitText.text = "Are you sure you want to quit to main menu?";
         confirmQuitMenu.SetActive(true);
@@ -101,7 +101,7 @@ public class SettingsManager : SingletonObject<SettingsManager>
     public void OnQuitToDesktopClicked()
     {
         if (PhotonNetwork.InRoom)
-            PhotonNetwork.LeaveRoom();
+            PhotonNetwork.Disconnect();
         chosenQuitType = QUIT_TYPE.DESKTOP;
         confirmQuitText.text = "ARE you sure you want to quit to desktop?";
         confirmQuitMenu.SetActive(true);

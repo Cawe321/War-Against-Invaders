@@ -443,7 +443,7 @@ GameObject:
   - component: {fileID: 1856343729887439003}
   - component: {fileID: 5737691260661259549}
   - component: {fileID: 2994097674180413823}
-  - component: {fileID: 2816285591211622277}
+  - component: {fileID: 2022570749108488791}
   m_Layer: 0
   m_Name: X-Wing
   m_TagString: Untagged
@@ -750,7 +750,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 2994097674180413823}
-  - {fileID: 2816285591211622277}
+  - {fileID: 2022570749108488791}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -770,7 +770,7 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 10
---- !u!114 &2816285591211622277
+--- !u!114 &2022570749108488791
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -779,30 +779,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7156498954158920595}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
+  m_Script: {fileID: 11500000, guid: 35144820bcc25444bb8f0fd767d9423e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PositionModel:
-    SynchronizeEnabled: 1
-    TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 4
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 100
-    ExtrapolateOption: 0
-    ExtrapolateSpeed: 1
-    ExtrapolateIncludingRoundTripTime: 1
-    ExtrapolateNumberOfStoredPositions: 1
-  m_RotationModel:
-    SynchronizeEnabled: 1
-    InterpolateOption: 2
-    InterpolateRotateTowardsSpeed: 180
-    InterpolateLerpSpeed: 5
-  m_ScaleModel:
-    SynchronizeEnabled: 0
-    InterpolateOption: 0
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 0
+  SmoothingDelay: 5
 --- !u!1 &7410260445109533986
 GameObject:
   m_ObjectHideFlags: 0

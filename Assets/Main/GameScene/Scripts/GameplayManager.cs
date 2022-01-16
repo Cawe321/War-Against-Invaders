@@ -310,9 +310,9 @@ public class GameplayManager : SingletonObject<GameplayManager>, IOnEventCallbac
             if (i == 0)
             {
                 GameObject go = PhotonNetwork.Instantiate(entityList.GetCombatEntityObject(objectsToSpawn[i]).name, originalSpawnPos, quaternion);
-                go.GetComponent<PhotonView>().RpcSecure("UpdateEntityParent", RpcTarget.All, false, team);
+                go.GetComponent<PhotonView>().RpcSecure("UpdateEntityParent", RpcTarget.All,  false, team);
                 StartCoroutine(WaitForTwoFramesToStartPlane(go.GetComponent<PlaneEntity>()));
-                infraredManager.AddInfrared(go.GetComponent<BaseEntity>());
+              
             }
             else if (i % 2 == 1)
             {
@@ -320,14 +320,14 @@ public class GameplayManager : SingletonObject<GameplayManager>, IOnEventCallbac
                 GameObject go = PhotonNetwork.Instantiate(entityList.GetCombatEntityObject(objectsToSpawn[i]).name, originalSpawnPos + new Vector3(distance, 0f, 0f), quaternion);
                 go.GetComponent<PhotonView>().RpcSecure("UpdateEntityParent", RpcTarget.All, false, team);
                 StartCoroutine(WaitForTwoFramesToStartPlane(go.GetComponent<PlaneEntity>()));
-                infraredManager.AddInfrared(go.GetComponent<BaseEntity>());
+               
             }
             else
             {
                 GameObject go = PhotonNetwork.Instantiate(entityList.GetCombatEntityObject(objectsToSpawn[i]).name, originalSpawnPos + new Vector3(-distance, 0f, 0f), quaternion);
                 go.GetComponent<PhotonView>().RpcSecure("UpdateEntityParent", RpcTarget.All, false, team);
                 StartCoroutine(WaitForTwoFramesToStartPlane(go.GetComponent<PlaneEntity>()));
-                infraredManager.AddInfrared(go.GetComponent<BaseEntity>());
+                
             }
         }
 

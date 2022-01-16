@@ -97,7 +97,8 @@ public class TurretEntity : MonoBehaviour
     /// <param name="weaponType">Fire Primary or Secondary weapon</param>
     public void FireAllWeapons(EntityWeapon.WEAPON_TYPE weaponType)
     {
-        baseEntity.FireAllWeapons(weaponType);
+        baseEntity.FireAllWeapons(weaponType, true);
+        baseEntity.photonView.RPC("FireAllWeapons", RpcTarget.Others, weaponType, false);
     }
 
     /// <summary>

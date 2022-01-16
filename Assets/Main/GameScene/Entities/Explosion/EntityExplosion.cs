@@ -40,14 +40,16 @@ public class EntityExplosion : MonoBehaviour
     {
         if (isClientMine) // only handle stuff when the client owns this explosion
         {
+            
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius);
             foreach (Collider collider in hitColliders)
             {
+                Debug.Log("hitting " + collider.name);
                 // Make an attempt to find EntityHealth component
                 EntityHealth entityHealth = collider.transform.GetComponent<EntityHealth>();
                 if (entityHealth != null)
                 {
-
+                    
                     Vector3 dist = collider.ClosestPoint(transform.position) - transform.position;
 
                     // Calculate explosion force

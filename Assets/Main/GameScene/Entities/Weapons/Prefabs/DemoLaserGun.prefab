@@ -135,6 +135,7 @@ MonoBehaviour:
   currAmmunition: 900
   owner: {fileID: 0}
   _weaponCooldown: 0.1
+  weaponAudio: {fileID: 0}
   weaponType: 0
   projectileSpread: 1
 --- !u!82 &6404077845858534425

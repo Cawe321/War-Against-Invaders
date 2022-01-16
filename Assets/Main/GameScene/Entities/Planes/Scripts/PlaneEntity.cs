@@ -112,6 +112,18 @@ public class PlaneEntity : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (engineActive)
+        {
+            // Calculate speed percentage
+            float speedPercent = (flightSpeed / flightMinTakeOffSpeed) * 100f;
+            jetEngineAudio.volume = flightSpeed / flightMaxSpeed;
+            foreach (JetEngineVFXController jet in jetEngineVFXControllers)
+            {
+                jet.percentage = speedPercent;
+            }
+        }
+  
+
         if (!baseEntity.initialised)
             return;
         if (!baseEntity.isAnyPlayerControlling)
@@ -133,11 +145,12 @@ public class PlaneEntity : MonoBehaviour
             baseEntity.DisconnectLocalPlayer();
             baseEntity.playerCanControl = false;
             engineActive = false;
+            baseEntity.photonView.RpcSecure("GiveCoinsOnDestruction", RpcTarget.All, false);
             if (GetComponent<DestroyAfterSeconds>() == null)
             {
                 DestroyAfterSeconds destroyScript = gameObject.AddComponent<DestroyAfterSeconds>();
                 destroyScript.DestroyAfterWaiting(10);
-                GiveCoinsOnDestruction();
+                
             }
         }
 
@@ -159,13 +172,7 @@ public class PlaneEntity : MonoBehaviour
                 ToggleEngine();
             }
 
-            // Calculate speed percentage
-            float speedPercent = (flightSpeed / flightMinTakeOffSpeed) * 100f;
-            foreach(JetEngineVFXController jet in jetEngineVFXControllers)
-            {
-                jet.percentage = speedPercent;
-            }
-            jetEngineAudio.volume = flightSpeed / flightMaxSpeed;
+           
 
             if (flightSpeed < flightMinTakeOffSpeed && transform.forward.y > -0.95f)
                 rb.AddRelativeTorque(Vector3.right * Mathf.Abs(1f - transform.forward.y) * flightEnginePower);
@@ -215,13 +222,14 @@ public class PlaneEntity : MonoBehaviour
             jetEngineAudio.volume = 0f;
         }
 
-        baseEntity.photonView.RpcSecure("UpdateFlightStats", RpcTarget.Others, false, storedFlightSpeed, flightSpeed, baseEntity.currFuel); ;
+        baseEntity.photonView.RPC("UpdateFlightStats", RpcTarget.Others, storedFlightSpeed, flightSpeed, baseEntity.currFuel, engineActive); ;
         
     }
 
     /// <summary>
     /// Gives coins on destruction of this plane entity
     /// </summary>
+    [PunRPC]
     void GiveCoinsOnDestruction()
     {
         // Give gold to opponent team
@@ -378,7 +386,10 @@ public class PlaneEntity : MonoBehaviour
     public void FireAllWeapons(EntityWeapon.WEAPON_TYPE weaponType)
     {
         if (baseEntity && baseEntity.CheckHealth())
-            baseEntity.FireAllWeapons(weaponType);
+        {
+            baseEntity.FireAllWeapons(weaponType, true);
+            baseEntity.photonView.RPC("FireAllWeapons", RpcTarget.Others, weaponType, false);
+        }
     }
 
     public void OnCollisionEnter(Collision collision)
@@ -441,10 +452,11 @@ public class PlaneEntity : MonoBehaviour
 
 
     [PunRPC]
-    public void UpdateFlightStats(float storedFlightSpeed, float flightSpeed, float currFuel)
+    public void UpdateFlightStats(float storedFlightSpeed, float flightSpeed, float currFuel, bool engineStatus)
     {
         this.storedFlightSpeed = storedFlightSpeed;
         this.flightSpeed = flightSpeed;
         baseEntity.currFuel = currFuel;
+        engineActive = engineStatus;
     }
 }

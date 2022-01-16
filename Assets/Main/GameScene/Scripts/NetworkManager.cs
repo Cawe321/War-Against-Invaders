@@ -19,6 +19,8 @@ public class NetworkManager : SingletonObjectPunCallback<NetworkManager>
     public const byte GiveCarePackage = 5;
     public const byte EndMatch = 6;
     public const byte DisableSpaceshipColliders = 7;
+    public const byte MakeEnemyDestroyedAnnouncement = 8;
+    public const byte MakeMissileExplode = 9;
 
     // Event Codes for PlayerManager
     public const byte UpdateEntityOwnership = 101;

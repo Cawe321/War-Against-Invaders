@@ -41,6 +41,7 @@ public class EntityMissile : EntityProjectile
 
     public override void ActivateProjectile(EntityWeapon parent)
     {
+        parent.weaponAudio.Play();
         owner = parent.owner;
 
         propulsionActive = false;

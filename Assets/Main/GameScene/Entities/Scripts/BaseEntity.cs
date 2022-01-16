@@ -98,12 +98,16 @@ public class BaseEntity : MonoBehaviour
     /// <summary>
     /// Commands all associated weapon types to fire.
     /// </summary>
-    public void FireAllWeapons(EntityWeapon.WEAPON_TYPE weaponType)
+    [PunRPC]
+    public void FireAllWeapons(EntityWeapon.WEAPON_TYPE weaponType, bool isMine)
     {
         foreach (EntityWeapon entityWeapon in entityWeaponList)
         {
             if (entityWeapon.weaponType == weaponType)
+            {
+                entityWeapon.isMine = isMine;
                 entityWeapon.FireWeapon(this);
+            }
         }
     }
 
@@ -283,6 +287,7 @@ public class BaseEntity : MonoBehaviour
                 break;
 
         }
+        GameplayManager.instance.infraredManager.AddInfrared(this);
     }
 
 
