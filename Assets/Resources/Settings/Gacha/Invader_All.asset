@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gachaTitle: Invader (All)
   gachaDescription: Chance at getting any invader equipments.
-  imageBanner: {fileID: 0}
+  imageBanner: {fileID: 21300000, guid: f856b7c6b26c50e4ca32060e0e129bb1, type: 3}
   teamType: 3
   cloudscriptFunctionName: Gacha_InvaderAll

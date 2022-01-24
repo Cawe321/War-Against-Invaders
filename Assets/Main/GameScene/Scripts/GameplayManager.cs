@@ -8,7 +8,6 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using Unity.Mathematics;
 using UnityEngine;
-using static Photon.Pun.UtilityScripts.PunTeams;
 
 public class GameplayManager : SingletonObject<GameplayManager>, IOnEventCallback
 {
@@ -101,14 +100,14 @@ public class GameplayManager : SingletonObject<GameplayManager>, IOnEventCallbac
         gameplayPhase = GAMEPLAY_PHASE.WAIT;
 
         defenderSpawnWave = new Dictionary<EntityTypes, int>();
-        AddToSpawnWave(TEAM_TYPE.DEFENDERS, EntityTypes.F16, 3);
-        AddToSpawnWave(TEAM_TYPE.DEFENDERS, EntityTypes.StealthWing, 2);
+        AddToSpawnWave(TEAM_TYPE.DEFENDERS, EntityTypes.Whitebeard, 2);
+        AddToSpawnWave(TEAM_TYPE.DEFENDERS, EntityTypes.StealthWing, 1);
         //defenderSpawnWave.Add(EntityTypes.F16, 3);
         //defenderSpawnWave.Add(EntityTypes.StealthWing, 2);
 
         invaderSpawnWave = new Dictionary<EntityTypes, int>();
-        AddToSpawnWave(TEAM_TYPE.INVADERS, EntityTypes.Deathrow, 3);
-        AddToSpawnWave(TEAM_TYPE.INVADERS, EntityTypes.Mako, 2);
+        AddToSpawnWave(TEAM_TYPE.INVADERS, EntityTypes.Deathrow, 2);
+        AddToSpawnWave(TEAM_TYPE.INVADERS, EntityTypes.Mako, 1);
         //invaderSpawnWave.Add(EntityTypes.Deathrow, 3);
         //invaderSpawnWave.Add(EntityTypes.Mako, 2);
 

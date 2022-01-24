@@ -17,6 +17,7 @@ public class AudioFiles : ScriptableObject
     public AudioClip _defenderMainMenuBGM;
     public AudioClip _invaderMainMenuBGM;
     public AudioClip _gameSceneBGM;
+    public AudioClip _matchmakingBGM;
 
     [Header("SFX Audio managed by external players")]
     public AudioClip _flightEngineSound;

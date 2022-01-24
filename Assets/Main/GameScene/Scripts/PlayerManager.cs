@@ -1,4 +1,5 @@
 using ExitGames.Client.Photon;
+using Newtonsoft.Json;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
@@ -116,7 +117,10 @@ public class PlayerManager : SingletonObject<PlayerManager>
                 }
 
                 if (equipmentStats.Count > 0)
-                    baseEntity.photonView.RpcSecure("LoadEquipmentStatsToEntity", RpcTarget.All, false, JsonUtility.ToJson(equipmentStats));
+                {
+                    baseEntity.photonView.RpcSecure("LoadEquipmentStatsToEntity", RpcTarget.All, false, JsonConvert.SerializeObject(equipmentStats.ToArray()));
+                    Debug.Log("Pre Equipment" + JsonConvert.SerializeObject(equipmentStats.ToArray()));
+                }
             }
 
             TurretEntity turretEntity = baseEntity.GetComponent<TurretEntity>();

@@ -125,8 +125,10 @@ public class FreeRoamCamera : MonoBehaviour
                 }
             }
 
-
-            
+            if (spectateEntity.baseEntity.isAnyPlayerControlling)
+                MainHUDManager.instance.spectateInfoText.text = "Currently operated by " + spectateEntity.baseEntity.playerControlling;
+            else
+                MainHUDManager.instance.spectateInfoText.text = "Currently operated by no one";
         }
         
     }

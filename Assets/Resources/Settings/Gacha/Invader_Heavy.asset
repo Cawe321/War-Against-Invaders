@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gachaTitle: Invader (Heavy Weapons)
   gachaDescription: Chance at getting invader heavy weapon equipments.
-  imageBanner: {fileID: 0}
+  imageBanner: {fileID: 21300000, guid: 33c3e719ecb615b4ab303655038dfa73, type: 3}
   teamType: 3
   cloudscriptFunctionName: Gacha_InvaderHeavy

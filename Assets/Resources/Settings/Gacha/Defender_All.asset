@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gachaTitle: Defender (All)
   gachaDescription: Chance at getting any defender equipments.
-  imageBanner: {fileID: 0}
+  imageBanner: {fileID: 21300000, guid: f856b7c6b26c50e4ca32060e0e129bb1, type: 3}
   teamType: 2
   cloudscriptFunctionName: Gacha_DefenderAll

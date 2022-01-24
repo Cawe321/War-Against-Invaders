@@ -160,6 +160,11 @@ public class SceneTransitionManager : MonoBehaviour
                     progressBar.localScale = new Vector3(progress, progressBar.localScale.y, progressBar.localScale.z);
                 yield return new WaitForFixedUpdate();
             }
+
+            if (textMesh)
+                textMesh.text = "100%";
+            if (progressBar)
+                progressBar.localScale = new Vector3(1f, progressBar.localScale.y, progressBar.localScale.z);
         }
         else
         {

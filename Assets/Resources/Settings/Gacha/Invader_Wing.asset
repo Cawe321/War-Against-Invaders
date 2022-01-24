@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gachaTitle: Invader (Wings)
   gachaDescription: Chance at getting invader wing equipments.
-  imageBanner: {fileID: 0}
+  imageBanner: {fileID: 21300000, guid: 9911d0c5b9057e143a0b52031ab67077, type: 3}
   teamType: 3
   cloudscriptFunctionName: Gacha_InvaderWing

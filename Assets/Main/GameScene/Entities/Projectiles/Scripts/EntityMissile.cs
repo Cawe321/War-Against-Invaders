@@ -120,7 +120,7 @@ public class EntityMissile : EntityProjectile
     {
         entityExplosion.isClientMine = isClientMine;
         entityExplosion.Ignite(transform.position);
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 
     IEnumerator PropulsionDelay(float seconds, Vector3 direction)

@@ -80,7 +80,7 @@ public class PlaneRunwayState : BaseState
             case PHASE.ENTER_RUNWAY:
                 {
                     Vector3 offset;
-                    offset = new Vector3(0, 200, -planeEntity.flightSpeed * 8);
+                    offset = new Vector3(0, 200, -planeEntity.flightSpeed * 5);
                     offset = assignedRunway.transform.rotation * offset;
                     Vector3 targetPos = assignedRunway.entrancePosition.position + offset;
                     if ((planeEntity.transform.position - targetPos).sqrMagnitude < 400f) // If plane entity is near the target position (<10 metres)
@@ -187,7 +187,7 @@ public class PlaneRunwayState : BaseState
                             planeEntity.Accelerate();
 
                         // Continue Taking Off
-                        planeEntity.RotateToTargetDirection((assignedRunway.exitPosition.position - assignedRunway.landingTargetPosition.position).normalized);
+                        //planeEntity.RotateToTargetDirection((assignedRunway.exitPosition.position - assignedRunway.landingTargetPosition.position).normalized);
                         planeEntity.RotateToTargetPosition(assignedRunway.exitPosition.position);
                     }
 

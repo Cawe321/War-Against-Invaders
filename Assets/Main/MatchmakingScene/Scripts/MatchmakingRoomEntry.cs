@@ -31,6 +31,6 @@ public class MatchmakingRoomEntry : MonoBehaviour
         roomName = name;
 
         RoomNameText.text = name;
-        RoomPlayersText.text = "Defenders: " + defenderPlayers + " | Invaders: " + invaderPlayers + " | Max Players: 6";
+        RoomPlayersText.text = "Defenders: " + defenderPlayers + " | Invaders: " + invaderPlayers;
     }
 }

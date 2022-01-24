@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
@@ -294,8 +295,8 @@ public class BaseEntity : MonoBehaviour
     [PunRPC]
     void LoadEquipmentStatsToEntity(string jsonStringOfStats)
     {
-        Debug.Log(jsonStringOfStats);
-        STAT[] allStats = JsonUtility.FromJson<STAT[]>(jsonStringOfStats);
+        Debug.Log("Equipment" + jsonStringOfStats);
+        STAT[] allStats = JsonConvert.DeserializeObject<STAT[]>(jsonStringOfStats);
 
         float flightSpeedIncreasePercent = 0;
         foreach (STAT stat in allStats)

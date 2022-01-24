@@ -57,6 +57,7 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
     public void Start()
     {
         //if (DataManager.instance != null)
+        AudioManager.instance.PlayBGM(AudioManager.instance.audioFiles._matchmakingBGM);
         OnLoginButtonClicked();
     }
 
@@ -256,6 +257,7 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
 
     public void OnBackButtonClicked()
     {
+        AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._buttonClickSFX);
         if (PhotonNetwork.InLobby)
         {
             PhotonNetwork.LeaveLobby();
@@ -266,6 +268,7 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
 
     public void OnCreateRoomButtonClicked()
     {
+        AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._buttonClickSFX);
         string roomName = RoomNameInputField.text;
         roomName = (roomName.Equals(string.Empty)) ? "Room " + Random.Range(1000, 10000) : roomName;
 
@@ -279,6 +282,7 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
 
     public void OnJoinRandomRoomButtonClicked()
     {
+        AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._buttonClickSFX);
         SetActivePanel(JoinRandomRoomPanel.name);
 
         PhotonNetwork.JoinRandomRoom();
@@ -286,6 +290,7 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
 
     public void OnLeaveGameButtonClicked()
     {
+        AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._buttonClickSFX);
         object count;
         PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(DataManager.instance.chosenGameTeam.ToString(), out count);
         if (count != null)
@@ -320,6 +325,7 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
 
     public void OnRoomListButtonClicked()
     {
+        AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._buttonClickSFX);
         if (!PhotonNetwork.InLobby)
         {
             PhotonNetwork.JoinLobby();
@@ -330,6 +336,7 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
 
     public void OnStartGameButtonClicked()
     {
+        AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._buttonClickSFX);
         PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.CurrentRoom.IsVisible = false;
 
@@ -436,6 +443,7 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
 
     public void ReturnToMainMenu()
     {
+        AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._buttonClickSFX);
         PhotonNetwork.Disconnect();
         PlayerPrefs.SetInt("MainMenuSkipVFX", 1);
         if (DataManager.instance.lastTeam == TEAM_TYPE.DEFENDERS)
@@ -446,6 +454,7 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
 
     public void ToggleSettings()
     {
+        AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._buttonClickSFX);
         openSettings = !openSettings;
         if (openSettings)
         {
@@ -458,5 +467,10 @@ public class MatchmakingManager : MonoBehaviourPunCallbacks
             AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._uiCloseSound);
         }
 
+    }
+
+    public void OnHover()
+    {
+        AudioManager.instance.PlaySFX(AudioManager.instance.audioFiles._buttonHoverSFX);
     }
 }

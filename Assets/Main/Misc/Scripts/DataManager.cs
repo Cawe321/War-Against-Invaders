@@ -157,11 +157,20 @@ public class DataManager : SingletonObject<DataManager>
 
                 inventoryLoaded.Invoke();
             }
+            else
+            {
+                loadedPlayerEquipment = new EntityEquipment[0];
+                loadedPlayerPlaneEquipment = new PlaneEquipmentEntity[0];
+                inventoryLoaded.Invoke();
+            }
             
         }, (error) =>
         {
             Debug.Log("Load Inventory Error: " + error.ErrorMessage);
             Debug.Log(error.GenerateErrorReport());
+            loadedPlayerEquipment = new EntityEquipment[0];
+            loadedPlayerPlaneEquipment = new PlaneEquipmentEntity[0];
+            inventoryLoaded.Invoke();
         });
     }
 

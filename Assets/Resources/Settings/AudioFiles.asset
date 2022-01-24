@@ -21,6 +21,7 @@ MonoBehaviour:
   _defenderMainMenuBGM: {fileID: 8300000, guid: a3b8046dac2e0ca4fbf110f4e8080597, type: 3}
   _invaderMainMenuBGM: {fileID: 8300000, guid: ea5c7e4ede77e12458bdb0df3c667786, type: 3}
   _gameSceneBGM: {fileID: 8300000, guid: 9bad825e5c6351a4ab4624d2b889d81a, type: 3}
+  _matchmakingBGM: {fileID: 8300000, guid: 3d92d2ac0247780469166ae210670c36, type: 3}
   _flightEngineSound: {fileID: 8300000, guid: 7725312a373ea184f85a19e3376d48ef, type: 3}
   _gunsFireSound: {fileID: 8300000, guid: d96dfbc1d28924f4dbca5e3794f96d91, type: 3}
   _gunsHitSound: {fileID: 8300000, guid: d10ad4886a14b3644a1871dfc9170f11, type: 3}

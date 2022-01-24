@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gachaTitle: Defender (Heavy Weapons)
   gachaDescription: Chance at getting defender heavy weapon equipments.
-  imageBanner: {fileID: 0}
+  imageBanner: {fileID: 21300000, guid: 33c3e719ecb615b4ab303655038dfa73, type: 3}
   teamType: 2
   cloudscriptFunctionName: Gacha_DefenderHeavy
