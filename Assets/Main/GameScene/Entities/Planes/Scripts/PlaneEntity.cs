@@ -145,9 +145,9 @@ public class PlaneEntity : MonoBehaviour
             baseEntity.DisconnectLocalPlayer();
             baseEntity.playerCanControl = false;
             engineActive = false;
-            baseEntity.photonView.RpcSecure("GiveCoinsOnDestruction", RpcTarget.All, false);
             if (GetComponent<DestroyAfterSeconds>() == null)
             {
+                baseEntity.photonView.RpcSecure("GiveCoinsOnDestruction", RpcTarget.All, false);
                 DestroyAfterSeconds destroyScript = gameObject.AddComponent<DestroyAfterSeconds>();
                 destroyScript.DestroyAfterWaiting(10);
                 
